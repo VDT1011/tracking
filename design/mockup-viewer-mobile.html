@@ -67,6 +67,7 @@ body {
 }
 .wordmark { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 .wordmark .mk-sq { width: 9px; height: 9px; background: var(--color-gold); border-radius: 3px; flex: none; }
+.wordmark .mk-logo { width: 20px; height: 20px; flex: none; }
 .wordmark b { font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); font-size: var(--fs-sm); color: var(--color-text); }
 .wordmark span { font-weight: var(--fw-reg); letter-spacing: var(--ls-wide); color: var(--color-beige); font-size: var(--fs-sm); }
 .badge {
@@ -191,9 +192,8 @@ body {
 .pod--win { z-index: 3; }
 .pod--win .pod-ava { border: 2px solid var(--seat-winner); }
 .pod--win .pod-plate { border-color: var(--seat-winner); background: var(--color-surface-2); box-shadow: var(--shadow-2); }
-.pod--empty .pod-ava { background: transparent; border-style: dashed; box-shadow: none; color: var(--color-text-muted); font-size: var(--fs-2xs); font-weight: var(--fw-semi); }
-.pod--empty .pod-plate { border-style: dashed; box-shadow: none; }
-.pod--empty .pod-name { color: var(--color-text-muted); }
+/* Viewer KHÔNG hiển thị ghế trống — chỉ hiện ghế có người (reporter/admin vẫn hiện "+" để xếp chỗ) */
+.pod--empty { display: none; }
 
 /* --- bet trên nỉ + nút dealer --- */
 .mt-bet {
@@ -234,8 +234,15 @@ body {
 .mb-7 { left: 74%; top: 45%; }
 .mb-8 { left: 74%; top: 64%; }
 .mb-9 { left: 65%; top: 78%; }
-/* nút dealer cạnh ghế giữ button */
+/* nút dealer cạnh ghế giữ button — đủ 9 ghế, dịch từ ghế vào phía felt (đối xứng trục x=50%) */
+.mtd-1 { left: 40%; top: 78%; }
+.mtd-2 { left: 24%; top: 64%; }
+.mtd-3 { left: 24%; top: 44%; }
+.mtd-4 { left: 29%; top: 31%; }
+.mtd-5 { left: 50%; top: 24%; }
+.mtd-6 { left: 71%; top: 31%; }
 .mtd-7 { left: 76%; top: 44%; }
+.mtd-8 { left: 76%; top: 64%; }
 .mtd-9 { left: 60%; top: 78%; }
 
 /* ---------- Lá bài ---------- */
@@ -388,7 +395,7 @@ body {
 .mv-eboard { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); display: flex; gap: 2px; z-index: 1; }
 .mv-epot { position: absolute; left: 50%; top: 58%; transform: translate(-50%, -50%); z-index: 1; background: var(--felt-pill); border-radius: var(--radius-full); padding: 1px 7px; font-size: 9px; font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .mv-eseat { position: absolute; transform: translate(-50%, -50%); z-index: 1; width: 22px; height: 22px; border-radius: var(--radius-full); background: var(--color-surface-2); border: 1px solid var(--color-gold-deep); display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: var(--fw-bold); color: var(--color-beige); box-shadow: var(--shadow-1); }
-.mv-eseat--empty { background: transparent; border-style: dashed; border-color: var(--seat-empty-line); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.mv-eseat--empty { display: none; }  /* viewer ẩn ghế trống (cả mini-table Home) */
 .mv-eseat--btn { border-color: var(--color-gold); color: var(--color-gold); }
 .me-1{left:50%;top:12%} .me-2{left:75%;top:20%} .me-3{left:89%;top:43%} .me-4{left:79%;top:66%} .me-5{left:61%;top:73%}
 .me-6{left:39%;top:73%} .me-7{left:21%;top:66%} .me-8{left:11%;top:43%} .me-9{left:26%;top:20%}
@@ -522,12 +529,19 @@ body {
 /* bottom tab dạng link (bấm chuyển frame) */
 .tab { text-decoration: none; }
 html { scroll-behavior: smooth; }
+/* banner offline (đồng bộ design-system §13) + empty-state log */
+.banner { display: flex; align-items: center; gap: var(--sp-2); padding: 8px var(--sp-4); border-top: 1px solid; border-bottom: 1px solid; flex: none; font-size: var(--fs-xs); }
+.banner b { font-weight: var(--fw-bold); }
+.banner .tail { margin-left: auto; font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; flex: none; }
+.banner--offline { background: var(--color-danger-soft); border-color: var(--color-danger-line); color: var(--color-danger-text); }
+.ml-empty { padding: var(--sp-5) var(--sp-4); text-align: center; color: var(--color-text-muted); font-size: var(--fs-sm); line-height: var(--lh-snug); }
+.ml-empty b { display: block; color: var(--color-beige); font-weight: var(--fw-semi); margin-bottom: 4px; }
 </style>
 </head>
 <body>
 
 <div class="mock-chrome">
-  <b>Mockup — Viewer mobile</b><span>chuẩn chính · 390px · 9 màn: Bàn (4 trạng thái) + Home / Giải / Hands / Chips / Permalink</span>
+  <b>Mockup — Viewer mobile</b><span>chuẩn chính · 390px · 11 màn: Bàn (4 trạng thái) + Empty + Offline + Home / Giải / Hands / Chips / Permalink</span>
   <nav>
     <a href="design-system.html">◂ Design System</a>
     <a href="mockup-logger.html">Reporter</a>
@@ -546,7 +560,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" id="ban-m" aria-label="Viewer mobile — đang live">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
     <div class="m-ctx"><b>Bàn 1</b> Level 14 · 8K/16K · Ante 16K · Championship I — High Roller</div>
@@ -575,27 +589,27 @@ html { scroll-behavior: smooth; }
         <span class="pod-plate"><span class="pod-name">T. Dwan</span><b class="pod-stack tnum">1M</b><span class="pod-bar pod-bar--check">Check</span></span>
       </div>
       <div class="pod pod--fold pp-3">
-        <span class="pod-ava">BK<span class="pos pod-pos">UTG</span></span>
+        <span class="pod-ava">BK</span>
         <span class="pod-plate"><span class="pod-name">B. Kenney</span><b class="pod-stack tnum">1.2M</b></span>
       </div>
       <div class="pod pp-4">
-        <span class="pod-ava">PI<span class="pos pod-pos">UTG+1</span></span>
+        <span class="pod-ava">PI</span>
         <span class="pod-plate"><span class="pod-name">P. Ivey</span><b class="pod-stack tnum">880K</b><span class="pod-bar pod-bar--bet">Bet</span></span>
       </div>
       <div class="pod pod--fold pp-5">
-        <span class="pod-ava">JK<span class="pos pod-pos">UTG+2</span></span>
+        <span class="pod-ava">JK</span>
         <span class="pod-plate"><span class="pod-name">J. Koon</span><b class="pod-stack tnum">1.5M</b></span>
       </div>
       <div class="pod pod--fold pp-6">
-        <span class="pod-ava">MB<span class="pos pod-pos">LJ</span></span>
+        <span class="pod-ava">MB</span>
         <span class="pod-plate"><span class="pod-name">M. Badziakouski</span><b class="pod-stack tnum">720K</b></span>
       </div>
       <div class="pod pod--fold pp-7">
-        <span class="pod-ava">WY<span class="pos pod-pos">HJ</span></span>
+        <span class="pod-ava">WY</span>
         <span class="pod-plate"><span class="pod-name">W.K. Yong</span><b class="pod-stack tnum">540K</b></span>
       </div>
       <div class="pod pod--fold pp-8">
-        <span class="pod-ava">SC<span class="pos pod-pos">CO</span></span>
+        <span class="pod-ava">SC</span>
         <span class="pod-plate"><span class="pod-name">S. Chidwick</span><b class="pod-stack tnum">2.1M</b></span>
       </div>
       <div class="pod pod--act pp-9">
@@ -645,7 +659,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" aria-label="Viewer mobile — showdown">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
     <div class="m-ctx"><b>Bàn 1</b> Level 14 · 8K/16K · Ante 16K · Championship I — High Roller</div>
@@ -675,11 +689,11 @@ html { scroll-behavior: smooth; }
         <span class="pod-plate"><span class="pod-name">T. Dwan</span><b class="pod-stack tnum">976K</b><span class="pod-bar">Muck</span></span>
       </div>
       <div class="pod pod--fold pp-3">
-        <span class="pod-ava">BK<span class="pos pod-pos">UTG</span></span>
+        <span class="pod-ava">BK</span>
         <span class="pod-plate"><span class="pod-name">B. Kenney</span><b class="pod-stack tnum">1.2M</b></span>
       </div>
       <div class="pod pod--win pp-4">
-        <span class="pod-ava">PI<span class="pos pod-pos">UTG+1</span>
+        <span class="pod-ava">PI
           <span class="pod-cards">
             <span class="pcard pcard--sm pcard--red"><b>K</b><i>♦</i></span>
             <span class="pcard pcard--sm"><b>K</b><i>♣</i></span>
@@ -688,19 +702,19 @@ html { scroll-behavior: smooth; }
         <span class="pod-plate"><span class="pod-name">P. Ivey</span><b class="pod-stack tnum">1.96M</b><span class="pod-bar pod-bar--win tnum">Win +980K</span></span>
       </div>
       <div class="pod pod--fold pp-5">
-        <span class="pod-ava">JK<span class="pos pod-pos">UTG+2</span></span>
+        <span class="pod-ava">JK</span>
         <span class="pod-plate"><span class="pod-name">J. Koon</span><b class="pod-stack tnum">1.5M</b></span>
       </div>
       <div class="pod pod--fold pp-6">
-        <span class="pod-ava">MB<span class="pos pod-pos">LJ</span></span>
+        <span class="pod-ava">MB</span>
         <span class="pod-plate"><span class="pod-name">M. Badziakouski</span><b class="pod-stack tnum">720K</b></span>
       </div>
       <div class="pod pod--fold pp-7">
-        <span class="pod-ava">WY<span class="pos pod-pos">HJ</span></span>
+        <span class="pod-ava">WY</span>
         <span class="pod-plate"><span class="pod-name">W.K. Yong</span><b class="pod-stack tnum">540K</b></span>
       </div>
       <div class="pod pod--fold pp-8">
-        <span class="pod-ava">SC<span class="pos pod-pos">CO</span></span>
+        <span class="pod-ava">SC</span>
         <span class="pod-plate"><span class="pod-name">S. Chidwick</span><b class="pod-stack tnum">2.1M</b></span>
       </div>
       <div class="pod pp-9">
@@ -766,7 +780,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" aria-label="Viewer mobile — hand không showdown">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge badge--live"><span class="dot"></span>Live</span>
     </header>
     <div class="m-ctx"><b>Bàn 1</b> Level 14 · 8K/16K · Ante 16K · Quads Weekly</div>
@@ -788,27 +802,27 @@ html { scroll-behavior: smooth; }
       </div>
 
       <div class="pod pod--fold pp-1">
-        <span class="pod-ava">PN<span class="pos pod-pos">UTG</span></span>
+        <span class="pod-ava">PN</span>
         <span class="pod-plate"><span class="pod-name">Phạm T. Nghĩa</span><b class="pod-stack tnum">410K</b></span>
       </div>
       <div class="pod pod--win pp-2">
-        <span class="pod-ava">TD<span class="pos pod-pos">UTG+1</span></span>
+        <span class="pod-ava">TD</span>
         <span class="pod-plate"><span class="pod-name">T. Dwan</span><b class="pod-stack tnum">1.04M</b><span class="pod-bar pod-bar--win">Win</span></span>
       </div>
       <div class="pod pod--fold pp-3">
-        <span class="pod-ava">BK<span class="pos pod-pos">UTG+2</span></span>
+        <span class="pod-ava">BK</span>
         <span class="pod-plate"><span class="pod-name">B. Kenney</span><b class="pod-stack tnum">1.21M</b></span>
       </div>
       <div class="pod pod--fold pp-4">
-        <span class="pod-ava">PI<span class="pos pod-pos">LJ</span></span>
+        <span class="pod-ava">PI</span>
         <span class="pod-plate"><span class="pod-name">P. Ivey</span><b class="pod-stack tnum">920K</b></span>
       </div>
       <div class="pod pod--fold pp-5">
-        <span class="pod-ava">JK<span class="pos pod-pos">HJ</span></span>
+        <span class="pod-ava">JK</span>
         <span class="pod-plate"><span class="pod-name">J. Koon</span><b class="pod-stack tnum">1.47M</b></span>
       </div>
       <div class="pod pod--fold pp-6">
-        <span class="pod-ava">MB<span class="pos pod-pos">CO</span></span>
+        <span class="pod-ava">MB</span>
         <span class="pod-plate"><span class="pod-name">M. Badziakouski</span><b class="pod-stack tnum">728K</b></span>
       </div>
       <div class="pod pod--fold pp-7">
@@ -865,7 +879,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" aria-label="Viewer mobile — break">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
     <div class="m-ctx"><b>Bàn 1</b> Break · Level 15 lúc 14:05 · Championship I — High Roller</div>
@@ -962,7 +976,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" aria-label="Viewer mobile — Home">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <button class="share" style="margin-left:auto" aria-label="Tìm giải / người chơi">⌕</button>
     </header>
 
@@ -1049,7 +1063,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" id="tour-m" aria-label="Viewer mobile — Tổng quan giải">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
 
@@ -1130,7 +1144,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" id="hands-m" aria-label="Viewer mobile — Lịch sử hand">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
     <div class="m-ctx"><b>High Roller</b> Lịch sử hand · Day 1A</div>
@@ -1194,7 +1208,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" id="chips-m" aria-label="Viewer mobile — Chips">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
     <div class="m-ctx"><b>High Roller</b> Chip counts · Day 1A</div>
@@ -1246,7 +1260,7 @@ html { scroll-behavior: smooth; }
   <section class="phone" id="perma-m" aria-label="Viewer mobile — Permalink hand">
 
     <header class="m-top">
-      <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
       <span class="badge"><span class="dot"></span>Delayed 30:00</span>
     </header>
     <div class="m-ctx"><b>Bàn 1</b> Hand #8 · Championship I — High Roller</div>
@@ -1296,7 +1310,7 @@ html { scroll-behavior: smooth; }
 
         <div class="mv-og">
           <div class="mv-og-th">
-            <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b></span>
+            <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b></span>
             <b>K♠ Q♦ 4♣ 9♥ 2♥</b>
             <span class="tnum">Ivey · Set of Kings · 1.9M</span>
           </div>
@@ -1314,8 +1328,187 @@ html { scroll-behavior: smooth; }
   <div class="note"><b>Chuẩn chính 390px</b><span>Người xem chủ yếu mở link share Zalo/FB trên điện thoại. Desktop (mockup-viewer-desktop.html + mockup-viewer.html) mở rộng từ đây — không thiết kế ngược.</span></div>
   <div class="note"><b>Đủ 5 trang giải (bổ sung 13/06)</b><span>Frame E–I: Home / · Tổng quan /t · Hands · Chips · Permalink /h — khớp desktop, mobile là nguồn đầy đủ. Bottom tab thống nhất 4 mục Tổng quan / Bàn / Hands / Chips cho cả màn giải lẫn màn bàn (v2.1, 13/06); hand-nav ‹ › dời vào giữa felt cạnh hand tag để nhường chỗ tab thứ 4; event card Home thêm mini-table đồng bộ desktop. KHÔNG bounty (chốt 13/06).</span></div>
   <div class="note"><b>Bàn đồ họa dọc (chốt 11/06)</b><span>Thay lưới 3×3 cũ theo chỉ đạo chủ dự án + ảnh tham chiếu: racetrack dọc, pod ghế NEO THEO GHẾ vật lý G1–G9 quanh rail; badge SB/BB/BTN, chấm D và bet trên nỉ xoay theo button. Pot + board nằm giữa bàn.</span></div>
+  <div class="note"><b>Viewer ẩn ghế trống (chốt 13/06)</b><span>Bàn live + mini-table Home chỉ render ghế <b>có người</b> — ghế trống KHÔNG hiện trên viewer (chỉ reporter/admin thấy "+" để xếp chỗ). Pod neo theo ghế vật lý G1–G9 nên ghế có người giữ đúng vị trí, chỉ bỏ ô trống.</span></div>
   <div class="note"><b>Pod ghế tối giản</b><span>Avatar ảnh người chơi nếu có (club_players.photo_url), fallback chữ cái đầu. Plate: tên + stack chips (quy đổi BB xem ở log/chips). Đang action (v2): viền success + vòng pulse — đồng bộ reporter, gold để dành winner; fold mờ 45%; bài showdown xòe trên avatar.</span></div>
   <div class="note"><b>Chuẩn đọc &amp; chạm</b><span>Touch target ≥ 44px, chữ nội dung ≥ 13px (micro-label 11px caps), số tabular-nums. Badge DELAYED/LIVE luôn ở top bar; log rút còn ~230px dưới bàn — bàn là nội dung chính.</span></div>
+</div>
+
+
+<!-- ============ FRAME J — EMPTY / CHỜ HAND ĐẦU TIÊN ============ -->
+<div class="phone-col">
+  <span class="frame-cap"><b>Frame J</b> · bàn vừa mở, CHƯA có hand — empty/chờ DEAL hand đầu tiên (giải vừa bắt đầu hoặc bàn mới vỡ)</span>
+  <section class="phone" id="empty-m" aria-label="Viewer mobile — chờ hand đầu tiên">
+
+    <header class="m-top">
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
+      <span class="badge badge--live"><span class="dot"></span>Live</span>
+    </header>
+    <div class="m-ctx"><b>Bàn 1</b> Level 14 · 8K/16K · bàn mới (re-balance) · Championship I — High Roller</div>
+
+    <div class="m-table" aria-label="Bàn 1 — đồ họa bàn">
+      <div class="mt-felt" aria-hidden="true"></div>
+      <div class="mt-center">
+        <span class="m-handtag">Bàn vừa mở · chờ DEAL</span>
+        <div class="m-break">
+          <span class="t">Chờ hand đầu tiên</span>
+          <b class="tnum">Hand #1</b>
+          <span class="nx">Người chơi vừa được chia về bàn — reporter sắp DEAL.<br>Trang tự cập nhật khi có hand.</span>
+        </div>
+      </div>
+      <div class="pod pp-1">
+        <span class="pod-ava">PN</span>
+        <span class="pod-plate"><span class="pod-name">Phạm T. Nghĩa</span><b class="pod-stack tnum">394K</b></span>
+      </div>
+      <div class="pod pp-2">
+        <span class="pod-ava">TD</span>
+        <span class="pod-plate"><span class="pod-name">T. Dwan</span><b class="pod-stack tnum">976K</b></span>
+      </div>
+      <div class="pod pp-3">
+        <span class="pod-ava">BK</span>
+        <span class="pod-plate"><span class="pod-name">B. Kenney</span><b class="pod-stack tnum">1.2M</b></span>
+      </div>
+      <div class="pod pp-4">
+        <span class="pod-ava">PI</span>
+        <span class="pod-plate"><span class="pod-name">P. Ivey</span><b class="pod-stack tnum">1.96M</b></span>
+      </div>
+      <div class="pod pp-5">
+        <span class="pod-ava">JK</span>
+        <span class="pod-plate"><span class="pod-name">J. Koon</span><b class="pod-stack tnum">1.5M</b></span>
+      </div>
+      <div class="pod pp-6">
+        <span class="pod-ava">MB</span>
+        <span class="pod-plate"><span class="pod-name">M. Badziakouski</span><b class="pod-stack tnum">720K</b></span>
+      </div>
+      <div class="pod pp-7">
+        <span class="pod-ava">WY</span>
+        <span class="pod-plate"><span class="pod-name">W.K. Yong</span><b class="pod-stack tnum">540K</b></span>
+      </div>
+      <div class="pod pp-8">
+        <span class="pod-ava">SC</span>
+        <span class="pod-plate"><span class="pod-name">S. Chidwick</span><b class="pod-stack tnum">2.1M</b></span>
+      </div>
+      <div class="pod pod--empty pp-9">
+        <span class="pod-ava">G9</span>
+        <span class="pod-plate"><span class="pod-name">Ghế trống</span></span>
+      </div>
+    </div>
+
+    <div class="m-log" aria-label="Diễn biến">
+      <div class="ml-empty"><b>Chưa có hand nào</b>Bàn đã sẵn sàng — diễn biến từng hand sẽ hiện ở đây ngay khi reporter DEAL hand đầu tiên.</div>
+    </div>
+
+    <nav class="m-tab" aria-label="Điều hướng">
+      <span class="tabs">
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab tab--active" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
+      </span>
+      <button class="share" aria-label="Chia sẻ">↗</button>
+    </nav>
+
+  </section>
+</div>
+
+<!-- ============ FRAME K — MẤT KẾT NỐI (OFFLINE) ============ -->
+<div class="phone-col">
+  <span class="frame-cap"><b>Frame K</b> · mất kết nối (offline) — banner đỏ đè trên; hiện hand cuối nhận được, tự cập nhật khi có mạng lại</span>
+  <section class="phone" id="offline-m" aria-label="Viewer mobile — mất kết nối">
+
+    <header class="m-top">
+      <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
+      <span class="badge"><span class="dot"></span>Delayed 30:00</span>
+    </header>
+
+    <div class="banner banner--offline" role="alert"><span class="dot"></span><b>Mất kết nối</b><span>· đang thử lại — hiện dữ liệu lúc 14:02</span><span class="tail">stale 8s</span></div>
+    <div class="m-ctx"><b>Bàn 1</b> Level 14 · 8K/16K · Ante 16K · Championship I — High Roller</div>
+
+    <div class="m-table" aria-label="Bàn 1 — đồ họa bàn">
+      <div class="mt-felt" aria-hidden="true"></div>
+
+      <div class="mt-center">
+        <div class="m-handnav"><button class="hbtn hbtn--felt" aria-label="Hand trước">‹</button><span class="m-handtag">Hand #8 — Flop</span><button class="hbtn hbtn--felt" disabled aria-label="Hand sau">›</button></div>
+        <div class="mt-pot"><span class="lbl">Pot</span><b class="tnum">180K</b><span class="tnum">≈ 11.3 BB</span></div>
+        <div class="mt-board" aria-label="Board">
+          <span class="pcard" aria-label="K bích"><b>K</b><i>♠</i></span>
+          <span class="pcard pcard--red" aria-label="Q rô"><b>Q</b><i>♦</i></span>
+          <span class="pcard" aria-label="4 chuồn"><b>4</b><i>♣</i></span>
+          <span class="pcard pcard--slot" aria-label="Slot turn"></span>
+          <span class="pcard pcard--slot" aria-label="Slot river"></span>
+        </div>
+      </div>
+
+      <div class="pod pod--fold pp-1">
+        <span class="pod-ava">PN<span class="pos pod-pos">SB</span></span>
+        <span class="pod-plate"><span class="pod-name">Phạm T. Nghĩa</span><b class="pod-stack tnum">402K</b></span>
+      </div>
+      <div class="pod pp-2">
+        <span class="pod-ava">TD<span class="pos pod-pos">BB</span></span>
+        <span class="pod-plate"><span class="pod-name">T. Dwan</span><b class="pod-stack tnum">1M</b><span class="pod-bar pod-bar--check">Check</span></span>
+      </div>
+      <div class="pod pod--fold pp-3">
+        <span class="pod-ava">BK</span>
+        <span class="pod-plate"><span class="pod-name">B. Kenney</span><b class="pod-stack tnum">1.2M</b></span>
+      </div>
+      <div class="pod pp-4">
+        <span class="pod-ava">PI</span>
+        <span class="pod-plate"><span class="pod-name">P. Ivey</span><b class="pod-stack tnum">880K</b><span class="pod-bar pod-bar--bet">Bet</span></span>
+      </div>
+      <div class="pod pod--fold pp-5">
+        <span class="pod-ava">JK</span>
+        <span class="pod-plate"><span class="pod-name">J. Koon</span><b class="pod-stack tnum">1.5M</b></span>
+      </div>
+      <div class="pod pod--fold pp-6">
+        <span class="pod-ava">MB</span>
+        <span class="pod-plate"><span class="pod-name">M. Badziakouski</span><b class="pod-stack tnum">720K</b></span>
+      </div>
+      <div class="pod pod--fold pp-7">
+        <span class="pod-ava">WY</span>
+        <span class="pod-plate"><span class="pod-name">W.K. Yong</span><b class="pod-stack tnum">540K</b></span>
+      </div>
+      <div class="pod pod--fold pp-8">
+        <span class="pod-ava">SC</span>
+        <span class="pod-plate"><span class="pod-name">S. Chidwick</span><b class="pod-stack tnum">2.1M</b></span>
+      </div>
+      <div class="pod pod--act pp-9">
+        <span class="pod-ava">ET<span class="pos pod-pos">BTN</span></span>
+        <span class="pod-plate"><span class="pod-name">E. Tsang</span><b class="pod-stack tnum">820K</b><span class="pod-bar pod-bar--act">Đến lượt</span></span>
+      </div>
+
+      <span class="mt-bet mb-4 tnum" aria-label="P. Ivey bet 60K"><span class="dot"></span>60K</span>
+      <span class="dbtn mt-d mtd-9" aria-label="Nút dealer ghế 9">D</span>
+    </div>
+
+    <div class="m-log" aria-label="Diễn biến hand">
+      <div class="ml-now ml-now--act"><span class="dot"></span>BTN · Elton Tsang đang suy nghĩ — cần 60K để theo</div>
+      <div class="ml-street">
+        <b>Flop</b>
+        <span class="cards">
+          <span class="pcard pcard--sm"><b>K</b><i>♠</i></span>
+          <span class="pcard pcard--sm pcard--red"><b>Q</b><i>♦</i></span>
+          <span class="pcard pcard--sm"><b>4</b><i>♣</i></span>
+        </span>
+        <span class="potend tnum">Pot 144K</span>
+      </div>
+      <div class="ml-row"><span class="pos">BB</span><span class="nm">Tom Dwan</span><span class="act--check">Check</span><span class="amt"></span></div>
+      <div class="ml-row"><span class="pos">UTG+1</span><span class="nm">Phil Ivey</span><span class="act--bet">Bet</span><span class="amt tnum">60K</span></div>
+      <div class="ml-street"><b>Preflop</b><span class="potend tnum">Pot 144K</span></div>
+      <div class="ml-row"><span class="pos">UTG</span><span class="nm">Bryn Kenney</span><span class="act--fold">Fold</span><span class="amt"></span></div>
+      <div class="ml-row"><span class="pos">UTG+1</span><span class="nm">Phil Ivey</span><span class="act--raise">Raise to</span><span class="amt tnum">40K</span></div>
+      <div class="ml-row"><span class="pos">UTG+2</span><span class="nm">Jason Koon</span><span class="act--fold">Fold</span><span class="amt"></span></div>
+    </div>
+
+    <nav class="m-tab" aria-label="Điều hướng">
+      <span class="tabs">
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab tab--active" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
+      </span>
+      <button class="share" aria-label="Chia sẻ hand">↗</button>
+    </nav>
+
+  </section>
 </div>
 
 </body>

@@ -74,6 +74,7 @@ body {
 }
 .wordmark { display: inline-flex; align-items: center; gap: 10px; flex: none; }
 .wordmark .mk-sq { width: 10px; height: 10px; background: var(--color-gold); border-radius: 3px; }
+.wordmark .mk-logo { width: 20px; height: 20px; flex: none; }
 .wordmark b { font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); font-size: var(--fs-base); color: var(--color-text); }
 .wordmark span { font-weight: var(--fw-reg); letter-spacing: var(--ls-wide); color: var(--color-beige); font-size: var(--fs-base); }
 .vr { width: 1px; height: 30px; background: var(--color-border); flex: none; }
@@ -197,7 +198,7 @@ body {
   font-size: 10px; font-weight: var(--fw-bold); color: var(--color-beige);
   box-shadow: var(--shadow-1);
 }
-.emini-seat--empty { background: transparent; border-style: dashed; border-color: var(--seat-empty-line); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.emini-seat--empty { display: none; }  /* viewer KHÔNG hiển thị ghế trống (chỉ ghế có người) */
 .emini-seat--btn { border-color: var(--color-gold); color: var(--color-gold); }
 .es-1{left:50%;top:13%} .es-2{left:74%;top:20%} .es-3{left:88%;top:42%} .es-4{left:79%;top:65%} .es-5{left:61%;top:73%}
 .es-6{left:39%;top:73%} .es-7{left:21%;top:65%} .es-8{left:12%;top:42%} .es-9{left:26%;top:20%}
@@ -500,7 +501,7 @@ body {
   <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/</b></span></div>
 
   <header class="topbar"><div class="topbar-in">
-    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
     <span class="vr"></span>
     <nav class="topnav">
       <a class="on" href="#home">Trang chủ</a>
@@ -656,7 +657,7 @@ body {
   <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/t/championship-i</b></span></div>
 
   <header class="topbar"><div class="topbar-in">
-    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
     <span class="vr"></span>
     <nav class="topnav">
       <a href="#home">Trang chủ</a>
@@ -784,7 +785,7 @@ body {
   <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/t/championship-i/hands</b></span></div>
 
   <header class="topbar"><div class="topbar-in">
-    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
     <span class="vr"></span>
     <nav class="topnav">
       <a href="#home">Trang chủ</a>
@@ -889,7 +890,7 @@ body {
   <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/t/championship-i/chips</b></span></div>
 
   <header class="topbar"><div class="topbar-in">
-    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
     <span class="vr"></span>
     <nav class="topnav">
       <a href="#home">Trang chủ</a>
@@ -957,7 +958,7 @@ body {
   <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/h/k8x2qa</b></span></div>
 
   <header class="topbar"><div class="topbar-in">
-    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
     <span class="vr"></span>
     <nav class="topnav"><a href="#home">Trang chủ</a><a href="#tour">High Roller — Day 1A</a></nav>
     <span class="top-tail"><span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span></span>
@@ -1023,7 +1024,7 @@ body {
 
     <div class="og-note">
       <div class="og-thumb">
-        <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b></span>
+        <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b></span>
         <b>K♠ Q♦ 4♣ 9♥ 2♥</b>
         <span class="tnum">Phil Ivey · Set of Kings · Pot 1.9M</span>
       </div>

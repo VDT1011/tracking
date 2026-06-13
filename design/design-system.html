@@ -28,6 +28,7 @@ body {
 }
 .wordmark { display: inline-flex; align-items: center; gap: 10px; color: var(--color-text); }
 .wordmark .mk-sq { width: 10px; height: 10px; background: var(--color-gold); }
+.wordmark .mk-logo { width: 20px; height: 20px; flex: none; }
 .wordmark b { font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); font-size: var(--fs-base); }
 .wordmark span { font-weight: var(--fw-reg); letter-spacing: var(--ls-wide); color: var(--color-beige); font-size: var(--fs-base); }
 .topbar-tag { color: var(--color-text-muted); font-size: var(--fs-xs); border-left: 1px solid var(--color-border); padding-left: var(--sp-4); }
@@ -389,6 +390,10 @@ code { font-family: var(--font-mono); font-size: 0.92em; color: var(--color-gold
 .pot-label { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-wide); }
 .pot-num { font-size: var(--fs-3xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tight); margin-top: 2px; }
 .pot-bb { font-size: var(--fs-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; margin-top: 2px; }
+/* nhiều tầng pot — main + side xếp ngang (multiway all-in) */
+.potstack { display: inline-flex; gap: var(--sp-6); align-items: flex-start; }
+.pot--side .pot-num { font-size: var(--fs-xl); }
+.pot--side .pot-label, .pot--side .pot-bb { opacity: 0.82; }
 
 /* ---------- 10 Action log ---------- */
 .alog { width: 100%; background: var(--color-surface-1); border: 1px solid var(--color-border); }
@@ -628,7 +633,7 @@ footer.page-end { border-top: 1px solid var(--color-border); margin-top: var(--s
 <body>
 
 <header class="topbar">
-  <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+  <span class="wordmark"><img class="mk-logo" src="quads.svg" alt="Quads"><b>QUADS</b><span>LIVE</span></span>
   <span class="topbar-tag">Design System · v2 Triton redesign · 06/2026 · nguồn chân lý cho port Vite + React</span>
   <nav class="topbar-nav">
     <a class="btn btn--outline" href="mockup-logger.html">Reporter ▸</a>
@@ -1051,7 +1056,14 @@ footer.page-end { border-top: 1px solid var(--color-border); margin-top: var(--s
       <span class="pcard pcard--lg pcard--slot"></span>
     </div>
   </div>
-  <p class="usage"><b>Side pot:</b> khi có nhiều tầng pot, lặp lại pot display cỡ nhỏ hơn (label "Side pot 1") xếp ngang dưới main pot.</p>
+  <div class="demo-cap demo-gap-top">Nhiều tầng pot (multiway all-in) — main + side xếp ngang</div>
+  <div class="demo demo--dark demo--center">
+    <div class="potstack">
+      <div class="pot"><div class="pot-label">Main Pot</div><div class="pot-num tnum">1.2M</div><div class="pot-bb tnum">75 BB</div></div>
+      <div class="pot pot--side"><div class="pot-label">Side Pot 1</div><div class="pot-num tnum">600K</div><div class="pot-bb tnum">37.5 BB</div></div>
+    </div>
+  </div>
+  <p class="usage"><b>Side pot</b> (≥3 người, có người all-in ngắn): main + side xếp ngang, side cỡ nhỏ hơn; nhiều tầng thì Side 1/2/3… Engine đã tính nhiều tầng pot + uncalled → viewer chỉ render danh sách pot trả về. Bàn live mobile/desktop dùng cùng pattern này ở giữa felt.</p>
 </section>
 
 <!-- ============ 10 ACTION LOG ============ -->
@@ -1256,7 +1268,7 @@ footer.page-end { border-top: 1px solid var(--color-border); margin-top: var(--s
 <!-- ============ 17 TAB BAR & SIDE PANEL (v2) ============ -->
 <section id="tabside">
   <div class="sec-head"><span class="idx">17</span><h2>Tab bar, hand chips &amp; side panel</h2></div>
-  <p class="sec-note">Tab bar gạch chân gold dùng chung cho panel dưới reporter (Next Hand / Standing / Busted / Hand History) và admin event (Overview / Structure / Seating Chart).
+  <p class="sec-note">Tab bar gạch chân gold dùng chung cho panel dưới reporter (Next Hand / Standing / Busted / Hand History) và admin event (Overview / Structure / Seating Chart / Chips / Visible Section).
   Dải chip số hand: chip active nền gold. Side panel người chơi trượt từ phải (~60% màn), sau scrim <code>--color-scrim</code>.</p>
   <div class="demo demo--col demo--dark">
     <div class="demo-cap">Tab bar reporter — active gạch chân gold</div>

@@ -255,8 +255,16 @@ body {
 .rb-6 { left: 67%; top: 24%; }
 .rb-8 { left: 72%; top: 66%; }
 /* chấm dealer cạnh ghế giữ button */
+/* nút dealer D — 1 offset cho mỗi ghế, dịch từ ghế vào phía felt (đối xứng qua trục x=50%) */
 .rtd-1 { left: 43%; top: 81%; }
+.rtd-2 { left: 26%; top: 66%; }
 .rtd-3 { left: 28%; top: 50%; }
+.rtd-4 { left: 33%; top: 26%; }
+.rtd-5 { left: 50%; top: 24%; }
+.rtd-6 { left: 67%; top: 26%; }
+.rtd-7 { left: 72%; top: 50%; }
+.rtd-8 { left: 74%; top: 66%; }
+.rtd-9 { left: 57%; top: 81%; }
 
 /* ================= ACTION BAR — bấm liên tục, tap ≥ --tap-lg ================= */
 .abar { height: var(--tap-lg); flex: none; display: flex; gap: var(--sp-2); align-items: stretch; }
@@ -554,12 +562,27 @@ html { scroll-behavior: smooth; }
 .pc-tag { flex: none; font-size: var(--fs-2xs); font-weight: var(--fw-semi); text-transform: uppercase; letter-spacing: var(--ls-caps); padding: 4px 9px; border-radius: var(--radius-full); white-space: nowrap; }
 .pc-tag--seat { color: var(--color-beige); border: 1px solid var(--color-border-strong); }
 .pc-tag--pending { color: var(--color-gold); background: var(--color-gold-soft); border: 1px solid var(--color-gold-deep); }
+
+/* ---------- Banner offline + toast lease (đồng bộ design-system §13) ---------- */
+.banner { width: 100%; display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border: 1px solid; flex: none; }
+.banner b { font-size: var(--fs-base); font-weight: var(--fw-semi); }
+.banner span { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.banner .tail { margin-left: auto; font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; flex: none; }
+.banner--offline { background: var(--color-danger-soft); border-color: var(--color-danger-line); }
+.banner--offline b, .banner--offline .tail, .banner--offline .dot { color: var(--color-danger-text); }
+.lease-wrap { position: absolute; inset: 0; z-index: 16; display: flex; align-items: center; justify-content: center; padding: var(--sp-5); }
+.toast { width: 100%; max-width: 460px; background: var(--color-surface-2); border: 1px solid var(--color-warning-line); border-left: 3px solid var(--color-warning); box-shadow: var(--shadow-2); padding: var(--sp-5); border-radius: var(--radius-md); }
+.toast h4 { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--color-warning); margin-bottom: 6px; }
+.toast p { font-size: var(--fs-sm); color: var(--color-text-muted); margin-bottom: var(--sp-4); line-height: var(--lh-snug); }
+.toast-actions { display: flex; gap: var(--sp-3); }
+/* logo Quads ở header reporter (top-left, trước nút back) */
+.mk-logo { width: 24px; height: 24px; flex: none; }
 </style>
 </head>
 <body>
 
 <div class="mock-chrome">
-  <b>Mockup — Reporter bàn</b><span>tablet portrait 820×1180 · v2 Triton redesign · 7 trạng thái</span>
+  <b>Mockup — Reporter bàn</b><span>tablet portrait 820×1180 · v2 Triton redesign · 9 trạng thái</span>
   <nav>
     <a href="design-system.html">◂ Design System</a>
     <a href="mockup-admin.html">Admin tablet</a>
@@ -575,6 +598,7 @@ html { scroll-behavior: smooth; }
 <main class="frame" aria-label="Reporter bàn 1 — chờ hand mới">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
@@ -692,6 +716,7 @@ html { scroll-behavior: smooth; }
 <section class="frame" aria-label="Reporter bàn 1 — giữa hand">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #129 — Preflop</em></b>
@@ -780,7 +805,7 @@ html { scroll-behavior: smooth; }
       <div class="rmeta">
         <b class="tnum">Hand #129</b>
         <span class="vr"></span>
-        <span class="tnum">Pot: 86,000 (Run: 1)</span>
+        <span class="tnum">Pot: 86,000</span>
         <span class="vr"></span>
         <span>Action log — mới nhất ở trên</span>
       </div>
@@ -809,6 +834,7 @@ html { scroll-behavior: smooth; }
 <section class="frame" aria-label="Reporter bàn 1 — card picker">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #130 — Flop</em></b>
@@ -933,6 +959,7 @@ html { scroll-behavior: smooth; }
 <section class="frame" aria-label="Reporter bàn 1 — kết thúc hand">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #129 — Kết thúc</em></b>
@@ -1016,7 +1043,7 @@ html { scroll-behavior: smooth; }
       <div class="rmeta">
         <b class="tnum">Hand #129</b>
         <span class="vr"></span>
-        <span class="tnum">Pot: 86,000 (Run: 1)</span>
+        <span class="tnum">Pot: 86,000</span>
         <span class="vr"></span>
         <span class="cards" aria-label="Board trống — kết thúc preflop">
           <span class="pcard pcard--sm pcard--slot"></span>
@@ -1055,6 +1082,7 @@ html { scroll-behavior: smooth; }
 <section class="frame" aria-label="Reporter bàn 1 — side panel người chơi">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
@@ -1209,6 +1237,7 @@ html { scroll-behavior: smooth; }
 <section class="frame" aria-label="Reporter bàn 1 — Standing Players">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
@@ -1303,6 +1332,7 @@ html { scroll-behavior: smooth; }
 <section class="frame" aria-label="Reporter bàn 1 — Busted Players">
 
   <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
     <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
     <div class="rp-crumb">
       <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
@@ -1438,5 +1468,175 @@ html { scroll-behavior: smooth; }
 
 </section>
 
+
+<!-- ============ FRAME 8 — MẤT KẾT NỐI (OFFLINE / QUEUE) ============ -->
+<span class="frame-cap" id="f8"><b>Frame 8</b> · mất kết nối — banner offline đè mép trên; thao tác vẫn ghi &amp; lưu cục bộ (queue localStorage M2-03), tự gửi khi có mạng</span>
+<section class="frame" aria-label="Reporter bàn 1 — mất kết nối">
+  <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
+    <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
+    <div class="rp-crumb">
+      <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
+      <span>Quads Winter Series 2026 / #5: 5M NLH High Roller — Day 1A</span>
+    </div>
+    <span class="rp-variant">Texas Hold'em</span>
+    <span class="vr"></span>
+    <span class="sync sync--off"><span class="dot"></span>Mất mạng — đã lưu cục bộ</span>
+  </header>
+  <div class="banner banner--offline" role="alert">
+    <span class="dot"></span>
+    <b>Mất kết nối</b>
+    <span>Thao tác vẫn được ghi &amp; lưu trên máy — nhập tiếp bình thường, tự gửi khi có mạng.</span>
+    <span class="tail">3 thao tác chờ gửi</span>
+  </div>
+  <section class="rtable" aria-label="Bàn oval 9 ghế">
+    <div class="rt-felt" aria-hidden="true"></div>
+    <div class="rt-center">
+      <span class="rt-note">Chờ chia hand #130</span>
+      <div class="rt-blinds tnum">4,000 / 8,000 · ante 8,000 <small>(min chip 500)</small></div>
+    </div>
+
+    <div class="rseat rs-1">
+      <span class="rseat-ava">NH<span class="rseat-no"><b>1</b><small>seat</small></span><span class="pos">BTN</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Nguyễn Trung Hiếu</span><b class="rseat-stack tnum">402,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-2">
+      <span class="rseat-ava">+<span class="rseat-no"><b>2</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-3">
+      <span class="rseat-ava">TB<span class="rseat-no"><b>3</b><small>seat</small></span><span class="pos">SB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Trần Quốc Bảo</span><b class="rseat-stack tnum">435,000</b></span>
+    </div>
+    <div class="rseat rs-4">
+      <span class="rseat-ava">VL<span class="rseat-no"><b>4</b><small>seat</small></span><span class="pos">BB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Vũ Hải Long</span><b class="rseat-stack tnum">373,000</b></span>
+    </div>
+    <div class="rseat rs-5">
+      <span class="rseat-ava">DN<span class="rseat-no"><b>5</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đỗ Thành Nam</span><b class="rseat-stack tnum">439,000</b></span>
+    </div>
+    <div class="rseat rs-6">
+      <span class="rseat-ava">HK<span class="rseat-no"><b>6</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Hoàng Gia Khánh</span><b class="rseat-stack tnum">521,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-7">
+      <span class="rseat-ava">+<span class="rseat-no"><b>7</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-8">
+      <span class="rseat-ava">BD<span class="rseat-no"><b>8</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Bùi Tiến Dũng</span><b class="rseat-stack tnum">546,000</b></span>
+    </div>
+    <div class="rseat rseat--satout rs-9">
+      <span class="rseat-ava">DV<span class="rseat-no"><b>9</b><small>seat</small></span><span class="rs-flag">Sit out</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đinh Văn Vũ</span><b class="rseat-stack tnum">200,000</b></span>
+    </div>
+
+    <span class="dbtn rt-d rtd-1" aria-label="Nút dealer ghế 1">D</span>
+  </section>
+
+  <section class="abar" aria-label="Thao tác chính">
+    <span class="ab-hint">Chạm ghế để mở panel người chơi<br>(bust out · stand up · đổi ghế · sửa chips)</span>
+    <button class="ab ab--cta">Deal<span class="tnum">Hand #130</span></button>
+  </section>
+  <section class="rpanel" aria-label="Panel dưới">
+    <nav class="rtabs">
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab rtab--active" href="#f1" aria-current="page">Hand History</a>
+      <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
+    </nav>
+    <div class="rp-body"><p class="rp-lead">Offline — panel vẫn xem được từ dữ liệu cục bộ; hand đang nhập sẽ đồng bộ tuần tự khi có mạng (không mất thao tác). Khi xanh lại, badge về "Đã đồng bộ".</p></div>
+  </section>
+
+</section>
+
+<!-- ============ FRAME 9 — LEASE BÀN BỊ THU HỒI ============ -->
+<span class="frame-cap" id="f9"><b>Frame 9</b> · lease bàn bị thu hồi — admin chuyển quyền ghi sang máy khác; màn khóa (scrim) + toast bắt buộc hành động (SPEC 8.4)</span>
+<section class="frame" aria-label="Reporter bàn 1 — lease bị thu hồi">
+  <header class="rp-head">
+    <img class="mk-logo" src="quads.svg" alt="Quads">
+    <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
+    <div class="rp-crumb">
+      <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
+      <span>Quads Winter Series 2026 / #5: 5M NLH High Roller — Day 1A</span>
+    </div>
+    <span class="rp-variant">Texas Hold'em</span>
+    <span class="vr"></span>
+    <span class="sync sync--ok"><span class="dot"></span>Đã đồng bộ <small>· 0.3s</small></span>
+  </header>
+  <section class="rtable" aria-label="Bàn oval 9 ghế">
+    <div class="rt-felt" aria-hidden="true"></div>
+    <div class="rt-center">
+      <span class="rt-note">Chờ chia hand #130</span>
+      <div class="rt-blinds tnum">4,000 / 8,000 · ante 8,000 <small>(min chip 500)</small></div>
+    </div>
+
+    <div class="rseat rs-1">
+      <span class="rseat-ava">NH<span class="rseat-no"><b>1</b><small>seat</small></span><span class="pos">BTN</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Nguyễn Trung Hiếu</span><b class="rseat-stack tnum">402,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-2">
+      <span class="rseat-ava">+<span class="rseat-no"><b>2</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-3">
+      <span class="rseat-ava">TB<span class="rseat-no"><b>3</b><small>seat</small></span><span class="pos">SB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Trần Quốc Bảo</span><b class="rseat-stack tnum">435,000</b></span>
+    </div>
+    <div class="rseat rs-4">
+      <span class="rseat-ava">VL<span class="rseat-no"><b>4</b><small>seat</small></span><span class="pos">BB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Vũ Hải Long</span><b class="rseat-stack tnum">373,000</b></span>
+    </div>
+    <div class="rseat rs-5">
+      <span class="rseat-ava">DN<span class="rseat-no"><b>5</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đỗ Thành Nam</span><b class="rseat-stack tnum">439,000</b></span>
+    </div>
+    <div class="rseat rs-6">
+      <span class="rseat-ava">HK<span class="rseat-no"><b>6</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Hoàng Gia Khánh</span><b class="rseat-stack tnum">521,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-7">
+      <span class="rseat-ava">+<span class="rseat-no"><b>7</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-8">
+      <span class="rseat-ava">BD<span class="rseat-no"><b>8</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Bùi Tiến Dũng</span><b class="rseat-stack tnum">546,000</b></span>
+    </div>
+    <div class="rseat rseat--satout rs-9">
+      <span class="rseat-ava">DV<span class="rseat-no"><b>9</b><small>seat</small></span><span class="rs-flag">Sit out</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đinh Văn Vũ</span><b class="rseat-stack tnum">200,000</b></span>
+    </div>
+
+    <span class="dbtn rt-d rtd-1" aria-label="Nút dealer ghế 1">D</span>
+  </section>
+
+  <section class="abar" aria-label="Thao tác chính">
+    <span class="ab-hint">Chạm ghế để mở panel người chơi<br>(bust out · stand up · đổi ghế · sửa chips)</span>
+    <button class="ab ab--cta">Deal<span class="tnum">Hand #130</span></button>
+  </section>
+  <section class="rpanel" aria-label="Panel dưới (khóa)">
+    <nav class="rtabs">
+      <a class="rtab rtab--active" href="#f1" aria-current="page">Hand History</a>
+      <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
+    </nav>
+  </section>
+
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="lease-wrap">
+    <div class="toast" role="alertdialog" aria-label="Lease bị thu hồi">
+      <h4>Lease bàn này đã bị thu hồi</h4>
+      <p>Admin đã chuyển quyền ghi sang thiết bị khác. Màn chuyển về chế độ chỉ xem; thao tác chưa gửi đã bị vô hiệu — tải lại để đồng bộ trạng thái mới nhất.</p>
+      <div class="toast-actions">
+        <button class="btn btn--primary">Tải lại trạng thái</button>
+        <button class="btn btn--ghost">Liên hệ admin</button>
+      </div>
+    </div>
+  </div>
+
+</section>
 </body>
 </html>
