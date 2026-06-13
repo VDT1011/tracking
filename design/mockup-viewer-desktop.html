@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quads Live — Mockup Viewer Desktop (trang giải)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* ============ STYLE RIÊNG MOCKUP VIEWER DESKTOP ============
+   Bản MỞ RỘNG cho PC (≥1024px) — chuẩn chính vẫn là mobile 390px
+   (mockup-viewer-mobile.html — CLAUDE.md quy tắc 5). File này vẽ
+   các route public CÒN THIẾU bản desktop; route live view bàn
+   (/t/[tour]/table/[n]) đã có ở mockup-viewer.html.
+   5 frame: A Home / · B Tổng quan giải /t/[tour] · C Lịch sử hand
+   /t/[tour]/hands · D Chips /t/[tour]/chips · E Permalink /h/[id].
+   Mọi màu/cỡ chữ qua tokens.css; số liệu tabular-nums; thuật ngữ
+   poker giữ tiếng Anh; mọi dữ liệu public hiển thị qua delay.        */
+
+body {
+  background:
+    radial-gradient(1200px 560px at 50% -12%, var(--color-sheen), transparent 70%),
+    var(--color-bg);
+}
+
+/* ---- chrome tài liệu (ngoài sản phẩm) ---- */
+.mock-chrome {
+  max-width: 1376px; margin: 0 auto;
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-6);
+  font-size: var(--fs-xs); color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: var(--ls-caps);
+  border-bottom: 1px dashed var(--color-border);
+}
+.mock-chrome b { color: var(--color-beige); font-weight: var(--fw-semi); }
+.mock-chrome nav { margin-left: auto; display: flex; gap: var(--sp-4); text-transform: none; letter-spacing: 0; }
+.mock-chrome a { font-size: var(--fs-sm); }
+.frame-cap {
+  max-width: 1376px; margin: var(--sp-7) auto var(--sp-2); padding: 0 var(--sp-6);
+  font-size: var(--fs-2xs); color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: var(--ls-caps);
+}
+.frame-cap b { color: var(--color-gold); font-weight: var(--fw-semi); }
+.frame-cap code { font-family: var(--font-mono); text-transform: none; letter-spacing: 0; color: var(--color-beige); font-size: 0.95em; }
+
+/* khung "trình duyệt" bao mỗi frame desktop */
+.win {
+  max-width: 1376px; margin: 0 auto var(--sp-9);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2); overflow: hidden;
+}
+.win-bar {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: 9px var(--sp-4); border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-1);
+}
+.win-bar .tl { width: 11px; height: 11px; border-radius: var(--radius-full); background: var(--color-surface-3); flex: none; }
+.win-url {
+  margin-left: var(--sp-3); flex: 1;
+  display: flex; align-items: center; gap: var(--sp-2);
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  border-radius: var(--radius-full); padding: 5px var(--sp-4);
+  font-size: var(--fs-xs); color: var(--color-text-muted); font-family: var(--font-mono);
+}
+.win-url b { color: var(--color-beige); font-weight: var(--fw-med); }
+
+/* ================= TOP BAR SẢN PHẨM (dùng chung mọi route) ================= */
+.topbar { border-bottom: 1px solid var(--color-border); background: var(--color-bg); }
+.topbar-in {
+  height: 66px; display: flex; align-items: center; gap: var(--sp-5); padding: 0 var(--sp-6);
+}
+.wordmark { display: inline-flex; align-items: center; gap: 10px; flex: none; }
+.wordmark .mk-sq { width: 10px; height: 10px; background: var(--color-gold); border-radius: 3px; }
+.wordmark b { font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); font-size: var(--fs-base); color: var(--color-text); }
+.wordmark span { font-weight: var(--fw-reg); letter-spacing: var(--ls-wide); color: var(--color-beige); font-size: var(--fs-base); }
+.vr { width: 1px; height: 30px; background: var(--color-border); flex: none; }
+.topnav { display: flex; align-items: center; gap: 2px; }
+.topnav a {
+  font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--color-text-muted);
+  padding: 8px var(--sp-3); border-radius: var(--radius-md);
+}
+.topnav a:hover { color: var(--color-text); background: var(--color-overlay); }
+.topnav a.on { color: var(--color-gold); background: var(--color-gold-faint); }
+.top-tail { margin-left: auto; display: flex; align-items: center; gap: var(--sp-3); }
+.badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: var(--fs-xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  padding: 7px 12px; border: 1px solid transparent; border-radius: var(--radius-full); font-variant-numeric: tabular-nums; flex: none;
+}
+.badge--delayed { color: var(--color-gold); background: var(--color-gold-soft); border-color: var(--color-gold); }
+.badge--live { color: var(--color-success); background: var(--color-success-soft); border-color: var(--color-success-line); }
+.badge--live .dot { animation: pulse 1.6s ease-in-out infinite; }
+.badge--practice { color: var(--color-info); background: var(--color-info-soft); border-color: var(--color-info-line); }
+
+/* search bار nhỏ trên topbar */
+.tsearch {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  background: var(--color-surface-1); border: 1px solid var(--color-border);
+  border-radius: var(--radius-full); padding: 7px var(--sp-4); width: 230px;
+  color: var(--color-text-muted); font-size: var(--fs-sm);
+}
+
+/* ================= PRIMITIVES dùng chung ================= */
+.wrap { max-width: 1376px; margin: 0 auto; padding: var(--sp-6); }
+.panel { background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
+.panel-head { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--color-border); }
+.panel-head h2 { font-size: var(--fs-xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-wide); color: var(--color-beige); }
+.panel-head .tag { margin-left: auto; font-size: var(--fs-xs); font-weight: var(--fw-semi); color: var(--color-gold); text-transform: uppercase; letter-spacing: var(--ls-caps); font-variant-numeric: tabular-nums; }
+.panel-foot { padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--color-border); }
+.sec-title { display: flex; align-items: baseline; gap: var(--sp-3); margin: var(--sp-2) 0 var(--sp-4); }
+.sec-title h2 { font-size: var(--fs-xl); font-weight: var(--fw-heavy); letter-spacing: -0.01em; }
+.sec-title span { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.sec-title a { margin-left: auto; font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--color-beige); }
+.sec-title a:hover { color: var(--color-gold); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  min-height: 42px; padding: 0 var(--sp-4); border-radius: var(--radius-md);
+  font-size: var(--fs-sm); font-weight: var(--fw-semi); line-height: 1;
+  background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.btn:hover { background: var(--color-surface-3); border-color: var(--color-border-strong); }
+.btn--primary { background: var(--color-gold); border-color: transparent; color: var(--color-ink-on-gold); font-weight: var(--fw-bold); }
+.btn--primary:hover { background: var(--color-gold-bright); }
+.btn--outline { background: transparent; border-color: var(--color-border-strong); color: var(--color-beige); }
+.btn--outline:hover { background: var(--color-overlay); color: var(--color-text); border-color: var(--color-beige); }
+.btn--ghost { background: transparent; border-color: transparent; color: var(--color-beige); }
+.btn--ghost:hover { background: var(--color-overlay); color: var(--color-text); }
+.btn--sm { min-height: 34px; padding: 0 var(--sp-3); font-size: var(--fs-xs); }
+
+/* lá bài (dùng trong hands/permalink) */
+.pcard {
+  position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+  width: var(--card-w-md); height: var(--card-h-md); flex: none;
+  background: var(--card-face); color: var(--card-black); border-radius: var(--radius-card);
+  box-shadow: inset 0 0 0 1px var(--card-face-edge), var(--shadow-card);
+}
+.pcard b { font-size: 16px; line-height: 1; font-weight: var(--fw-heavy); letter-spacing: -0.02em; }
+.pcard i { font-style: normal; font-size: 12px; line-height: 1; margin-top: 2px; }
+.pcard--red { color: var(--card-red); }
+.pcard--lg { width: var(--card-w-lg); height: var(--card-h-lg); }
+.pcard--lg b { font-size: 25px; } .pcard--lg i { font-size: 17px; margin-top: 3px; }
+.pcard--sm { width: var(--card-w-sm); height: var(--card-h-sm); flex-direction: row; gap: 1px; }
+.pcard--sm b { font-size: 11px; } .pcard--sm i { font-size: 10px; margin-top: 0; }
+.pcard--slot { background: transparent; border: 1px dashed var(--color-border-strong); box-shadow: none; }
+.pos {
+  display: inline-flex; align-items: center; flex: none;
+  font-size: var(--fs-2xs); font-weight: var(--fw-semi); letter-spacing: var(--ls-caps);
+  color: var(--color-beige); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
+  padding: 2px 6px; text-transform: uppercase;
+}
+
+/* ===================================================================
+   FRAME A — HOME  /
+   =================================================================== */
+.home-hero { padding: var(--sp-6) var(--sp-6) 0; }
+.home-hero h1 { font-size: var(--fs-3xl); font-weight: var(--fw-heavy); letter-spacing: -0.02em; line-height: var(--lh-tight); }
+.home-hero p { color: var(--color-text-muted); margin-top: var(--sp-2); font-size: var(--fs-base); }
+
+.ev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-5); }
+.ev-card {
+  background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: border-color var(--t-fast), transform var(--t-fast);
+}
+.ev-card:hover { border-color: var(--color-border-strong); transform: translateY(-2px); }
+.ev-photo {
+  position: relative; aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(120% 120% at 30% 0%, var(--felt-hi), var(--felt) 55%, var(--felt-deep) 100%);
+  border-bottom: 1px solid var(--color-border);
+  display: flex; align-items: flex-end; padding: var(--sp-3);
+}
+.ev-photo .badge { position: relative; z-index: 2; }
+
+/* mini table + players thu nhỏ trong ảnh card (Home) */
+.ev-mini { position: absolute; inset: 0; z-index: 0; }
+.ev-oval {
+  position: absolute; left: 8%; right: 8%; top: 9%; bottom: 22%;
+  border-radius: var(--radius-full);
+  background: radial-gradient(ellipse at 50% 42%, var(--felt-hi), var(--felt) 62%, var(--felt-deep) 100%);
+  border: 5px solid var(--rail);
+  box-shadow: 0 0 0 1px var(--rail-edge), inset 0 0 0 1px var(--rail-edge), var(--shadow-1);
+}
+.ev-oval::before { content: ""; position: absolute; inset: 9px; border: 1px solid var(--felt-line); border-radius: var(--radius-full); }
+.emini-board { position: absolute; left: 50%; top: 40%; transform: translate(-50%, -50%); display: flex; gap: 3px; z-index: 1; }
+.emini-pot { position: absolute; left: 50%; top: 61%; transform: translate(-50%, -50%); z-index: 1; background: var(--felt-pill); border-radius: var(--radius-full); padding: 2px 9px; font-size: var(--fs-2xs); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.emini-seat {
+  position: absolute; transform: translate(-50%, -50%); z-index: 1;
+  width: 28px; height: 28px; border-radius: var(--radius-full);
+  background: var(--color-surface-2); border: 1px solid var(--color-gold-deep);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: var(--fw-bold); color: var(--color-beige);
+  box-shadow: var(--shadow-1);
+}
+.emini-seat--empty { background: transparent; border-style: dashed; border-color: var(--seat-empty-line); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.emini-seat--btn { border-color: var(--color-gold); color: var(--color-gold); }
+.es-1{left:50%;top:13%} .es-2{left:74%;top:20%} .es-3{left:88%;top:42%} .es-4{left:79%;top:65%} .es-5{left:61%;top:73%}
+.es-6{left:39%;top:73%} .es-7{left:21%;top:65%} .es-8{left:12%;top:42%} .es-9{left:26%;top:20%}
+.ev-body { padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-3); flex: 1; }
+.ev-series { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.ev-name { font-size: var(--fs-md); font-weight: var(--fw-bold); line-height: var(--lh-snug); }
+.ev-name .tnum { color: var(--color-gold); }
+.ev-meta { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin-top: auto; }
+.ev-kv { line-height: var(--lh-snug); }
+.ev-kv .k { display: block; font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.ev-kv .v { display: block; font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.ev-foot { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--color-border); }
+.ev-foot .tables { font-size: var(--fs-xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.ev-foot .btn { margin-left: auto; }
+
+/* hàng "giải gần đây" gọn hơn */
+.past-list { display: flex; flex-direction: column; }
+.past-row {
+  display: grid; grid-template-columns: 56px minmax(0,1fr) 160px 130px 120px; gap: var(--sp-4); align-items: center;
+  padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--color-border); color: inherit;
+}
+.past-row:first-child { border-top: 0; }
+.past-row:hover { background: var(--color-overlay); }
+.past-row .pno { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; }
+.past-row .pname b { display: block; font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.past-row .pname small { font-size: var(--fs-2xs); color: var(--color-text-muted); }
+.past-row .pm { font-size: var(--fs-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.past-row .pwin { font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.past-row .pwin small { color: var(--color-text-muted); font-weight: var(--fw-reg); }
+
+/* ===================================================================
+   FRAME B — TỔNG QUAN GIẢI  /t/[tour]
+   =================================================================== */
+.thero {
+  position: relative; height: 240px;
+  background:
+    linear-gradient(180deg, rgba(10,9,8,0.05), rgba(10,9,8,0.85)),
+    radial-gradient(140% 120% at 20% -10%, var(--felt-hi), var(--felt) 50%, var(--felt-deep) 100%);
+  border-bottom: 1px solid var(--color-border);
+  display: flex; align-items: flex-end;
+}
+.thero::after { content: "♠"; position: absolute; right: 40px; top: -10px; font-size: 220px; line-height: 1; color: var(--rail-edge); opacity: 0.35; }
+.thero-in { position: relative; z-index: 1; max-width: 1376px; width: 100%; margin: 0 auto; padding: var(--sp-6); }
+.thero .crumb { font-size: var(--fs-xs); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); font-weight: var(--fw-semi); }
+.thero h1 { font-size: var(--fs-4xl); font-weight: var(--fw-heavy); letter-spacing: -0.02em; line-height: var(--lh-tight); margin-top: var(--sp-2); }
+.thero h1 .tnum { color: var(--color-gold); }
+.thero .htail { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-3); }
+
+/* dải stat tiles dưới hero */
+.tstats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--color-border); border-bottom: 1px solid var(--color-border); }
+.tstat { background: var(--color-bg); padding: var(--sp-4) var(--sp-5); }
+.tstat .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.tstat .v { font-size: var(--fs-2xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); margin-top: 2px; }
+.tstat .v small { font-size: var(--fs-sm); color: var(--color-text-muted); font-weight: var(--fw-reg); margin-left: 4px; }
+.tstat--accent .v { color: var(--color-gold); }
+
+.tcols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--sp-6); align-items: start; }
+.tstack { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+/* card bàn đang track */
+.watch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); padding: var(--sp-4); }
+.watch {
+  display: block; color: inherit;
+  background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  padding: var(--sp-4); transition: border-color var(--t-fast), background var(--t-fast);
+}
+.watch:hover { border-color: var(--color-gold-deep); background: var(--color-surface-3); }
+.watch-top { display: flex; align-items: center; gap: var(--sp-2); }
+.watch-top h3 { font-size: var(--fs-md); font-weight: var(--fw-bold); }
+.watch-top h3 .tnum { color: var(--color-gold); }
+.watch-top .badge { margin-left: auto; padding: 4px 9px; font-size: var(--fs-2xs); }
+.watch-mid { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-3); }
+.wm-ring {
+  width: 46px; height: 46px; border-radius: var(--radius-full); flex: none;
+  background: radial-gradient(ellipse at 50% 40%, var(--felt-hi), var(--felt) 70%);
+  border: 3px solid var(--rail); box-shadow: 0 0 0 1px var(--rail-edge);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--fs-2xs); font-weight: var(--fw-bold); color: var(--color-beige); font-variant-numeric: tabular-nums;
+}
+.watch-lead { line-height: var(--lh-snug); min-width: 0; }
+.watch-lead .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.watch-lead .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.watch-lead .st { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; }
+.watch-foot { display: flex; align-items: center; justify-content: space-between; margin-top: var(--sp-3); font-size: var(--fs-xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.watch-foot .go { color: var(--color-beige); font-weight: var(--fw-semi); }
+
+/* top stacks */
+.stk-row { display: grid; grid-template-columns: 40px minmax(0,1fr) 90px 120px; gap: var(--sp-3); align-items: center; padding: 9px var(--sp-4); border-top: 1px solid var(--color-border); }
+.stk-row .rk { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-text-muted); font-variant-numeric: tabular-nums; text-align: center; }
+.stk-row.lead .rk { color: var(--color-gold); }
+.stk-row .who { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
+.stk-row .who .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stk-row .tbl { font-size: var(--fs-xs); color: var(--color-text-muted); text-align: right; }
+.stk-row .val { text-align: right; }
+.stk-row .val b { font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.stk-row .val span { font-size: var(--fs-2xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; display: block; }
+.ava-xs { width: 26px; height: 26px; border-radius: var(--radius-full); flex: none; background: var(--color-surface-2); border: 1px solid var(--color-border-strong); display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-2xs); font-weight: var(--fw-bold); color: var(--color-beige); }
+
+/* payouts read-only */
+.pay-row { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; gap: var(--sp-3); align-items: center; padding: 8px var(--sp-4); border-top: 1px solid var(--color-border); font-variant-numeric: tabular-nums; }
+.pay-row .no { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-gold); text-align: center; }
+.pay-row .who { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.pay-row .who b { color: var(--color-text); font-weight: var(--fw-semi); }
+.pay-row .amt { text-align: right; }
+.pay-row .amt b { font-size: var(--fs-sm); font-weight: var(--fw-bold); }
+.pay-row .amt .bty { font-size: var(--fs-2xs); color: var(--color-gold); display: block; }
+.pay-row .amt .tk { font-size: var(--fs-xs); color: var(--color-info); font-weight: var(--fw-semi); }
+
+/* days */
+.day-row { display: grid; grid-template-columns: 40px minmax(0,1fr) auto; gap: var(--sp-3); align-items: center; padding: 9px var(--sp-4); border-top: 1px solid var(--color-border); font-variant-numeric: tabular-nums; font-size: var(--fs-sm); }
+.day-row .dn { font-weight: var(--fw-bold); color: var(--color-text-muted); text-align: center; }
+.day-row .dd b { font-weight: var(--fw-semi); }
+.day-row .dt { text-align: right; color: var(--color-text-muted); }
+.day-row--on { background: var(--color-gold-faint); }
+.day-row--on .dn { color: var(--color-gold); }
+
+/* blind structure read-only */
+.bls-head, .bls-row { display: grid; grid-template-columns: 44px 1fr 1fr 70px minmax(0,1.4fr); gap: var(--sp-3); align-items: center; }
+.bls-head { padding: 7px var(--sp-4); background: var(--color-surface-2); border-top: 1px solid var(--color-border); }
+.bls-head span { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.bls-row { padding: 8px var(--sp-4); border-top: 1px solid var(--color-border); font-size: var(--fs-sm); font-variant-numeric: tabular-nums; }
+.bls-row .lv { font-weight: var(--fw-bold); color: var(--color-text-muted); text-align: center; }
+.bls-row .note { font-size: var(--fs-xs); color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bls-row--on { background: var(--color-gold-faint); }
+.bls-row--on .lv { color: var(--color-gold); }
+.bls-row--break { color: var(--color-info); }
+.bls-row--break .note { color: var(--color-info); font-weight: var(--fw-semi); }
+
+/* ===================================================================
+   FRAME C — LỊCH SỬ HAND  /t/[tour]/hands
+   =================================================================== */
+.hbar { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-4) 0 var(--sp-5); flex-wrap: wrap; }
+.chip {
+  display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 38px; padding: 0 var(--sp-4);
+  border-radius: var(--radius-full); border: 1px solid var(--color-border-strong); background: transparent;
+  color: var(--color-beige); font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums;
+}
+.chip:hover { background: var(--color-overlay); color: var(--color-text); }
+.chip--on { background: var(--color-gold); border-color: transparent; color: var(--color-ink-on-gold); font-weight: var(--fw-bold); }
+.hbar .grow { flex: 1; }
+
+.hl-head, .hl-row { display: grid; grid-template-columns: 56px 92px minmax(0,1.4fr) minmax(0,1.2fr) 96px 120px 44px; gap: var(--sp-4); align-items: center; }
+.hl-head { padding: 8px var(--sp-4); }
+.hl-head span { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.hl-row { padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--color-border); color: inherit; }
+.hl-row:hover { background: var(--color-overlay); }
+.hl-row .no { font-size: var(--fs-base); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; }
+.hl-row .tbl { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.hl-row .win { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
+.hl-row .win .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hl-row .cls { font-size: var(--fs-sm); color: var(--color-beige); }
+.hl-row .cls.nosd { color: var(--color-text-muted); font-style: italic; }
+.hl-row .pot { text-align: right; font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.hl-row .bd { display: flex; gap: 2px; justify-content: flex-end; }
+.hl-row .arr { text-align: center; color: var(--color-text-muted); }
+.hl-row:hover .arr { color: var(--color-gold); }
+.tag-sd { font-size: var(--fs-2xs); font-weight: var(--fw-semi); text-transform: uppercase; letter-spacing: var(--ls-caps); padding: 2px 7px; border-radius: var(--radius-sm); }
+.tag-sd--show { color: var(--color-beige); border: 1px solid var(--color-border-strong); }
+.tag-sd--nosd { color: var(--color-text-muted); border: 1px dashed var(--color-border-strong); }
+
+/* sidebar biggest pots */
+.big-row { display: flex; align-items: center; gap: var(--sp-3); padding: 10px var(--sp-4); border-top: 1px solid var(--color-border); }
+.big-row .rk { width: 22px; font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; text-align: center; flex: none; }
+.big-row .info { min-width: 0; flex: 1; }
+.big-row .info b { display: block; font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.big-row .info small { font-size: var(--fs-2xs); color: var(--color-text-muted); }
+.big-row .pv { font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+
+/* ===================================================================
+   FRAME D — CHIPS  /t/[tour]/chips
+   =================================================================== */
+.cl-head, .cl-row { display: grid; grid-template-columns: 52px minmax(0,1fr) 110px 150px 120px; gap: var(--sp-4); align-items: center; }
+.cl-head { padding: 8px var(--sp-4); }
+.cl-head span { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.cl-row { padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--color-border); }
+.cl-row .rk { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--color-text-muted); font-variant-numeric: tabular-nums; text-align: center; }
+.cl-row--lead { background: var(--color-gold-faint); }
+.cl-row--lead .rk { color: var(--color-gold); }
+.cl-row .who { display: flex; align-items: center; gap: var(--sp-3); min-width: 0; }
+.cl-row .who .nm { font-size: var(--fs-base); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cl-row .tbl { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.cl-row .st { text-align: right; }
+.cl-row .st b { font-size: var(--fs-md); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+.cl-row .st span { font-size: var(--fs-2xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; display: block; }
+.cl-bar { height: 8px; border-radius: var(--radius-full); background: var(--color-surface-2); overflow: hidden; }
+.cl-bar i { display: block; height: 100%; background: var(--color-gold); border-radius: var(--radius-full); }
+.cl-bar i.mid { background: var(--color-beige); }
+.cl-bar i.low { background: var(--color-surface-3); }
+
+/* finishers */
+.fin-row { display: grid; grid-template-columns: 48px minmax(0,1fr) auto; gap: var(--sp-3); align-items: center; padding: 9px var(--sp-4); border-top: 1px solid var(--color-border); }
+.fin-row .rk { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; text-align: center; }
+.fin-row .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fin-row .nm small { display: block; font-size: var(--fs-2xs); color: var(--color-text-muted); font-weight: var(--fw-reg); }
+.fin-row .pr { text-align: right; font-variant-numeric: tabular-nums; }
+.fin-row .pr b { font-size: var(--fs-sm); font-weight: var(--fw-bold); }
+.fin-row .pr .bty { font-size: var(--fs-2xs); color: var(--color-gold); display: block; }
+.fld-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--color-border); }
+.fld-tile { background: var(--color-surface-1); padding: var(--sp-4); }
+.fld-tile .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.fld-tile .v { font-size: var(--fs-xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+/* ===================================================================
+   FRAME E — PERMALINK  /h/[handId]
+   =================================================================== */
+.perma-wrap { max-width: 960px; margin: 0 auto; padding: var(--sp-7) var(--sp-6); }
+.perma-crumb { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); color: var(--color-text-muted); margin-bottom: var(--sp-4); }
+.perma-crumb a { color: var(--color-beige); font-weight: var(--fw-semi); }
+.perma-crumb .sep { color: var(--color-border-strong); }
+.perma-hero {
+  position: relative; border-radius: var(--radius-lg); overflow: hidden;
+  border: 1px solid var(--color-border);
+  background:
+    radial-gradient(120% 120% at 50% -10%, var(--felt-hi), var(--felt) 55%, var(--felt-deep) 100%);
+  padding: var(--sp-7) var(--sp-6); text-align: center;
+}
+.perma-hero .ph-hand { font-size: var(--fs-xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-wide); }
+.perma-hero .ph-pot { font-size: var(--fs-4xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tight); margin: var(--sp-2) 0; }
+.perma-hero .ph-pot small { font-size: var(--fs-md); color: var(--color-text-muted); font-weight: var(--fw-reg); margin-left: var(--sp-2); }
+.perma-board { display: flex; gap: var(--sp-2); justify-content: center; margin: var(--sp-5) 0; }
+.perma-win {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  border: 1px solid var(--color-gold); background: var(--color-gold-soft); color: var(--color-gold);
+  padding: 8px var(--sp-5); border-radius: var(--radius-full);
+  font-size: var(--fs-base); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums;
+}
+.perma-vs { display: flex; align-items: stretch; justify-content: center; gap: var(--sp-5); margin-top: var(--sp-6); }
+.pv-seat { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); width: 200px; }
+.pv-cards { display: flex; gap: 4px; }
+.pv-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.pv-cls { font-size: var(--fs-xs); }
+.pv-cls.win { color: var(--color-gold); font-weight: var(--fw-bold); }
+.pv-cls.lose { color: var(--color-text-muted); }
+.pv-div { align-self: center; font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--color-text-muted); }
+
+.perma-cta { display: flex; gap: var(--sp-3); margin-top: var(--sp-6); }
+.perma-cta .btn { flex: 1; min-height: 48px; }
+
+.og-note {
+  margin-top: var(--sp-6); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-lg);
+  padding: var(--sp-4); display: flex; gap: var(--sp-4); align-items: center;
+}
+.og-thumb {
+  width: 200px; aspect-ratio: 1200 / 630; flex: none; border-radius: var(--radius-md); overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: radial-gradient(120% 120% at 50% 0%, var(--felt-hi), var(--felt-deep));
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center;
+}
+.og-thumb b { font-size: var(--fs-xs); font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); }
+.og-thumb span { font-size: 9px; color: var(--color-beige); font-variant-numeric: tabular-nums; }
+.og-note .txt b { font-size: var(--fs-sm); color: var(--color-beige); display: block; margin-bottom: 2px; }
+.og-note .txt span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); }
+
+/* action log (dùng trong permalink) — đồng bộ viewer.html */
+.alog-street { display: flex; align-items: center; gap: var(--sp-3); padding: 8px var(--sp-4); background: var(--color-surface-2); border-top: 1px solid var(--color-border); }
+.alog-street b { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-beige); }
+.alog-street .cards { display: flex; gap: 3px; }
+.alog-street .potend { margin-left: auto; font-size: var(--fs-xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.alog-row { display: grid; grid-template-columns: 64px minmax(0,1fr) auto 104px; gap: var(--sp-3); align-items: center; padding: 7px var(--sp-4); border-top: 1px solid var(--color-border); font-size: var(--fs-sm); }
+.alog-row .nm { font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alog-row .amt { text-align: right; font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
+.alog-row--sys { grid-template-columns: 64px 1fr; color: var(--color-text-muted); font-size: var(--fs-xs); }
+.alog-row--sys.win { color: var(--color-gold); font-weight: var(--fw-semi); font-size: var(--fs-sm); }
+.act--fold, .act--check, .act--post { color: var(--color-text-muted); }
+.act--call { color: var(--color-beige); }
+.act--bet, .act--raise { color: var(--color-gold); font-weight: var(--fw-semi); }
+.act--allin { color: var(--color-danger-text); font-weight: var(--fw-bold); }
+.act--show { color: var(--color-beige); }
+
+/* footer */
+.page-foot { max-width: 1376px; margin: 0 auto; padding: var(--sp-5) var(--sp-6) var(--sp-8); border-top: 1px solid var(--color-border); display: flex; gap: var(--sp-4); align-items: center; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.page-foot .right { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* notes cuối trang */
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-2); max-width: 1376px; margin: 0 auto; padding: 0 var(--sp-6) var(--sp-9); }
+.note { border: 1px solid var(--color-border); background: var(--color-surface-1); border-radius: var(--radius-md); padding: var(--sp-4); }
+.note b { display: block; font-size: var(--fs-sm); color: var(--color-gold); margin-bottom: 4px; }
+.note span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); display: block; }
+</style>
+</head>
+<body>
+
+<div class="mock-chrome">
+  <b>Mockup — Viewer desktop</b><span>bản mở rộng PC · trang giải · 5 route</span>
+  <nav>
+    <a href="design-system.html">◂ Design System</a>
+    <a href="mockup-viewer-mobile.html">Viewer Mobile</a>
+    <a href="mockup-viewer.html">Table view (đã có)</a>
+    <a href="mockup-admin-desktop.html">Admin Desktop ▸</a>
+  </nav>
+</div>
+
+<!-- =================================================================
+     FRAME A — HOME  /
+     ================================================================= -->
+<div class="frame-cap" id="home"><b>Frame A</b> · Home <code>/</code> — series/giải đang chạy + gần đây (ẩn practice), card photo event</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/</b></span></div>
+
+  <header class="topbar"><div class="topbar-in">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="vr"></span>
+    <nav class="topnav">
+      <a class="on" href="#home">Trang chủ</a>
+      <a href="#tour">Giải đấu</a>
+    </nav>
+    <span class="top-tail">
+      <span class="tsearch">⌕ Tìm giải / người chơi…</span>
+    </span>
+  </div></header>
+
+  <div class="wrap">
+    <div class="home-hero" style="padding-left:0;padding-right:0">
+      <h1>Đang diễn ra</h1>
+      <p>Theo dõi ván bài trực tiếp của CLB Quads Poker — mọi dữ liệu hiển thị trễ khớp livestream.</p>
+    </div>
+
+    <div class="ev-grid" style="margin-top:var(--sp-6)">
+
+      <a class="ev-card" href="mockup-viewer.html">
+        <div class="ev-photo">
+          <div class="ev-mini" aria-hidden="true">
+            <div class="ev-oval"></div>
+            <span class="emini-board"><span class="pcard pcard--sm"><b>K</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>Q</b><i>♦</i></span><span class="pcard pcard--sm"><b>4</b><i>♣</i></span></span>
+            <span class="emini-pot tnum">Pot 180K</span>
+            <span class="emini-seat es-1">SC</span>
+            <span class="emini-seat es-2">PI</span>
+            <span class="emini-seat es-3">TD</span>
+            <span class="emini-seat es-4 emini-seat--empty">4</span>
+            <span class="emini-seat es-5">BK</span>
+            <span class="emini-seat es-6">JK</span>
+            <span class="emini-seat es-7">MB</span>
+            <span class="emini-seat es-8">WY</span>
+            <span class="emini-seat es-9 emini-seat--btn">PN</span>
+          </div>
+          <span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span>
+        </div>
+        <div class="ev-body">
+          <span class="ev-series">Quads Poker Championship I</span>
+          <span class="ev-name">High Roller — Day 1A</span>
+          <div class="ev-meta">
+            <span class="ev-kv"><span class="k">Level</span><span class="v tnum">14 · 8K/16K</span></span>
+            <span class="ev-kv"><span class="k">Còn lại</span><span class="v tnum">24<small>/35</small></span></span>
+            <span class="ev-kv"><span class="k">Chip leader</span><span class="v tnum">2.1M</span></span>
+          </div>
+        </div>
+        <div class="ev-foot"><span class="tables">3 bàn đang track</span><span class="btn btn--primary btn--sm">Xem ▸</span></div>
+      </a>
+
+      <a class="ev-card" href="#tour">
+        <div class="ev-photo">
+          <div class="ev-mini" aria-hidden="true">
+            <div class="ev-oval"></div>
+            <span class="emini-board"><span class="pcard pcard--sm"><b>9</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>9</b><i>♥</i></span><span class="pcard pcard--sm"><b>3</b><i>♣</i></span></span>
+            <span class="emini-pot tnum">Pot 96K</span>
+            <span class="emini-seat es-1 emini-seat--btn">MT</span>
+            <span class="emini-seat es-2">TS</span>
+            <span class="emini-seat es-3">DA</span>
+            <span class="emini-seat es-4">QH</span>
+            <span class="emini-seat es-5 emini-seat--empty">5</span>
+            <span class="emini-seat es-6">VK</span>
+            <span class="emini-seat es-7">HP</span>
+            <span class="emini-seat es-8 emini-seat--empty">8</span>
+            <span class="emini-seat es-9">NA</span>
+          </div>
+          <span class="badge badge--delayed"><span class="dot"></span>Delayed 15:00</span>
+        </div>
+        <div class="ev-body">
+          <span class="ev-series">Quads Winter Series 2026</span>
+          <span class="ev-name"><span class="tnum">#5:</span> 5M NLH High Roller — Day 1A</span>
+          <div class="ev-meta">
+            <span class="ev-kv"><span class="k">Level</span><span class="v tnum">10 · 4K/8K</span></span>
+            <span class="ev-kv"><span class="k">Còn lại</span><span class="v tnum">24<small>/35</small></span></span>
+            
+          </div>
+        </div>
+        <div class="ev-foot"><span class="tables">2 bàn đang track</span><span class="btn btn--primary btn--sm">Xem ▸</span></div>
+      </a>
+
+      <a class="ev-card" href="#tour">
+        <div class="ev-photo">
+          <div class="ev-mini" aria-hidden="true">
+            <div class="ev-oval"></div>
+            <span class="emini-board"><span class="pcard pcard--sm"><b>7</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>6</b><i>♦</i></span><span class="pcard pcard--sm pcard--red"><b>5</b><i>♥</i></span></span>
+            <span class="emini-pot tnum">Pot 64K</span>
+            <span class="emini-seat es-1">LT</span>
+            <span class="emini-seat es-2 emini-seat--empty">2</span>
+            <span class="emini-seat es-3">PD</span>
+            <span class="emini-seat es-4 emini-seat--empty">4</span>
+            <span class="emini-seat es-5">NH</span>
+            <span class="emini-seat es-6 emini-seat--empty">6</span>
+            <span class="emini-seat es-7">TK</span>
+            <span class="emini-seat es-8">BC</span>
+            <span class="emini-seat es-9 emini-seat--btn">AQ</span>
+          </div>
+          <span class="badge badge--live"><span class="dot"></span>Live</span>
+        </div>
+        <div class="ev-body">
+          <span class="ev-series">Quads Weekly</span>
+          <span class="ev-name">Thursday Turbo</span>
+          <div class="ev-meta">
+            <span class="ev-kv"><span class="k">Level</span><span class="v tnum">8 · 2K/4K</span></span>
+            <span class="ev-kv"><span class="k">Còn lại</span><span class="v tnum">12<small>/28</small></span></span>
+            <span class="ev-kv"><span class="k">Chip leader</span><span class="v tnum">540K</span></span>
+          </div>
+        </div>
+        <div class="ev-foot"><span class="tables">1 bàn đang track</span><span class="btn btn--primary btn--sm">Xem ▸</span></div>
+      </a>
+
+    </div>
+
+    <div class="sec-title" style="margin-top:var(--sp-9)">
+      <h2>Gần đây</h2><span>đã kết thúc</span>
+      <a href="#">Tất cả giải ▸</a>
+    </div>
+    <div class="panel">
+      <div class="past-list">
+        <a class="past-row" href="#">
+          <span class="pno tnum">#4</span>
+          <span class="pname"><b>Sunday Deepstack 2M</b><small>Quads Winter Series 2026 · 08/12/2026</small></span>
+          <span class="pm">52 entries</span>
+          <span class="pm">Kết thúc</span>
+          <span class="pwin">Nguyễn Trung Hiếu <small>· vô địch</small></span>
+        </a>
+        <a class="past-row" href="#">
+          <span class="pno tnum">#3</span>
+          <span class="pname"><b>Deep Stack 1M</b><small>Quads Winter Series 2026 · 06/12/2026</small></span>
+          <span class="pm">44 entries</span>
+          <span class="pm">Kết thúc</span>
+          <span class="pwin">Trần Quốc Bảo <small>· vô địch</small></span>
+        </a>
+        <a class="past-row" href="#">
+          <span class="pno tnum">#2</span>
+          <span class="pname"><b>Mini Main Event</b><small>Quads Winter Series 2026 · 01/12/2026</small></span>
+          <span class="pm">88 entries</span>
+          <span class="pm">Kết thúc</span>
+          <span class="pwin">Vũ Hải Long <small>· vô địch</small></span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-foot">
+    <span>QUADS LIVE — CLB Quads Poker</span>
+    <span class="right tnum">live.quadspoker.vn</span>
+  </footer>
+</div>
+
+<!-- =================================================================
+     FRAME B — TỔNG QUAN GIẢI  /t/[tour]
+     ================================================================= -->
+<div class="frame-cap" id="tour"><b>Frame B</b> · Tổng quan giải <code>/t/championship-i</code> — ảnh header, clock/level, field, bàn track, top stacks, payouts, days, blind structure</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/t/championship-i</b></span></div>
+
+  <header class="topbar"><div class="topbar-in">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="vr"></span>
+    <nav class="topnav">
+      <a href="#home">Trang chủ</a>
+      <a class="on" href="#tour">Tổng quan</a>
+      <a href="#hands">Hands</a>
+      <a href="#chips">Chips</a>
+    </nav>
+    <span class="top-tail"><span class="tsearch">⌕ Tìm người chơi…</span></span>
+  </div></header>
+
+  <section class="thero">
+    <div class="thero-in">
+      <div class="crumb">Quads Poker Championship I</div>
+      <h1>High Roller <span class="tnum">— Day 1A</span></h1>
+      <div class="htail">
+        <span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span>
+        <span class="badge badge--level">Late reg đang mở</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="tstats">
+    <div class="tstat"><div class="k">Level</div><div class="v tnum">14</div></div>
+    <div class="tstat"><div class="k">Blinds</div><div class="v tnum">8K/16K</div></div>
+    <div class="tstat"><div class="k">Ante (BB)</div><div class="v tnum">16K</div></div>
+    <div class="tstat tstat--accent"><div class="k">Còn lại level</div><div class="v tnum">07:42</div></div>
+    <div class="tstat"><div class="k">Players left</div><div class="v tnum">24<small>/ 35 entries</small></div></div>
+    <div class="tstat"><div class="k">Avg stack</div><div class="v tnum">1.46M<small>91 BB</small></div></div>
+  </div>
+
+  <div class="wrap">
+    <div class="tcols">
+
+      <!-- cột trái: bàn track + top stacks -->
+      <div class="tstack">
+        <section class="panel">
+          <div class="panel-head"><h2>Bàn đang track</h2><span class="tag">3 bàn</span></div>
+          <div class="watch-grid">
+            <a class="watch" href="mockup-viewer.html">
+              <div class="watch-top"><h3><span class="tnum">#1:</span> Feature table</h3><span class="badge badge--delayed">30:00</span></div>
+              <div class="watch-mid">
+                <span class="wm-ring tnum">9</span>
+                <div class="watch-lead"><span class="k">Chip leader</span><span class="nm">Stephen Chidwick</span><span class="st tnum">2.1M · 131 BB</span></div>
+              </div>
+              <div class="watch-foot"><span>Hand #8 · Showdown</span><span class="go">Xem trực tiếp ▸</span></div>
+            </a>
+            <a class="watch" href="mockup-viewer.html">
+              <div class="watch-top"><h3><span class="tnum">#2:</span> Bàn 2</h3><span class="badge badge--delayed">30:00</span></div>
+              <div class="watch-mid">
+                <span class="wm-ring tnum">8</span>
+                <div class="watch-lead"><span class="k">Chip leader</span><span class="nm">Jason Koon</span><span class="st tnum">1.5M · 94 BB</span></div>
+              </div>
+              <div class="watch-foot"><span>Hand #12 · Flop</span><span class="go">Xem trực tiếp ▸</span></div>
+            </a>
+            <a class="watch" href="mockup-viewer.html">
+              <div class="watch-top"><h3><span class="tnum">#3:</span> Bàn 3</h3><span class="badge badge--delayed">30:00</span></div>
+              <div class="watch-mid">
+                <span class="wm-ring tnum">7</span>
+                <div class="watch-lead"><span class="k">Chip leader</span><span class="nm">Bryn Kenney</span><span class="st tnum">1.2M · 75 BB</span></div>
+              </div>
+              <div class="watch-foot"><span>Hand #9 · Preflop</span><span class="go">Xem trực tiếp ▸</span></div>
+            </a>
+            <div class="watch" style="opacity:.5;cursor:default">
+              <div class="watch-top"><h3><span class="tnum">#4:</span> Bàn 4</h3><span class="badge badge--level">Không track</span></div>
+              <div class="watch-mid"><span class="wm-ring tnum">9</span><div class="watch-lead"><span class="k">Trạng thái</span><span class="nm">Đang chơi, không lên hình</span></div></div>
+              <div class="watch-foot"><span>Chỉ chip count cập nhật ở break</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Top stacks</h2><a class="tag" href="#chips">Tất cả ▸</a></div>
+          <div class="stk-row lead"><span class="rk tnum">1</span><span class="who"><span class="ava-xs">SC</span><span class="nm">Stephen Chidwick</span></span><span class="tbl">Bàn 1</span><span class="val"><b class="tnum">2.1M</b><span class="tnum">131 BB</span></span></div>
+          <div class="stk-row"><span class="rk tnum">2</span><span class="who"><span class="ava-xs">PI</span><span class="nm">Phil Ivey</span></span><span class="tbl">Bàn 1</span><span class="val"><b class="tnum">1.96M</b><span class="tnum">123 BB</span></span></div>
+          <div class="stk-row"><span class="rk tnum">3</span><span class="who"><span class="ava-xs">JK</span><span class="nm">Jason Koon</span></span><span class="tbl">Bàn 2</span><span class="val"><b class="tnum">1.5M</b><span class="tnum">94 BB</span></span></div>
+          <div class="stk-row"><span class="rk tnum">4</span><span class="who"><span class="ava-xs">BK</span><span class="nm">Bryn Kenney</span></span><span class="tbl">Bàn 3</span><span class="val"><b class="tnum">1.2M</b><span class="tnum">75 BB</span></span></div>
+          <div class="stk-row"><span class="rk tnum">5</span><span class="who"><span class="ava-xs">TD</span><span class="nm">Tom Dwan</span></span><span class="tbl">Bàn 1</span><span class="val"><b class="tnum">976K</b><span class="tnum">61 BB</span></span></div>
+        </section>
+      </div>
+
+      <!-- cột phải: payouts, days, structure -->
+      <div class="tstack">
+        <section class="panel">
+          <div class="panel-head"><h2>Payouts</h2><span class="tag">Prize pool 175M</span></div>
+          <div class="pay-row"><span class="no tnum">1</span><span class="who">— sẽ xác định —</span><span class="amt"><b class="tnum">70,000,000</b></span></div>
+          <div class="pay-row"><span class="no tnum">2</span><span class="who">— sẽ xác định —</span><span class="amt"><b class="tnum">42,000,000</b></span></div>
+          <div class="pay-row"><span class="no tnum">3</span><span class="who">— sẽ xác định —</span><span class="amt"><b class="tnum">28,000,000</b></span></div>
+          <div class="pay-row"><span class="no tnum">4</span><span class="who">— sẽ xác định —</span><span class="amt"><b class="tnum">18,000,000</b></span></div>
+          <div class="pay-row"><span class="no tnum">5</span><span class="who">— sẽ xác định —</span><span class="amt"><b class="tnum">12,000,000</b></span></div>
+          <div class="panel-foot"><a class="btn btn--ghost btn--sm" href="#">Xem đủ 8 hạng ▾</a></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Days</h2></div>
+          <div class="day-row day-row--on"><span class="dn tnum">1</span><span class="dd"><b>Day 1A</b> — 19/12/2026</span><span class="dt tnum">13:00 → đang chạy</span></div>
+          <div class="day-row"><span class="dn tnum">2</span><span class="dd"><b>Day 1B</b> — 20/12/2026</span><span class="dt tnum">13:00 – 23:30</span></div>
+          <div class="day-row"><span class="dn tnum">3</span><span class="dd"><b>Day 2</b> (final) — 21/12/2026</span><span class="dt tnum">14:00</span></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Blind structure</h2><span class="tag">★ level 14</span></div>
+          <div class="bls-head"><span>Lv</span><span>Small / Big</span><span>Ante</span><span>Phút</span><span>Ghi chú</span></div>
+          <div class="bls-row"><span class="lv tnum">12</span><span class="tnum">6K / 12K</span><span class="tnum">12K</span><span class="tnum">35</span><span class="note">Hết late reg</span></div>
+          <div class="bls-row bls-row--break"><span class="lv tnum">13</span><span class="tnum">—</span><span class="tnum">—</span><span class="tnum">10</span><span class="note">Break 10 phút</span></div>
+          <div class="bls-row bls-row--on"><span class="lv tnum">14</span><span class="tnum">8K / 16K</span><span class="tnum">16K</span><span class="tnum">35</span><span class="note">— đang chạy</span></div>
+          <div class="bls-row"><span class="lv tnum">15</span><span class="tnum">10K / 20K</span><span class="tnum">20K</span><span class="tnum">35</span><span class="note">Color-up 500</span></div>
+          <div class="bls-row"><span class="lv tnum">16</span><span class="tnum">15K / 30K</span><span class="tnum">30K</span><span class="tnum">35</span><span class="note">—</span></div>
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="page-foot">
+    <span>QUADS LIVE — CLB Quads Poker</span>
+    <span class="right tnum">Mọi dữ liệu hiển thị trễ 30:00 khớp livestream</span>
+  </footer>
+</div>
+
+<!-- =================================================================
+     FRAME C — LỊCH SỬ HAND  /t/[tour]/hands
+     ================================================================= -->
+<div class="frame-cap" id="hands"><b>Frame C</b> · Lịch sử hand <code>/t/championship-i/hands</code> — lọc theo bàn/showdown, danh sách hand qua delay → permalink</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/t/championship-i/hands</b></span></div>
+
+  <header class="topbar"><div class="topbar-in">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="vr"></span>
+    <nav class="topnav">
+      <a href="#home">Trang chủ</a>
+      <a href="#tour">Tổng quan</a>
+      <a class="on" href="#hands">Hands</a>
+      <a href="#chips">Chips</a>
+    </nav>
+    <span class="top-tail"><span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span></span>
+  </div></header>
+
+  <div class="wrap">
+    <div class="sec-title" style="margin-bottom:var(--sp-2)"><h2>Lịch sử hand</h2><span>High Roller — Day 1A</span></div>
+
+    <div class="hbar">
+      <button class="chip chip--on">Tất cả bàn</button>
+      <button class="chip">Bàn 1</button>
+      <button class="chip">Bàn 2</button>
+      <button class="chip">Bàn 3</button>
+      <span class="grow"></span>
+      <button class="chip">Chỉ showdown</button>
+      <button class="chip">Pot lớn nhất</button>
+    </div>
+
+    <div class="tcols" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)">
+      <section class="panel">
+        <div class="hl-head">
+          <span>Hand</span><span>Bàn</span><span>Winner</span><span>Kết quả</span><span>Pot</span><span>Board</span><span></span>
+        </div>
+        <a class="hl-row" href="#perma">
+          <span class="no tnum">#8</span><span class="tbl">Bàn 1</span>
+          <span class="win"><span class="ava-xs">PI</span><span class="nm">Phil Ivey</span></span>
+          <span class="cls">Set of Kings <span class="tag-sd tag-sd--show">Showdown</span></span>
+          <span class="pot tnum">1.9M</span>
+          <span class="bd"><span class="pcard pcard--sm"><b>K</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>Q</b><i>♦</i></span><span class="pcard pcard--sm"><b>4</b><i>♣</i></span></span>
+          <span class="arr">▸</span>
+        </a>
+        <a class="hl-row" href="#perma">
+          <span class="no tnum">#7</span><span class="tbl">Bàn 1</span>
+          <span class="win"><span class="ava-xs">ET</span><span class="nm">Elton Tsang</span></span>
+          <span class="cls">Trips <span class="tag-sd tag-sd--show">Showdown</span></span>
+          <span class="pot tnum">320K</span>
+          <span class="bd"><span class="pcard pcard--sm"><b>9</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>9</b><i>♥</i></span><span class="pcard pcard--sm"><b>3</b><i>♣</i></span></span>
+          <span class="arr">▸</span>
+        </a>
+        <a class="hl-row" href="#perma">
+          <span class="no tnum">#6</span><span class="tbl">Bàn 1</span>
+          <span class="win"><span class="ava-xs">TD</span><span class="nm">Tom Dwan</span></span>
+          <span class="cls nosd">Không showdown <span class="tag-sd tag-sd--nosd">No SD</span></span>
+          <span class="pot tnum">96K</span>
+          <span class="bd"><span class="pcard pcard--sm"><b>8</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>5</b><i>♦</i></span><span class="pcard pcard--sm"><b>2</b><i>♣</i></span></span>
+          <span class="arr">▸</span>
+        </a>
+        <a class="hl-row" href="#perma">
+          <span class="no tnum">#5</span><span class="tbl">Bàn 2</span>
+          <span class="win"><span class="ava-xs">JK</span><span class="nm">Jason Koon</span></span>
+          <span class="cls">Straight <span class="tag-sd tag-sd--show">Showdown</span></span>
+          <span class="pot tnum">540K</span>
+          <span class="bd"><span class="pcard pcard--sm"><b>7</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>6</b><i>♦</i></span><span class="pcard pcard--sm pcard--red"><b>5</b><i>♥</i></span></span>
+          <span class="arr">▸</span>
+        </a>
+        <a class="hl-row" href="#perma">
+          <span class="no tnum">#4</span><span class="tbl">Bàn 3</span>
+          <span class="win"><span class="ava-xs">SC</span><span class="nm">Stephen Chidwick</span></span>
+          <span class="cls nosd">Không showdown <span class="tag-sd tag-sd--nosd">No SD</span></span>
+          <span class="pot tnum">64K</span>
+          <span class="bd"><span class="pcard pcard--sm"><b>A</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>J</b><i>♦</i></span><span class="pcard pcard--sm"><b>3</b><i>♣</i></span></span>
+          <span class="arr">▸</span>
+        </a>
+        <a class="hl-row" href="#perma">
+          <span class="no tnum">#3</span><span class="tbl">Bàn 1</span>
+          <span class="win"><span class="ava-xs">KO</span><span class="nm">Jason Koon</span></span>
+          <span class="cls">Two Pair <span class="tag-sd tag-sd--show">Showdown</span></span>
+          <span class="pot tnum">210K</span>
+          <span class="bd"><span class="pcard pcard--sm"><b>Q</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>T</b><i>♦</i></span><span class="pcard pcard--sm"><b>T</b><i>♣</i></span></span>
+          <span class="arr">▸</span>
+        </a>
+        <div class="panel-foot" style="text-align:center"><a class="btn btn--outline btn--sm" href="#">Tải thêm hand cũ hơn</a></div>
+      </section>
+
+      <section class="panel" style="align-self:start">
+        <div class="panel-head"><h2>Pot lớn nhất</h2><span class="tag">Day 1A</span></div>
+        <a class="big-row" href="#perma"><span class="rk tnum">1</span><span class="info"><b>Phil Ivey thắng Set of Kings</b><small>Hand #8 · Bàn 1 vs Elton Tsang</small></span><span class="pv tnum">1.9M</span></a>
+        <a class="big-row" href="#perma"><span class="rk tnum">2</span><span class="info"><b>Jason Koon thắng Straight</b><small>Hand #5 · Bàn 2</small></span><span class="pv tnum">540K</span></a>
+        <a class="big-row" href="#perma"><span class="rk tnum">3</span><span class="info"><b>Elton Tsang thắng Trips</b><small>Hand #7 · Bàn 1</small></span><span class="pv tnum">320K</span></a>
+        <a class="big-row" href="#perma"><span class="rk tnum">4</span><span class="info"><b>Jason Koon thắng Two Pair</b><small>Hand #3 · Bàn 1</small></span><span class="pv tnum">210K</span></a>
+        <div class="panel-foot"><span class="note" style="border:0;padding:0;background:0"><span>Lịch sử hiển thị qua delay 30:00 — hand mới nhất xuất hiện sau khi qua bộ lọc thời gian.</span></span></div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="page-foot">
+    <span>QUADS LIVE — CLB Quads Poker</span>
+    <span class="right tnum">Mọi dữ liệu hiển thị trễ 30:00 khớp livestream</span>
+  </footer>
+</div>
+
+<!-- =================================================================
+     FRAME D — CHIPS  /t/[tour]/chips
+     ================================================================= -->
+<div class="frame-cap" id="chips"><b>Frame D</b> · Chips <code>/t/championship-i/chips</code> — chip leaderboard các bàn track + finishers (hạng + payout)</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/t/championship-i/chips</b></span></div>
+
+  <header class="topbar"><div class="topbar-in">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="vr"></span>
+    <nav class="topnav">
+      <a href="#home">Trang chủ</a>
+      <a href="#tour">Tổng quan</a>
+      <a href="#hands">Hands</a>
+      <a class="on" href="#chips">Chips</a>
+    </nav>
+    <span class="top-tail"><span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span></span>
+  </div></header>
+
+  <div class="wrap">
+    <div class="sec-title" style="margin-bottom:var(--sp-4)"><h2>Chip counts</h2><span>chỉ các bàn đang track · cập nhật ở break cho bàn không lên hình</span></div>
+
+    <div class="tcols" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
+
+      <section class="panel">
+        <div class="panel-head"><h2>Chip leaderboard</h2><span class="tag">24 người còn lại</span></div>
+        <div class="cl-head"><span>#</span><span>Người chơi</span><span>Bàn</span><span>Tỷ trọng</span><span>Stack</span></div>
+        <div class="cl-row cl-row--lead"><span class="rk tnum">1</span><span class="who"><span class="ava-xs">SC</span><span class="nm">Stephen Chidwick</span></span><span class="tbl">Bàn 1 · G8</span><span class="bar-c"><span class="cl-bar"><i style="width:100%"></i></span></span><span class="st"><b class="tnum">2.1M</b><span class="tnum">131 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">2</span><span class="who"><span class="ava-xs">PI</span><span class="nm">Phil Ivey</span></span><span class="tbl">Bàn 1 · G4</span><span class="bar-c"><span class="cl-bar"><i style="width:93%"></i></span></span><span class="st"><b class="tnum">1.96M</b><span class="tnum">123 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">3</span><span class="who"><span class="ava-xs">JK</span><span class="nm">Jason Koon</span></span><span class="tbl">Bàn 2 · G5</span><span class="bar-c"><span class="cl-bar"><i class="mid" style="width:71%"></i></span></span><span class="st"><b class="tnum">1.5M</b><span class="tnum">94 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">4</span><span class="who"><span class="ava-xs">BK</span><span class="nm">Bryn Kenney</span></span><span class="tbl">Bàn 3 · G3</span><span class="bar-c"><span class="cl-bar"><i class="mid" style="width:57%"></i></span></span><span class="st"><b class="tnum">1.2M</b><span class="tnum">75 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">5</span><span class="who"><span class="ava-xs">TD</span><span class="nm">Tom Dwan</span></span><span class="tbl">Bàn 1 · G2</span><span class="bar-c"><span class="cl-bar"><i class="mid" style="width:46%"></i></span></span><span class="st"><b class="tnum">976K</b><span class="tnum">61 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">6</span><span class="who"><span class="ava-xs">MB</span><span class="nm">M. Badziakouski</span></span><span class="tbl">Bàn 2 · G7</span><span class="bar-c"><span class="cl-bar"><i class="low" style="width:34%"></i></span></span><span class="st"><b class="tnum">720K</b><span class="tnum">45 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">7</span><span class="who"><span class="ava-xs">WY</span><span class="nm">Wai Kin Yong</span></span><span class="tbl">Bàn 3 · G6</span><span class="bar-c"><span class="cl-bar"><i class="low" style="width:26%"></i></span></span><span class="st"><b class="tnum">540K</b><span class="tnum">34 BB</span></span></div>
+        <div class="cl-row"><span class="rk tnum">8</span><span class="who"><span class="ava-xs">PN</span><span class="nm">Phạm T. Nghĩa</span></span><span class="tbl">Bàn 1 · G1</span><span class="bar-c"><span class="cl-bar"><i class="low" style="width:19%"></i></span></span><span class="st"><b class="tnum">394K</b><span class="tnum">25 BB</span></span></div>
+        <div class="panel-foot" style="text-align:center"><a class="btn btn--outline btn--sm" href="#">Xem đủ 24 người</a></div>
+      </section>
+
+      <div class="tstack">
+        <section class="panel">
+          <div class="panel-head"><h2>Tổng quan field</h2></div>
+          <div class="fld-tiles">
+            <div class="fld-tile"><div class="k">Players left</div><div class="v tnum">24</div></div>
+            <div class="fld-tile"><div class="k">Entries</div><div class="v tnum">35</div></div>
+            <div class="fld-tile"><div class="k">Avg stack</div><div class="v tnum">1.46M</div></div>
+            <div class="fld-tile"><div class="k">Total chips</div><div class="v tnum">35M</div></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Đã về đích</h2><span class="tag">finishers</span></div>
+          <div class="fin-row"><span class="rk tnum">25</span><span class="nm">Đỗ Thành Nam<small>bust hand #8 · Bàn 1</small></span><span class="pr"><b class="tnum">8,000,000</b></span></div>
+          <div class="fin-row"><span class="rk tnum">26</span><span class="nm">Hoàng Gia Khánh<small>bust hand #6 · Bàn 2</small></span><span class="pr"><b class="tnum">8,000,000</b></span></div>
+          <div class="fin-row"><span class="rk tnum">27</span><span class="nm">Bùi Tiến Dũng<small>bust hand #4 · Bàn 3</small></span><span class="pr"><b class="tnum">6,000,000</b></span></div>
+          <div class="fin-row"><span class="rk tnum">28</span><span class="nm">Đinh Văn Vũ<small>bust hand #2 · Bàn 1</small></span><span class="pr"><b class="tnum">6,000,000</b></span></div>
+          <div class="panel-foot"><span class="note" style="border:0;padding:0;background:0"><span>Hạng do floor xác nhận tay (registration đã đóng mới gắn hạng). Payout hiển thị khi gán người nhận.</span></span></div>
+        </section>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="page-foot">
+    <span>QUADS LIVE — CLB Quads Poker</span>
+    <span class="right tnum">Mọi dữ liệu hiển thị trễ 30:00 khớp livestream</span>
+  </footer>
+</div>
+
+<!-- =================================================================
+     FRAME E — PERMALINK  /h/[handId]
+     ================================================================= -->
+<div class="frame-cap" id="perma"><b>Frame E</b> · Permalink hand <code>/h/k8x2qa</code> — trang share 1 hand, replay rút gọn + ảnh OG động (ưu tiên ảnh event, fallback brand)</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">live.quadspoker.vn<b>/h/k8x2qa</b></span></div>
+
+  <header class="topbar"><div class="topbar-in">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="vr"></span>
+    <nav class="topnav"><a href="#home">Trang chủ</a><a href="#tour">High Roller — Day 1A</a></nav>
+    <span class="top-tail"><span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span></span>
+  </div></header>
+
+  <div class="perma-wrap">
+    <div class="perma-crumb">
+      <a href="#tour">Championship I — High Roller</a><span class="sep">/</span>
+      <a href="mockup-viewer.html">Bàn 1</a><span class="sep">/</span>
+      <span>Hand #8 — Showdown</span>
+    </div>
+
+    <div class="perma-hero">
+      <div class="ph-hand">Hand #8 · Bàn 1 · Level 14 — 8K/16K (ante 16K)</div>
+      <div class="ph-pot tnum">Pot 1.9M <small class="tnum">118.5 BB</small></div>
+      <div class="perma-board">
+        <span class="pcard pcard--lg"><b>K</b><i>♠</i></span>
+        <span class="pcard pcard--lg pcard--red"><b>Q</b><i>♦</i></span>
+        <span class="pcard pcard--lg"><b>4</b><i>♣</i></span>
+        <span class="pcard pcard--lg pcard--red"><b>9</b><i>♥</i></span>
+        <span class="pcard pcard--lg pcard--red"><b>2</b><i>♥</i></span>
+      </div>
+      <span class="perma-win tnum">Phil Ivey thắng +980K — Set of Kings</span>
+
+      <div class="perma-vs">
+        <div class="pv-seat">
+          <div class="pv-cards">
+            <span class="pcard pcard--red"><b>K</b><i>♦</i></span>
+            <span class="pcard"><b>K</b><i>♣</i></span>
+          </div>
+          <span class="pv-name">Phil Ivey <span class="pos">UTG+1</span></span>
+          <span class="pv-cls win">Set of Kings · thắng 1.9M</span>
+        </div>
+        <span class="pv-div">vs</span>
+        <div class="pv-seat">
+          <div class="pv-cards">
+            <span class="pcard"><b>A</b><i>♠</i></span>
+            <span class="pcard pcard--red"><b>A</b><i>♦</i></span>
+          </div>
+          <span class="pv-name">Elton Tsang <span class="pos">BTN</span></span>
+          <span class="pv-cls lose">Pair of Aces · bust</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="perma-cta">
+      <a class="btn btn--primary" href="mockup-viewer.html">▸ Xem Bàn 1 trực tiếp</a>
+      <a class="btn btn--outline" href="#tour">Tổng quan giải</a>
+      <button class="btn btn--outline">↗ Copy link</button>
+    </div>
+
+    <section class="panel" style="margin-top:var(--sp-6)">
+      <div class="panel-head"><h2>Diễn biến — River</h2><span class="tag tnum">Main pot 1.9M</span></div>
+      <div class="alog-street"><b>River</b><span class="cards"><span class="pcard pcard--sm pcard--red"><b>2</b><i>♥</i></span></span><span class="potend tnum">Pot 1.9M</span></div>
+      <div class="alog-row"><span class="pos">UTG+1</span><span class="nm">Phil Ivey</span><span class="act--check">Check</span><span class="amt"></span></div>
+      <div class="alog-row"><span class="pos">BTN</span><span class="nm">Elton Tsang</span><span class="act--bet">Bet</span><span class="amt tnum">220K</span></div>
+      <div class="alog-row"><span class="pos">UTG+1</span><span class="nm">Phil Ivey</span><span class="act--allin">Raise all-in</span><span class="amt tnum">740K</span></div>
+      <div class="alog-row"><span class="pos">BTN</span><span class="nm">Elton Tsang</span><span class="act--allin">Call all-in</span><span class="amt tnum">456K</span></div>
+      <div class="alog-row alog-row--sys"><span></span><span>Uncalled 64K trả lại Phil Ivey</span></div>
+      <div class="alog-street"><b>Showdown</b><span class="potend tnum">Main pot 1.9M</span></div>
+      <div class="alog-row alog-row--sys win"><span></span><span>Phil Ivey thắng Main Pot 1.9M (+980K) — Set of Kings</span></div>
+    </section>
+
+    <div class="og-note">
+      <div class="og-thumb">
+        <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b></span>
+        <b>K♠ Q♦ 4♣ 9♥ 2♥</b>
+        <span class="tnum">Phil Ivey · Set of Kings · Pot 1.9M</span>
+      </div>
+      <div class="txt">
+        <b>Ảnh OG khi share Zalo / Facebook</b>
+        <span>og:image sinh động theo hand: board + winner + pot, ưu tiên ảnh header event làm nền; nếu event chưa upload ảnh thì fallback ảnh brand tĩnh. og:title = "Hand #8 — Phil Ivey thắng Set of Kings (1.9M)".</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-foot">
+    <span>QUADS LIVE — CLB Quads Poker</span>
+    <span class="right tnum">Hand này hiển thị trễ 30:00 khớp livestream</span>
+  </footer>
+</div>
+
+<div class="notes">
+  <div class="note"><b>Mobile-first vẫn là chuẩn</b><span>Desktop là bản mở rộng (CLAUDE.md quy tắc 5). 5 frame này bổ sung cho route đã có bản mobile + table view desktop; KHÔNG thiết kế ngược từ desktop.</span></div>
+  <div class="note"><b>Delay phủ mọi route</b><span>Badge Delayed/Live ở topbar mọi trang; hand list, chip counts, payouts gán người, finishers đều render từ trạng thái tại now − D (SPEC 8.3).</span></div>
+  <div class="note"><b>Tận dụng chiều ngang</b><span>Tổng quan giải dùng 2 cột (bàn track + top stacks | payouts/days/structure); hands & chips có sidebar phụ. Mobile xếp dọc 1 cột tương ứng.</span></div>
+  <div class="note"><b>Ẩn danh & hide</b><span>Người ẩn danh hiển thị "Player N", người hidden không xuất hiện ở leaderboard/hands/permalink. Không public seating chart chi tiết (SPEC 13).</span></div>
+</div>
+
+</body>
+</html>

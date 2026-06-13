@@ -1,0 +1,270 @@
+/* ============================================================
+   QUADS LIVE — DESIGN TOKENS v1
+   Nguồn chân lý cho port sang Vite + React.
+   Quy ước: mọi MÀU và CỠ CHỮ trong UI phải đi qua biến ở đây —
+   không hardcode hex/px trong CSS component.
+   Sàn cỡ chữ: nội dung ≥ 13px (--fs-sm), micro-label 11px (--fs-2xs).
+   Brand: nền đen ấm, gold tiết chế, bo tròn nhất quán theo token
+   (--radius-sm/md/lg; lá bài --radius-card; pill/dot --radius-full).
+   ============================================================ */
+
+:root {
+
+  /* ---------- 1. MÀU NỀN & BỀ MẶT ---------- */
+  --color-bg:          #0A0908;  /* nền trang */
+  --color-surface-1:   #1B1711;  /* panel, card */
+  --color-surface-2:   #2A2621;  /* nút trung tính, hàng nổi trên panel */
+  --color-surface-3:   #363027;  /* hover của surface-2 (tự bổ sung) */
+
+  /* ---------- 2. MÀU CHỮ ---------- */
+  --color-text:        #F9F9F9;  /* chữ chính */
+  --color-text-muted:  #9A9281;  /* chữ phụ, meta (≥4.5:1 trên surface-2) */
+  --color-beige:       #C8BEA7;  /* accent beige: nhãn, giá trị phụ nổi */
+
+  /* ---------- 3. ACCENT GOLD (chữ ký brand) ---------- */
+  --color-gold:        #DAB37A;  /* CTA, đang action, winner, DELAYED */
+  --color-gold-bright: #E8CA94;  /* hover của gold (tự bổ sung) */
+  --color-gold-deep:   #BE9858;  /* pressed của gold (tự bổ sung) */
+  --color-gold-soft:   rgba(218, 179, 122, 0.18); /* nền nhấn gold 18% */
+  --color-gold-faint:  rgba(218, 179, 122, 0.08); /* nền gold rất nhẹ (tự bổ sung) */
+  --color-ink-on-gold: #181206;  /* chữ đặt trên nền gold đặc (tự bổ sung) */
+
+  /* ---------- 4. MÀU NGỮ NGHĨA (tự bổ sung, hài hòa palette ấm) ---------- */
+  --color-success:      #6FE0A0;                   /* đã đồng bộ, LIVE */
+  --color-success-soft: rgba(111, 224, 160, 0.12);
+  --color-success-line: rgba(111, 224, 160, 0.40);
+  --color-danger:       #E0654F;                   /* đỏ ấm: Fold, mất mạng, bust */
+  --color-danger-text:  #E87B61;                   /* chữ danger cỡ nhỏ trên nền tint (≥4.5:1) */
+  --color-danger-soft:  rgba(224, 101, 79, 0.14);
+  --color-danger-line:  rgba(224, 101, 79, 0.45);
+  --color-warning:      #E89B4B;                   /* hổ phách: All-in, chờ đồng bộ, lease */
+  --color-warning-soft: rgba(232, 155, 75, 0.14);
+  --color-warning-line: rgba(232, 155, 75, 0.45);
+  --color-info:         #8FAEC2;                   /* xanh xám bụi: thông báo trung tính, practice */
+  --color-info-soft:    rgba(143, 174, 194, 0.12);
+  --color-info-line:    rgba(143, 174, 194, 0.40);
+
+  /* ---------- 5. VIỀN, LỚP PHỦ, BÓNG ---------- */
+  --color-border:        rgba(243, 237, 224, 0.12); /* hairline mặc định */
+  --color-border-strong: rgba(243, 237, 224, 0.28); /* viền nút outline, hover */
+  --color-overlay:       rgba(243, 237, 224, 0.10); /* hover sáng ấm trên nền tối */
+  --color-sheen:         rgba(243, 237, 224, 0.04); /* vignette ấm rất nhẹ cho nền trang */
+  --shadow-1:    0 1px 2px rgba(5, 4, 3, 0.50);     /* nổi nhẹ */
+  --shadow-2:    0 12px 32px rgba(5, 4, 3, 0.55);   /* toast, plate winner */
+  --shadow-card: 0 1px 3px rgba(5, 4, 3, 0.45);     /* lá bài trên nỉ */
+
+  /* ---------- 6. LÁ BÀI ---------- */
+  --card-face:      #F9F9F9;               /* mặt lá sáng */
+  --card-face-edge: rgba(26, 24, 20, 0.22);/* viền 1px quanh lá */
+  --card-red:       #C73B27;               /* ♥ ♦ — đỏ ấm, 4.9:1 trên mặt lá */
+  --card-black:     #1A1814;               /* ♠ ♣ — gần đen ấm */
+  --card-back-line: rgba(218, 179, 122, 0.22); /* vân chéo mặt sau */
+
+  /* Kích thước lá bài (3 cỡ chuẩn) */
+  --card-w-lg: 56px;  --card-h-lg: 78px;   /* board viewer */
+  --card-w-md: 36px;  --card-h-md: 50px;   /* seat, board logger */
+  --card-w-sm: 22px;  --card-h-sm: 30px;   /* inline trong action log */
+  /* Glyph bên trong .pcard (rank/suit 10–25px) là exception có chủ đích,
+     tỉ lệ theo cỡ lá — port React thành MỘT component Card duy nhất. */
+
+  /* ---------- 7. BÀN NỈ (viewer) ---------- */
+  --felt-hi:   #2E3B27;                    /* tâm nỉ olive ấm */
+  --felt:      #1E2818;                    /* nỉ chính */
+  --felt-deep: #131A0F;                    /* mép nỉ */
+  --rail:      #271F14;                    /* thành bàn da nâu */
+  --rail-edge: rgba(218, 179, 122, 0.30);  /* chỉ gold quanh thành bàn */
+  --felt-line: rgba(218, 179, 122, 0.14);  /* betting line khắc chìm */
+  --felt-glow: rgba(46, 59, 39, 0.34);     /* ánh nỉ sau board (mobile stage) — không dùng color-mix vì webview cũ */
+  --felt-pill: rgba(8, 7, 5, 0.42);        /* nền pill nổi trên nỉ: bet, pot giữa bàn (chữ beige/gold ≥4.5:1) */
+
+  /* ---------- 8. TYPOGRAPHY ---------- */
+  /* Inter là font duy nhất của UI; fallback system-ui khi mở offline */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  /* mono chỉ dùng cho tài liệu kỹ thuật (tên biến trong styleguide), không dùng trong UI sản phẩm */
+  --font-mono: ui-monospace, 'Cascadia Mono', Consolas, 'Courier New', monospace;
+
+  --fs-2xs: 11px;   /* micro-label uppercase */
+  --fs-xs:  12px;   /* badge, meta phụ */
+  --fs-sm:  13px;   /* meta, BB phụ */
+  --fs-base:15px;   /* body, nhãn nút thường */
+  --fs-md:  17px;   /* nhãn nổi, tên người chơi logger */
+  --fs-lg:  20px;   /* nút action pad, số nổi */
+  --fs-xl:  24px;   /* stack logger, pot nhỏ */
+  --fs-2xl: 30px;   /* pot logger */
+  --fs-3xl: 38px;   /* pot viewer */
+  --fs-4xl: 48px;   /* hero, số khổng lồ */
+
+  --lh-tight: 1.1;
+  --lh-snug:  1.3;
+  --lh-base:  1.5;
+
+  --fw-reg:  400;
+  --fw-med:  500;
+  --fw-semi: 600;
+  --fw-bold: 700;
+  --fw-heavy:800;
+
+  --ls-caps: 0.08em;   /* mọi label uppercase */
+  --ls-wide: 0.16em;   /* wordmark, header street */
+  --ls-num: -0.01em;   /* số to hơi khít lại */
+
+  /* ---------- 9. SPACING (bậc 4px) ---------- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 32px;
+  --sp-8: 40px;
+  --sp-9: 48px;
+  --sp-10: 64px;
+
+  /* ---------- 10. GÓC (bo tròn nhất quán — không hardcode px trong component) ---------- */
+  --radius-sm:   6px;    /* badge vị trí, nhãn trạng thái, step, chip nhỏ */
+  --radius-md:   10px;   /* button, seat card, plate, input, bar */
+  --radius-lg:   14px;   /* panel, khung lớn, action log, toast */
+  --radius-card: 5px;    /* lá bài */
+  --radius-full: 999px;  /* pill (badge), dot tròn */
+
+  /* ---------- 11. KÍCH THƯỚC CHẠM ---------- */
+  --tap-sm:  44px;   /* mobile viewer: tab, nút điều hướng */
+  --tap-min: 56px;   /* nút bấm chính logger tối thiểu */
+  --tap-lg:  64px;   /* action pad */
+
+  /* ---------- 12. MOTION ---------- */
+  --t-fast:  120ms ease;  /* hover, press */
+  --t-med:   220ms ease;  /* toast, banner */
+  --t-flash: 600ms ease;  /* nháy giá trị mới khi stack/pot đổi qua polling */
+
+  /* ---------- 13. Z-INDEX ---------- */
+  --z-top:   50;    /* topbar sticky */
+  --z-toast: 100;   /* toast, overlay cảnh báo */
+
+  /* ============================================================
+     v2 — TRITON REDESIGN (bổ sung additive, 06/2026)
+     Bố cục + luồng thao tác reporter/admin theo Triton Poker
+     Reporter; MÀU giữ nguyên palette Quads (đen ấm + gold + beige).
+     KHÔNG sửa/xóa token cũ phía trên — code M2 đang dùng.
+     ============================================================ */
+
+  /* ---------- 14. DECK 4 MÀU — chỉ dùng trong CARD PICKER ----------
+     Lá hiển thị (board, pocket, log) vẫn 2 màu: --card-red / --card-black.
+     Picker 4 màu để reporter chọn nhanh, giảm nhầm chất (Triton).
+     ♠ = --card-black, ♥ = --card-red (sẵn có);
+     ♣ green rừng ấm, ♦ xanh petrol bụi — cùng nhiệt độ palette ấm,
+     cả hai ≥ 4.5:1 trên mặt lá --card-face. */
+  --card-green: #2E7747;  /* ♣ — 5.2:1 trên card-face */
+  --card-blue:  #31647F;  /* ♦ — 6.1:1 trên card-face, cùng họ --color-info */
+
+  /* ---------- 15. CHỮ TRÊN NỀN SEMANTIC ĐẶC (action bar reporter) ----------
+     Quy ước màu chức năng theo Triton, diễn đạt bằng palette Quads:
+     đỏ = ALL-IN / phá hủy · vàng = RAISE/BET/CTA · xanh lá = CALL/CHECK/xác nhận. */
+  --color-ink-on-success: #0E281A;  /* chữ trên nút success đặc (9.6:1) */
+  --color-ink-on-danger:  #2B0D07;  /* chữ trên nút danger đặc (5.3:1) */
+  --color-success-bright: #8CE9B4;  /* hover của success đặc */
+  --color-success-deep:   #57C588;  /* pressed của success đặc */
+  --color-danger-bright:  #E87B61;  /* hover của danger đặc (= danger-text) */
+  --color-danger-deep:    #C24E3B;  /* pressed của danger đặc */
+
+  /* ---------- 16. TRẠNG THÁI GHẾ (reporter + viewer dùng chung) ----------
+     to-act XANH LÁ (theo Triton — phân biệt với winner GOLD),
+     sit-out ĐỎ ẤM, busted mờ. Alias để đổi tập trung một chỗ. */
+  --seat-toact:       var(--color-success);
+  --seat-toact-soft:  var(--color-success-soft);
+  --seat-winner:      var(--color-gold);
+  --seat-winner-soft: var(--color-gold-soft);
+  --seat-satout:      var(--color-danger);
+  --seat-satout-soft: var(--color-danger-soft);
+  --seat-busted:      var(--color-text-muted);
+  --seat-empty-line:  var(--color-border-strong);  /* vòng dashed ghế trống */
+
+  /* ---------- 17. LỚP PHỦ TỐI (side panel, sheet) ---------- */
+  --color-scrim: rgba(5, 4, 3, 0.55);  /* scrim sau side panel / bottom sheet */
+
+  /* Breakpoint viewer (hằng số — media query không dùng được var):
+     mobile-first ≤ 1023px là chuẩn chính; desktop từ 1024px. */
+}
+
+/* ============================================================
+   BASE STYLES — reset tối thiểu + nền + focus
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: dark; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p, figure { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img { display: block; max-width: 100%; }
+a { color: var(--color-beige); text-decoration: none; }
+a:hover { color: var(--color-gold); }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  border-radius: var(--radius-md);
+}
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+
+/* Focus ring — luôn nhìn thấy được trên nền tối */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+::selection { background: var(--color-gold); color: var(--color-ink-on-gold); }
+
+/* Scrollbar tối, mảnh */
+* { scrollbar-width: thin; scrollbar-color: var(--color-surface-3) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--color-surface-3); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Tiện ích dùng chung ---------- */
+
+/* Mọi số liệu chip/stack/pot/BB bắt buộc dùng tabular-nums */
+.tnum { font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+
+/* Micro-label uppercase — nhịp thị giác chính của brand */
+.caps {
+  text-transform: uppercase;
+  letter-spacing: var(--ls-caps);
+  font-weight: var(--fw-semi);
+}
+
+/* Chấm trạng thái tròn */
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: var(--radius-full);
+  background: currentColor;
+  flex: none;
+}
+
+/* Số ghế vật lý G1–G9 — lưới/oval NEO THEO GHẾ cố định,
+   badge vị trí (SB/BTN...) + chấm D mới là thứ xoay theo button */
+.gno {
+  font-size: var(--fs-2xs); font-weight: var(--fw-semi);
+  color: var(--color-text-muted); font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+/* Nhịp nhấp nháy dùng chung: badge LIVE, sync pending, "đang suy nghĩ" */
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

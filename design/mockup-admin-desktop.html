@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quads Live — Mockup Admin Desktop (PC ≥1280px)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* ============ STYLE RIÊNG MOCKUP ADMIN DESKTOP (v2 — Triton redesign) ============
+   Màn quản trị event trên PC/laptop (≥1280px). Bản tablet portrait
+   (mockup-admin.html) vẫn dùng khi đứng vận hành; bản desktop này
+   tận dụng chiều ngang: SIDEBAR trái điều hướng Series→Event→Flight,
+   nội dung 2 cột, blind levels + seating grid rộng. Màu giữ palette
+   Quads (đen ấm + gold + beige), bố cục theo Triton Poker Reporter
+   Admin. KHÔNG sync ngoài (không Import from PokerLens). 3 frame =
+   3 tab: Overview · Structure · Seating Chart. Demo: Quads Winter
+   Series 2026 — #5: 5M NLH High Roller, Day 1A.                  */
+
+body {
+  background:
+    radial-gradient(1200px 540px at 50% -12%, var(--color-sheen), transparent 70%),
+    var(--color-bg);
+}
+
+/* ---- chrome tài liệu ---- */
+.mock-chrome {
+  max-width: 1440px; margin: 0 auto;
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-6);
+  font-size: var(--fs-xs); color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: var(--ls-caps);
+  border-bottom: 1px dashed var(--color-border);
+}
+.mock-chrome b { color: var(--color-beige); font-weight: var(--fw-semi); }
+.mock-chrome nav { margin-left: auto; display: flex; gap: var(--sp-4); text-transform: none; letter-spacing: 0; }
+.mock-chrome a { font-size: var(--fs-sm); }
+.frame-cap {
+  max-width: 1440px; margin: var(--sp-7) auto var(--sp-2); padding: 0 var(--sp-6);
+  font-size: var(--fs-2xs); color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: var(--ls-caps);
+}
+.frame-cap b { color: var(--color-gold); font-weight: var(--fw-semi); }
+
+.win {
+  max-width: 1440px; margin: 0 auto var(--sp-9);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-2); overflow: hidden;
+}
+.win-bar { display: flex; align-items: center; gap: var(--sp-2); padding: 9px var(--sp-4); border-bottom: 1px solid var(--color-border); background: var(--color-surface-1); }
+.win-bar .tl { width: 11px; height: 11px; border-radius: var(--radius-full); background: var(--color-surface-3); flex: none; }
+.win-url { margin-left: var(--sp-3); flex: 1; display: flex; align-items: center; gap: var(--sp-2); background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-full); padding: 5px var(--sp-4); font-size: var(--fs-xs); color: var(--color-text-muted); font-family: var(--font-mono); }
+.win-url b { color: var(--color-beige); font-weight: var(--fw-med); }
+
+/* ================= TOP BAR ================= */
+.topbar { display: flex; align-items: center; gap: var(--sp-4); height: 60px; padding: 0 var(--sp-5); border-bottom: 1px solid var(--color-border); background: var(--color-bg); }
+.wordmark { display: inline-flex; align-items: center; gap: 9px; flex: none; }
+.wordmark .mk-sq { width: 10px; height: 10px; background: var(--color-gold); border-radius: 3px; }
+.wordmark b { font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); font-size: var(--fs-base); }
+.wordmark span { font-weight: var(--fw-reg); letter-spacing: var(--ls-wide); color: var(--color-beige); font-size: var(--fs-base); }
+.top-tag { font-size: var(--fs-2xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--color-beige); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); padding: 3px 8px; }
+.vr { width: 1px; height: 28px; background: var(--color-border); flex: none; }
+.top-tail { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+.top-link { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--color-text-muted); padding: 8px var(--sp-3); border-radius: var(--radius-md); }
+.top-link:hover { color: var(--color-text); background: var(--color-overlay); }
+.acct { display: inline-flex; align-items: center; gap: var(--sp-2); padding: 6px var(--sp-3); border: 1px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--fs-sm); color: var(--color-beige); }
+.acct .ava { width: 26px; height: 26px; border-radius: var(--radius-full); background: var(--color-gold-soft); border: 1px solid var(--color-gold-deep); display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-2xs); font-weight: var(--fw-bold); color: var(--color-gold); }
+
+/* ================= BODY = SIDEBAR + MAIN ================= */
+.adwrap { display: grid; grid-template-columns: 284px minmax(0, 1fr); align-items: start; }
+
+/* ---------- SIDEBAR điều hướng ---------- */
+.side { border-right: 1px solid var(--color-border); min-height: 760px; background: var(--color-surface-1); display: flex; flex-direction: column; }
+.side-series { padding: var(--sp-4) var(--sp-4) var(--sp-3); border-bottom: 1px solid var(--color-border); }
+.side-series .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.side-pick { display: flex; align-items: center; gap: var(--sp-2); margin-top: 4px; padding: 8px var(--sp-3); border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); background: var(--color-bg); cursor: pointer; }
+.side-pick b { font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-gold); flex: 1; }
+.side-pick .cv { color: var(--color-beige); }
+.side-cap { display: flex; align-items: center; padding: var(--sp-4) var(--sp-4) var(--sp-2); }
+.side-cap span { font-size: var(--fs-2xs); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); font-weight: var(--fw-semi); }
+.side-cap .add { margin-left: auto; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--color-border); border-radius: var(--radius-sm); color: var(--color-beige); font-size: var(--fs-md); }
+.side-cap .add:hover { background: var(--color-gold-soft); color: var(--color-gold); border-color: var(--color-gold-deep); }
+.side-list { display: flex; flex-direction: column; padding: 0 var(--sp-2); overflow-y: auto; }
+.side-ev {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: 9px var(--sp-3); border-radius: var(--radius-md); color: inherit; min-height: 42px;
+}
+.side-ev:hover { background: var(--color-overlay); }
+.side-ev .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.side-ev .no { font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-text-muted); font-variant-numeric: tabular-nums; flex: none; min-width: 22px; }
+.side-ev .sdot { width: 7px; height: 7px; border-radius: var(--radius-full); flex: none; }
+.side-ev .sdot--run { background: var(--color-success); }
+.side-ev .sdot--done { background: var(--color-text-muted); }
+.side-flight { padding-left: var(--sp-7); }
+.side-flight .nm { font-weight: var(--fw-med); color: var(--color-text-muted); }
+.side-ev--active { background: var(--color-gold-soft); }
+.side-ev--active .nm { color: var(--color-gold); }
+.side-ev--active .no { color: var(--color-gold); }
+.side-foot { margin-top: auto; padding: var(--sp-3) var(--sp-4); border-top: 1px solid var(--color-border); }
+
+/* ---------- MAIN ---------- */
+.main { min-width: 0; }
+.ad-head { padding: var(--sp-5) var(--sp-6) 0; }
+.crumb { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.crumb b { color: var(--color-beige); font-weight: var(--fw-semi); }
+.ad-title { display: flex; align-items: flex-start; gap: var(--sp-3); margin-top: 6px; }
+.ad-title h1 { font-size: var(--fs-2xl); font-weight: var(--fw-heavy); letter-spacing: -0.01em; line-height: var(--lh-tight); }
+.ad-title h1 .tnum { color: var(--color-gold); }
+.ad-edit { width: 38px; height: 38px; flex: none; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-beige); }
+.ad-edit:hover { background: var(--color-overlay); color: var(--color-text); }
+.ad-status { margin-left: auto; display: flex; align-items: center; gap: var(--sp-2); }
+/* pill trạng thái nhanh trên header */
+.spill { display: inline-flex; align-items: center; gap: var(--sp-2); padding: 7px var(--sp-3); border: 1px solid var(--color-border-strong); border-radius: var(--radius-full); font-size: var(--fs-xs); color: var(--color-beige); font-weight: var(--fw-semi); }
+.spill .dot { width: 8px; height: 8px; }
+.spill b { color: var(--color-text); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.spill--run { color: var(--color-success); border-color: var(--color-success-line); background: var(--color-success-soft); }
+.spill--open { color: var(--color-gold); border-color: var(--color-gold-deep); }
+.spill--delay { color: var(--color-gold); border-color: var(--color-gold); background: var(--color-gold-soft); font-variant-numeric: tabular-nums; }
+
+/* tab bar */
+.ad-tabs { display: flex; gap: var(--sp-1); padding: var(--sp-4) var(--sp-6) 0; border-bottom: 1px solid var(--color-border); }
+.adtab { min-height: 48px; padding: 0 var(--sp-4); display: inline-flex; align-items: center; gap: var(--sp-1); background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0; font-size: var(--fs-base); font-weight: var(--fw-semi); color: var(--color-text-muted); }
+.adtab:hover { color: var(--color-beige); }
+.adtab--active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
+.adtab:disabled { opacity: 0.4; }
+.adtab small { font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+
+.ad-body { padding: var(--sp-6); }
+.cols-2 { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--sp-5); align-items: start; }
+.stack { display: flex; flex-direction: column; gap: var(--sp-5); }
+
+.card { background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-4); }
+.card-head { display: flex; align-items: center; gap: var(--sp-3); }
+.card-head h2 { font-size: var(--fs-md); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.card-head .tail { margin-left: auto; display: flex; align-items: center; gap: var(--sp-3); }
+.card .note { font-size: var(--fs-sm); color: var(--color-text-muted); line-height: var(--lh-snug); }
+.card .note b { color: var(--color-beige); font-weight: var(--fw-semi); }
+
+/* form */
+.fld { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.fld > label { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.fld > label .req { color: var(--color-gold); }
+.input { background: var(--color-bg); border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); min-height: 44px; padding: 9px var(--sp-3); width: 100%; font-variant-numeric: tabular-nums; transition: border-color var(--t-fast); }
+.input:hover { border-color: var(--color-beige); }
+.input:focus { border-color: var(--color-gold); outline: none; box-shadow: 0 0 0 1px var(--color-gold); }
+.input::placeholder { color: var(--color-text-muted); }
+.selwrap { position: relative; }
+.selwrap::after { content: "▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--color-beige); pointer-events: none; font-size: var(--fs-sm); }
+.selwrap select { appearance: none; -webkit-appearance: none; padding-right: var(--sp-7); }
+.frow { display: grid; gap: var(--sp-4); align-items: end; }
+.frow--2 { grid-template-columns: 1fr 1fr; }
+.frow--3 { grid-template-columns: 1fr 1fr auto; }
+
+/* nút */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); min-height: 44px; padding: 0 var(--sp-5); border-radius: var(--radius-md); font-size: var(--fs-sm); font-weight: var(--fw-bold); line-height: 1; text-transform: uppercase; letter-spacing: var(--ls-caps); background: var(--color-surface-2); color: var(--color-text); border: 1px solid var(--color-border); transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast); }
+.btn:hover { background: var(--color-surface-3); border-color: var(--color-border-strong); }
+.btn:active { transform: translateY(1px); }
+.btn--outline { background: transparent; border-color: var(--color-border-strong); color: var(--color-beige); }
+.btn--outline:hover { background: var(--color-overlay); color: var(--color-text); border-color: var(--color-beige); }
+.btn--primary { background: var(--color-gold); border-color: transparent; color: var(--color-ink-on-gold); }
+.btn--primary:hover { background: var(--color-gold-bright); }
+.btn--danger { background: transparent; border-color: var(--color-danger-line); color: var(--color-danger-text); }
+.btn--danger:hover { border-color: var(--color-danger); background: var(--color-danger-soft); }
+.btn--icon { width: 44px; padding: 0; flex: none; font-size: var(--fs-md); text-transform: none; }
+.btn--sm { min-height: 36px; padding: 0 var(--sp-3); font-size: var(--fs-2xs); }
+.btn-add { width: 44px; height: 44px; flex: none; display: inline-flex; align-items: center; justify-content: center; background: var(--color-gold-soft); border: 1px solid var(--color-gold); border-radius: var(--radius-md); color: var(--color-gold); font-size: var(--fs-xl); font-weight: var(--fw-bold); }
+.btn-add:hover { background: var(--color-gold); color: var(--color-ink-on-gold); }
+
+/* toggle + checkbox */
+.swrow { display: flex; align-items: center; gap: var(--sp-3); min-height: var(--tap-sm); }
+.swrow b { font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.switch { width: 46px; height: 26px; flex: none; position: relative; border-radius: var(--radius-full); background: var(--color-surface-3); border: 1px solid var(--color-border-strong); transition: background var(--t-fast), border-color var(--t-fast); }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: var(--radius-full); background: var(--color-beige); transition: left var(--t-fast), background var(--t-fast); }
+.switch--on { background: var(--color-gold-soft); border-color: var(--color-gold); }
+.switch--on::after { left: 23px; background: var(--color-gold); }
+.chkrow { display: flex; align-items: center; gap: var(--sp-3); min-height: var(--tap-sm); cursor: pointer; }
+.chk { width: 22px; height: 22px; flex: none; border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); background: var(--color-bg); display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-sm); color: var(--color-ink-on-gold); }
+.chk--on { background: var(--color-gold); border-color: transparent; }
+.chkrow span.lbl { font-size: var(--fs-base); }
+
+/* bảng payout / days */
+.tbl-head, .tbl-row { display: grid; gap: var(--sp-3); align-items: center; }
+.tbl-head { padding: 0 var(--sp-1) 6px; }
+.tbl-head span { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.tbl-row { padding: var(--sp-2) var(--sp-1); border-top: 1px solid var(--color-border); font-size: var(--fs-base); font-variant-numeric: tabular-nums; }
+.tbl-row .num { font-weight: var(--fw-semi); }
+.tbl-row .gold { color: var(--color-gold); font-weight: var(--fw-bold); }
+.tbl-row .muted { color: var(--color-text-muted); }
+.tbl-row .tk { color: var(--color-info); font-weight: var(--fw-semi); }
+.grid-payout { grid-template-columns: 52px 1.3fr 1.5fr 44px; }
+.grid-day { grid-template-columns: 52px 1.4fr 1fr 1fr 44px; }
+.row-x { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid transparent; border-radius: var(--radius-sm); color: var(--color-text-muted); font-size: var(--fs-base); }
+.row-x:hover { color: var(--color-danger-text); border-color: var(--color-danger-line); }
+.add-inline { display: grid; gap: var(--sp-3); align-items: end; margin-top: var(--sp-2); padding-top: var(--sp-3); border-top: 1px dashed var(--color-border); }
+
+/* upload ảnh */
+.uprow { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+.upbox { border: 1px dashed var(--color-border-strong); border-radius: var(--radius-lg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-2); min-height: 168px; padding: var(--sp-5); text-align: center; }
+.upbox .ic { font-size: var(--fs-2xl); color: var(--color-text-muted); }
+.upbox b { font-size: var(--fs-base); font-weight: var(--fw-semi); }
+.upbox span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); }
+
+/* ---------- Structure: blind levels (desktop rộng) ---------- */
+.blhead, .blrow { display: grid; grid-template-columns: 48px 1fr 1fr 1fr 110px 90px minmax(0,2fr) 44px 44px; gap: var(--sp-2); align-items: center; }
+.blhead { padding: 0 var(--sp-1) 6px; }
+.blhead span { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.blrow { padding: 5px var(--sp-1); border-top: 1px solid var(--color-border); }
+.blrow .input { min-height: 42px; padding: 7px var(--sp-2); }
+.blrow--current { background: var(--color-gold-faint); border-top-color: var(--color-gold); border-radius: var(--radius-sm); }
+.blrow--break { background: var(--color-info-soft); }
+.bl-star { width: 44px; height: 42px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 0; color: var(--color-text-muted); font-size: var(--fs-md); }
+.bl-star--on { color: var(--color-gold); }
+.bl-clone, .bl-del { width: 44px; height: 42px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-beige); font-size: var(--fs-base); }
+.bl-clone:hover { background: var(--color-overlay); color: var(--color-text); }
+.bl-del { color: var(--color-danger-text); border-color: transparent; }
+.bl-del:hover { border-color: var(--color-danger-line); background: var(--color-danger-soft); }
+
+/* ---------- Seating chart ---------- */
+.sc-tools { display: flex; gap: var(--sp-3); align-items: stretch; margin-bottom: var(--sp-5); }
+.sc-tools .input { flex: 1; min-height: 44px; }
+.standing { background: var(--color-surface-1); border: 1px dashed var(--color-border-strong); border-radius: var(--radius-lg); padding: var(--sp-4) var(--sp-5); display: flex; align-items: center; gap: var(--sp-5); min-height: 92px; margin-bottom: var(--sp-5); }
+.standing h2 { font-size: var(--fs-sm); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--color-beige); flex: none; }
+.standing .people { display: flex; gap: var(--sp-4); flex-wrap: wrap; }
+.standing .hint { margin-left: auto; font-size: var(--fs-xs); color: var(--color-text-muted); max-width: 240px; text-align: right; }
+.sperson { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 76px; }
+.sperson .ava { width: 46px; height: 46px; border-radius: var(--radius-full); background: var(--color-surface-2); border: 1px solid var(--color-gold-deep); display: flex; align-items: center; justify-content: center; font-size: var(--fs-sm); font-weight: var(--fw-bold); color: var(--color-beige); }
+.sperson .nm { font-size: var(--fs-2xs); color: var(--color-text); text-align: center; line-height: var(--lh-snug); }
+
+.tgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
+.tcard { background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-2); }
+.tcard-head { display: flex; align-items: center; gap: var(--sp-2); }
+.tcard-head h3 { font-size: var(--fs-md); font-weight: var(--fw-bold); }
+.tcard-head h3 .tnum { color: var(--color-gold); }
+.tcard-head .seats-n { font-size: var(--fs-2xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.tcard-head .tail { margin-left: auto; display: flex; gap: var(--sp-1); }
+.tc-btn { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--color-border); border-radius: var(--radius-md); color: var(--color-beige); font-size: var(--fs-sm); }
+.tc-btn:hover { background: var(--color-overlay); color: var(--color-text); }
+.toval { position: relative; height: 210px; }
+.toval-felt { position: absolute; inset: 24px 40px; border-radius: var(--radius-full); background: radial-gradient(ellipse at 50% 42%, var(--felt-hi), var(--felt) 64%, var(--felt-deep) 100%); border: 6px solid var(--rail); box-shadow: 0 0 0 1px var(--rail-edge), inset 0 0 0 1px var(--rail-edge), var(--shadow-1); }
+.topen { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 0 var(--sp-4); border-radius: var(--radius-full); font-size: var(--fs-2xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--color-gold); background: var(--felt-pill); border: 1px solid var(--color-gold-deep); }
+.topen:hover { background: var(--color-gold); color: var(--color-ink-on-gold); }
+.tseat { position: absolute; transform: translate(-50%, -50%); z-index: 1; width: 36px; height: 36px; border-radius: var(--radius-full); background: var(--color-surface-2); border: 1px solid var(--color-gold-deep); display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-2xs); font-weight: var(--fw-bold); color: var(--color-beige); box-shadow: var(--shadow-1); }
+.tseat--empty { background: transparent; border-style: dashed; border-color: var(--seat-empty-line); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.tv-1 { left: 32%; top: 88%; } .tv-2 { left: 13%; top: 70%; } .tv-3 { left: 13%; top: 36%; }
+.tv-4 { left: 30%; top: 12%; } .tv-5 { left: 50%; top: 9%; }  .tv-6 { left: 70%; top: 12%; }
+.tv-7 { left: 87%; top: 36%; } .tv-8 { left: 87%; top: 70%; } .tv-9 { left: 68%; top: 88%; }
+.tcard-foot { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-xs); color: var(--color-text-muted); }
+.tcard-foot .rep { display: inline-flex; align-items: center; gap: 5px; }
+.tcard-foot .rep .dot { width: 7px; height: 7px; background: var(--color-success); }
+.tcard-foot .seatcount { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+/* notes */
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-2); max-width: 1440px; margin: 0 auto; padding: 0 var(--sp-6) var(--sp-9); }
+.note { border: 1px solid var(--color-border); background: var(--color-surface-1); border-radius: var(--radius-md); padding: var(--sp-4); }
+.note b { display: block; font-size: var(--fs-sm); color: var(--color-gold); margin-bottom: 4px; }
+.note span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); display: block; }
+</style>
+</head>
+<body>
+
+<div class="mock-chrome">
+  <b>Mockup — Admin desktop</b><span>PC ≥1280 · sidebar Series→Event→Flight · 3 tab</span>
+  <nav>
+    <a href="design-system.html">◂ Design System</a>
+    <a href="mockup-admin.html">Admin Tablet</a>
+    <a href="mockup-viewer-desktop.html">Viewer Desktop</a>
+    <a href="mockup-logger.html">Reporter ▸</a>
+  </nav>
+</div>
+
+<!-- =================================================================
+     FRAME A — TAB OVERVIEW
+     ================================================================= -->
+<div class="frame-cap" id="overview"><b>Frame A</b> · Tab Overview — Payouts (toggle tickets) · Days · Ảnh event</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">admin.quadspoker.vn<b>/event/5/overview</b></span></div>
+
+  <header class="topbar">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="top-tag">Admin</span>
+    <span class="top-tail">
+      <a class="top-link" href="mockup-viewer-desktop.html">Viewer ↗</a>
+      <a class="top-link" href="mockup-logger.html">Reporter ↗</a>
+      <span class="vr"></span>
+      <span class="acct"><span class="ava">AD</span>Admin ▾</span>
+    </span>
+  </header>
+
+  <div class="adwrap">
+
+    <!-- SIDEBAR -->
+    <aside class="side">
+      <div class="side-series">
+        <div class="k">Series</div>
+        <div class="side-pick"><b>Quads Winter Series 2026</b><span class="cv">▾</span></div>
+      </div>
+      <div class="side-cap"><span>Events</span><button class="add" aria-label="Thêm event">+</button></div>
+      <nav class="side-list">
+        <a class="side-ev" href="#"><span class="no tnum">#1</span><span class="nm">Opening Freezeout</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#2</span><span class="nm">Deepstack 2M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#3</span><span class="nm">Deep Stack 1M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#4</span><span class="nm">Sunday Deepstack</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev side-ev--active" href="#"><span class="no tnum">#5</span><span class="nm">5M NLH High Roller</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight side-ev--active" href="#"><span class="no tnum">1A</span><span class="nm">Day 1A — đang chạy</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight" href="#"><span class="no tnum">1B</span><span class="nm">Day 1B</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#6</span><span class="nm">Mini Main Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#7</span><span class="nm">Ladies Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#8</span><span class="nm">High Roller</span></a>
+      </nav>
+      <div class="side-foot"><button class="btn btn--outline btn--sm" style="width:100%">+ Series mới</button></div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="ad-head">
+        <div class="crumb">Quads Winter Series 2026 <b>›</b> Event #5</div>
+        <div class="ad-title">
+          <h1><span class="tnum">#5:</span> 5M NLH High Roller — Day 1A</h1>
+          <button class="ad-edit" aria-label="Sửa tên">✎</button>
+          <span class="ad-status">
+            <span class="spill spill--run"><span class="dot"></span>Clock running · Lv <b>10</b></span>
+            <span class="spill spill--open">Reg open</span>
+            <span class="spill spill--delay"><span class="dot"></span>Delay 15:00</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="ad-tabs">
+        <button class="adtab adtab--active">Overview</button>
+        <button class="adtab">Structure</button>
+        <button class="adtab">Seating Chart</button>
+        <button class="adtab" disabled>Reception <small>· sau</small></button>
+        <button class="adtab" disabled>Chips <small>· sau</small></button>
+        <button class="adtab" disabled>Visible Section <small>· sau</small></button>
+      </nav>
+
+      <div class="ad-body">
+        <div class="cols-2">
+
+          <!-- Payouts (rộng) -->
+          <section class="card" aria-label="Payouts">
+            <div class="card-head">
+              <h2>Payouts</h2>
+              <span class="tail"><label class="swrow"><span class="switch" role="switch" aria-checked="false" tabindex="0"></span><b>Payouts as tickets</b></label></span>
+            </div>
+            <p class="note">Khi bật <b>Payouts as tickets</b>, hạng chưa có Win amount hiển thị "Ticket" (satellite) trên viewer; hạng có Win amount thì ưu tiên số tiền.</p>
+            <div class="tbl-head grid-payout"><span>No</span><span>Win amount</span><span>Người nhận</span><span></span></div>
+            <div class="tbl-row grid-payout"><span class="num gold tnum">1</span><span class="num tnum">70,000,000</span><span class="muted">— chưa xác định —</span><button class="row-x" aria-label="Xóa hạng 1">✕</button></div>
+            <div class="tbl-row grid-payout"><span class="num gold tnum">2</span><span class="num tnum">42,000,000</span><span class="muted">— chưa xác định —</span><button class="row-x" aria-label="Xóa hạng 2">✕</button></div>
+            <div class="tbl-row grid-payout"><span class="num gold tnum">3</span><span class="num tnum">28,000,000</span><span class="muted">— chưa xác định —</span><button class="row-x" aria-label="Xóa hạng 3">✕</button></div>
+            <div class="tbl-row grid-payout"><span class="num gold tnum">4</span><span class="num tnum">18,000,000</span><span class="muted">— chưa xác định —</span><button class="row-x" aria-label="Xóa hạng 4">✕</button></div>
+            <div class="tbl-row grid-payout"><span class="num gold tnum">5</span><span class="num tnum">12,000,000</span><span class="muted">— chưa xác định —</span><button class="row-x" aria-label="Xóa hạng 5">✕</button></div>
+            <div class="tbl-row grid-payout"><span class="num gold tnum">6</span><span class="tk">Ticket Day 2</span><span class="muted">— chưa xác định —</span><button class="row-x" aria-label="Xóa hạng 6">✕</button></div>
+            <div class="add-inline grid-payout">
+              <div class="fld"><label for="po-no">No <span class="req">*</span></label><input class="input tnum" id="po-no" value="7"></div>
+              <div class="fld"><label for="po-win">Win amount</label><input class="input tnum" id="po-win" placeholder="0"></div>
+              
+              <div class="fld"><label for="po-pt">Người nhận</label><span class="selwrap"><select class="input" id="po-pt"><option>— chọn —</option><option>Nguyễn Trung Hiếu</option><option>Trần Quốc Bảo</option></select></span></div>
+              <button class="btn-add" aria-label="Thêm hạng">+</button>
+            </div>
+          </section>
+
+          <!-- Days + Ảnh -->
+          <div class="stack">
+            <section class="card" aria-label="Days">
+              <div class="card-head"><h2>Days</h2></div>
+              <div class="tbl-head grid-day"><span>No</span><span>Ngày</span><span>Bắt đầu</span><span>Kết thúc</span><span></span></div>
+              <div class="tbl-row grid-day"><span class="num gold tnum">1</span><span class="num tnum">2026-12-19</span><span class="num tnum">13:00</span><span class="muted tnum">— đang chạy</span><button class="row-x" aria-label="Xóa day 1">✕</button></div>
+              <div class="tbl-row grid-day"><span class="num gold tnum">2</span><span class="num tnum">2026-12-21</span><span class="num tnum">14:00</span><span class="muted">—</span><button class="row-x" aria-label="Xóa day 2">✕</button></div>
+              <div class="add-inline grid-day">
+                <div class="fld"><label for="d-no">No <span class="req">*</span></label><input class="input tnum" id="d-no" value="3"></div>
+                <div class="fld"><label for="d-date">Ngày <span class="req">*</span></label><input class="input tnum" id="d-date" placeholder="YYYY-MM-DD"></div>
+                <div class="fld"><label for="d-st">Bắt đầu <span class="req">*</span></label><input class="input tnum" id="d-st" placeholder="hh:mm"></div>
+                <div class="fld"><label for="d-en">Kết thúc</label><input class="input tnum" id="d-en" placeholder="hh:mm"></div>
+                <button class="btn-add" aria-label="Thêm day">+</button>
+              </div>
+            </section>
+
+            <section class="card" aria-label="Ảnh event">
+              <div class="card-head"><h2>Ảnh event</h2></div>
+              <div class="uprow">
+                <div class="upbox">
+                  <span class="ic">🖼</span>
+                  <b>Header image</b>
+                  <span>Tỷ lệ 16:7 (vd 2400×1044) — validate tỷ lệ. Dùng cho đầu trang viewer + nền ảnh OG.</span>
+                  <button class="btn btn--outline btn--sm">Chọn ảnh…</button>
+                </div>
+                <div class="upbox">
+                  <span class="ic">🃏</span>
+                  <b>Card photo</b>
+                  <span>Hiển thị 760×570, cover. Dùng cho danh sách event + link share.</span>
+                  <button class="btn btn--outline btn--sm">Chọn ảnh…</button>
+                </div>
+              </div>
+              <p class="note">Ảnh lưu trong Postgres (bytea ≤ 2 MB), serve qua endpoint có ETag — không thêm hạ tầng file storage.</p>
+            </section>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================================================================
+     FRAME B — TAB STRUCTURE
+     ================================================================= -->
+<div class="frame-cap" id="structure"><b>Frame B</b> · Tab Structure — Field + Info (2 card ngang) · Blind Levels editor full-width (nhập tay)</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">admin.quadspoker.vn<b>/event/5/structure</b></span></div>
+
+  <header class="topbar">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="top-tag">Admin</span>
+    <span class="top-tail">
+      <a class="top-link" href="mockup-viewer-desktop.html">Viewer ↗</a>
+      <a class="top-link" href="mockup-logger.html">Reporter ↗</a>
+      <span class="vr"></span>
+      <span class="acct"><span class="ava">AD</span>Admin ▾</span>
+    </span>
+  </header>
+
+  <div class="adwrap">
+    <aside class="side">
+      <div class="side-series">
+        <div class="k">Series</div>
+        <div class="side-pick"><b>Quads Winter Series 2026</b><span class="cv">▾</span></div>
+      </div>
+      <div class="side-cap"><span>Events</span><button class="add" aria-label="Thêm event">+</button></div>
+      <nav class="side-list">
+        <a class="side-ev" href="#"><span class="no tnum">#1</span><span class="nm">Opening Freezeout</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#2</span><span class="nm">Deepstack 2M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#3</span><span class="nm">Deep Stack 1M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#4</span><span class="nm">Sunday Deepstack</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev side-ev--active" href="#"><span class="no tnum">#5</span><span class="nm">5M NLH High Roller</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight side-ev--active" href="#"><span class="no tnum">1A</span><span class="nm">Day 1A — đang chạy</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight" href="#"><span class="no tnum">1B</span><span class="nm">Day 1B</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#6</span><span class="nm">Mini Main Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#7</span><span class="nm">Ladies Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#8</span><span class="nm">High Roller</span></a>
+      </nav>
+      <div class="side-foot"><button class="btn btn--outline btn--sm" style="width:100%">+ Series mới</button></div>
+    </aside>
+
+    <div class="main">
+      <div class="ad-head">
+        <div class="crumb">Quads Winter Series 2026 <b>›</b> Event #5</div>
+        <div class="ad-title">
+          <h1><span class="tnum">#5:</span> 5M NLH High Roller — Day 1A</h1>
+          <button class="ad-edit" aria-label="Sửa tên">✎</button>
+          <span class="ad-status">
+            <span class="spill spill--run"><span class="dot"></span>Clock running · Lv <b>10</b></span>
+            <span class="spill spill--open">Reg open</span>
+            <span class="spill spill--delay"><span class="dot"></span>Delay 15:00</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="ad-tabs">
+        <button class="adtab">Overview</button>
+        <button class="adtab adtab--active">Structure</button>
+        <button class="adtab">Seating Chart</button>
+        <button class="adtab" disabled>Reception <small>· sau</small></button>
+        <button class="adtab" disabled>Chips <small>· sau</small></button>
+        <button class="adtab" disabled>Visible Section <small>· sau</small></button>
+      </nav>
+
+      <div class="ad-body">
+        <div class="cols-2" style="grid-template-columns:1fr 1fr; margin-bottom:var(--sp-5)">
+          <section class="card" aria-label="Field">
+            <div class="card-head"><h2>Field</h2><span class="tail"><button class="btn btn--outline btn--sm">Cập nhật</button></span></div>
+            <div class="frow frow--2">
+              <div class="fld"><label for="f-remain">Players remaining <span class="req">*</span></label><input class="input tnum" id="f-remain" value="24"></div>
+              <div class="fld"><label for="f-entries">No of entries <span class="req">*</span></label><input class="input tnum" id="f-entries" value="35"></div>
+            </div>
+            <p class="note">Hệ thống chỉ <b>gợi ý</b> từ dữ liệu bust/track — admin chốt số rồi bấm Cập nhật mới ghi (<code>PLAYERS_REMAINING_SET</code> / <code>ENTRIES_SET</code>).</p>
+          </section>
+
+          <section class="card" aria-label="Info">
+            <div class="card-head"><h2>Info</h2><span class="tail"><button class="btn btn--outline btn--sm">Cập nhật</button></span></div>
+            <div class="frow frow--2">
+              <div class="fld"><label for="i-reg">Registration status</label><span class="selwrap"><select class="input" id="i-reg"><option>Open — late reg đến hết level 12</option><option>Closed</option></select></span></div>
+              <div class="fld"><label for="i-clock">Clock status</label><span class="selwrap"><select class="input" id="i-clock"><option>Running</option><option>Paused</option></select></span></div>
+            </div>
+            <label class="chkrow"><span class="chk" role="checkbox" aria-checked="false" tabindex="0"></span><span class="lbl">Show hands left thay vì time left</span></label>
+          </section>
+        </div>
+
+        <section class="card" aria-label="Blind levels">
+          <div class="card-head">
+            <h2>Blind Levels</h2>
+            <span class="tail">
+              <button class="btn btn--outline btn--sm">⧉ Clone blind levels</button>
+              <button class="btn btn--primary btn--sm">+ Thêm level</button>
+            </span>
+          </div>
+          <p class="note">Nhập tay từng level — bản này <b>không sync</b> phần mềm ngoài (không Import from PokerLens). ★ = level đang chạy; <b>Min chip</b> để race-off; <b>Note after</b> dùng cho break / color-up. Sửa khi flight đang chạy chỉ áp cho level chưa bắt đầu.</p>
+          <div class="blhead">
+            <span></span><span>Small blind</span><span>Big blind</span><span>Ante (BB)</span><span>Min chip</span><span>Phút</span><span>Note after</span><span></span><span></span>
+          </div>
+          <div class="blrow">
+            <button class="bl-star" aria-label="Đặt làm level hiện tại">☆</button>
+            <input class="input tnum" value="2,500"><input class="input tnum" value="5,000"><input class="input tnum" value="5,000"><input class="input tnum" value="500"><input class="input tnum" value="35"><input class="input" placeholder="Ghi chú…"><button class="bl-clone" aria-label="Nhân bản">⧉</button><button class="bl-del" aria-label="Xóa">🗑</button>
+          </div>
+          <div class="blrow">
+            <button class="bl-star" aria-label="Đặt làm level hiện tại">☆</button>
+            <input class="input tnum" value="3,000"><input class="input tnum" value="6,000"><input class="input tnum" value="6,000"><input class="input tnum" value="500"><input class="input tnum" value="35"><input class="input" value="Break 10 phút"><button class="bl-clone" aria-label="Nhân bản">⧉</button><button class="bl-del" aria-label="Xóa">🗑</button>
+          </div>
+          <div class="blrow blrow--current" aria-current="true">
+            <button class="bl-star bl-star--on" aria-label="Level hiện tại">★</button>
+            <input class="input tnum" value="4,000"><input class="input tnum" value="8,000"><input class="input tnum" value="8,000"><input class="input tnum" value="500"><input class="input tnum" value="35"><input class="input" placeholder="Ghi chú…"><button class="bl-clone" aria-label="Nhân bản">⧉</button><button class="bl-del" aria-label="Xóa">🗑</button>
+          </div>
+          <div class="blrow">
+            <button class="bl-star" aria-label="Đặt làm level hiện tại">☆</button>
+            <input class="input tnum" value="5,000"><input class="input tnum" value="10,000"><input class="input tnum" value="10,000"><input class="input tnum" value="1,000"><input class="input tnum" value="35"><input class="input" value="Race-off chip 500"><button class="bl-clone" aria-label="Nhân bản">⧉</button><button class="bl-del" aria-label="Xóa">🗑</button>
+          </div>
+          <div class="blrow">
+            <button class="bl-star" aria-label="Đặt làm level hiện tại">☆</button>
+            <input class="input tnum" value="6,000"><input class="input tnum" value="12,000"><input class="input tnum" value="12,000"><input class="input tnum" value="1,000"><input class="input tnum" value="35"><input class="input" value="Hết late reg"><button class="bl-clone" aria-label="Nhân bản">⧉</button><button class="bl-del" aria-label="Xóa">🗑</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================================================================
+     FRAME C — TAB SEATING CHART
+     ================================================================= -->
+<div class="frame-cap" id="seating"><b>Frame C</b> · Tab Seating Chart — Search · RE-DRAW · ADD GAME · Standing Participants · lưới card bàn 3 cột + OPEN REPORTER</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">admin.quadspoker.vn<b>/event/5/seating</b></span></div>
+
+  <header class="topbar">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="top-tag">Admin</span>
+    <span class="top-tail">
+      <a class="top-link" href="mockup-viewer-desktop.html">Viewer ↗</a>
+      <a class="top-link" href="mockup-logger.html">Reporter ↗</a>
+      <span class="vr"></span>
+      <span class="acct"><span class="ava">AD</span>Admin ▾</span>
+    </span>
+  </header>
+
+  <div class="adwrap">
+    <aside class="side">
+      <div class="side-series">
+        <div class="k">Series</div>
+        <div class="side-pick"><b>Quads Winter Series 2026</b><span class="cv">▾</span></div>
+      </div>
+      <div class="side-cap"><span>Events</span><button class="add" aria-label="Thêm event">+</button></div>
+      <nav class="side-list">
+        <a class="side-ev" href="#"><span class="no tnum">#1</span><span class="nm">Opening Freezeout</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#2</span><span class="nm">Deepstack 2M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#3</span><span class="nm">Deep Stack 1M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#4</span><span class="nm">Sunday Deepstack</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev side-ev--active" href="#"><span class="no tnum">#5</span><span class="nm">5M NLH High Roller</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight side-ev--active" href="#"><span class="no tnum">1A</span><span class="nm">Day 1A — đang chạy</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight" href="#"><span class="no tnum">1B</span><span class="nm">Day 1B</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#6</span><span class="nm">Mini Main Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#7</span><span class="nm">Ladies Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#8</span><span class="nm">High Roller</span></a>
+      </nav>
+      <div class="side-foot"><button class="btn btn--outline btn--sm" style="width:100%">+ Series mới</button></div>
+    </aside>
+
+    <div class="main">
+      <div class="ad-head">
+        <div class="crumb">Quads Winter Series 2026 <b>›</b> Event #5</div>
+        <div class="ad-title">
+          <h1><span class="tnum">#5:</span> 5M NLH High Roller — Day 1A</h1>
+          <button class="ad-edit" aria-label="Sửa tên">✎</button>
+          <span class="ad-status">
+            <span class="spill spill--run"><span class="dot"></span>Clock running · Lv <b>10</b></span>
+            <span class="spill spill--open">Reg open</span>
+            <span class="spill spill--delay"><span class="dot"></span>Delay 15:00</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="ad-tabs">
+        <button class="adtab">Overview</button>
+        <button class="adtab">Structure</button>
+        <button class="adtab adtab--active">Seating Chart</button>
+        <button class="adtab" disabled>Reception <small>· sau</small></button>
+        <button class="adtab" disabled>Chips <small>· sau</small></button>
+        <button class="adtab" disabled>Visible Section <small>· sau</small></button>
+      </nav>
+
+      <div class="ad-body">
+        <div class="sc-tools">
+          <input class="input" type="search" placeholder="⌕ Tìm người chơi theo tên / ID → chỉ ra bàn & ghế đang ngồi…">          <button class="btn btn--danger">Re-draw</button>
+          <button class="btn btn--outline">+ Add game</button>
+        </div>
+
+        <section class="standing" aria-label="Standing participants">
+          <h2>Standing<br>participants</h2>
+          <div class="people">
+            <div class="sperson"><span class="ava">PL</span><span class="nm">Phan Lâm</span></div>
+            <div class="sperson"><span class="ava">VT</span><span class="nm">Vũ Tùng</span></div>
+            <div class="sperson"><span class="ava">+</span><span class="nm">Thêm</span></div>
+          </div>
+          <span class="hint">Gán vào ghế trống từ đây hoặc dấu "+" trên reporter; stack mang theo. Re-draw để xếp lại toàn bộ.</span>
+        </section>
+
+        <div class="tgrid">
+
+          <article class="tcard" aria-label="Bàn 1">
+            <div class="tcard-head"><h3><span class="tnum">#1:</span> Feature table</h3><span class="tail"><button class="tc-btn" aria-label="Sắp xếp">⠿</button><button class="tc-btn" aria-label="Sửa bàn">✎</button></span></div>
+            <div class="toval">
+              <div class="toval-felt" aria-hidden="true"></div>
+              <a class="topen" href="mockup-logger.html">Open Reporter</a>
+              <span class="tseat tv-1" title="Nguyễn Trung Hiếu">NH</span>
+              <span class="tseat tseat--empty tv-2">2</span>
+              <span class="tseat tv-3" title="Trần Quốc Bảo">TB</span>
+              <span class="tseat tv-4" title="Vũ Hải Long">VL</span>
+              <span class="tseat tv-5" title="Đỗ Thành Nam">DN</span>
+              <span class="tseat tv-6" title="Hoàng Gia Khánh">HK</span>
+              <span class="tseat tseat--empty tv-7">7</span>
+              <span class="tseat tv-8" title="Bùi Tiến Dũng">BD</span>
+              <span class="tseat tv-9" title="Đinh Văn Vũ">DV</span>
+            </div>
+            <div class="tcard-foot"><span class="rep"><span class="dot"></span>Reporter: Minh</span><span class="seatcount tnum">7/9 ghế</span></div>
+          </article>
+
+          <article class="tcard" aria-label="Bàn 2">
+            <div class="tcard-head"><h3><span class="tnum">#2:</span> Bàn 2</h3><span class="tail"><button class="tc-btn" aria-label="Sắp xếp">⠿</button><button class="tc-btn" aria-label="Sửa bàn">✎</button></span></div>
+            <div class="toval">
+              <div class="toval-felt" aria-hidden="true"></div>
+              <a class="topen" href="mockup-logger.html">Open Reporter</a>
+              <span class="tseat tv-1" title="Lê Minh Tuấn">MT</span>
+              <span class="tseat tv-2" title="Ngô Thanh Sơn">TS</span>
+              <span class="tseat tv-3" title="Phạm Đức Anh">DA</span>
+              <span class="tseat tv-4" title="Đặng Quang Huy">QH</span>
+              <span class="tseat tseat--empty tv-5">5</span>
+              <span class="tseat tv-6" title="Tạ Văn Kiên">VK</span>
+              <span class="tseat tv-7" title="Lý Hoàng Phúc">HP</span>
+              <span class="tseat tseat--empty tv-8">8</span>
+              <span class="tseat tv-9" title="Cao Ngọc Ánh">NA</span>
+            </div>
+            <div class="tcard-foot"><span class="rep"><span class="dot"></span>Reporter: Lan</span><span class="seatcount tnum">7/9 ghế</span></div>
+          </article>
+
+          <article class="tcard" aria-label="Bàn 3">
+            <div class="tcard-head"><h3><span class="tnum">#3:</span> Bàn 3</h3><span class="tail"><button class="tc-btn" aria-label="Sắp xếp">⠿</button><button class="tc-btn" aria-label="Sửa bàn">✎</button></span></div>
+            <div class="toval">
+              <div class="toval-felt" aria-hidden="true"></div>
+              <a class="topen" href="mockup-logger.html">Open Reporter</a>
+              <span class="tseat tv-1" title="Trịnh Công Sang">CS</span>
+              <span class="tseat tv-2" title="Hà Việt Dũng">VD</span>
+              <span class="tseat tseat--empty tv-3">3</span>
+              <span class="tseat tv-4" title="Mai Xuân Trường">XT</span>
+              <span class="tseat tv-5" title="Đoàn Khắc Việt">KV</span>
+              <span class="tseat tv-6" title="Vương Tuấn Kiệt">TK</span>
+              <span class="tseat tv-7" title="Lương Bảo Châu">BC</span>
+              <span class="tseat tv-8" title="Kiều Anh Quân">AQ</span>
+              <span class="tseat tseat--empty tv-9">9</span>
+            </div>
+            <div class="tcard-foot"><span class="rep" style="color:var(--color-text-muted)"><span class="dot" style="background:var(--color-text-muted)"></span>Chưa gán reporter</span><span class="seatcount tnum">7/9 ghế</span></div>
+          </article>
+
+          <article class="tcard" aria-label="Bàn 5">
+            <div class="tcard-head"><h3><span class="tnum">#5:</span> Bàn 5</h3><span class="tail"><button class="tc-btn" aria-label="Sắp xếp">⠿</button><button class="tc-btn" aria-label="Sửa bàn">✎</button></span></div>
+            <div class="toval">
+              <div class="toval-felt" aria-hidden="true"></div>
+              <a class="topen" href="mockup-logger.html">Open Reporter</a>
+              <span class="tseat tv-1" title="Quách Thái Bình">TB</span>
+              <span class="tseat tseat--empty tv-2">2</span>
+              <span class="tseat tv-3" title="Ông Gia Bảo">GB</span>
+              <span class="tseat tv-4" title="Nghiêm Đình Lộc">DL</span>
+              <span class="tseat tv-5" title="Thái Minh Nhật">MN</span>
+              <span class="tseat tseat--empty tv-6">6</span>
+              <span class="tseat tv-7" title="Triệu Quốc Đạt">QD</span>
+              <span class="tseat tv-8" title="La Thành Trung">TT</span>
+              <span class="tseat tseat--empty tv-9">9</span>
+            </div>
+            <div class="tcard-foot"><span class="rep" style="color:var(--color-text-muted)"><span class="dot" style="background:var(--color-text-muted)"></span>Chưa gán reporter</span><span class="seatcount tnum">6/9 ghế</span></div>
+          </article>
+
+          <article class="tcard" aria-label="Thêm bàn" style="border-style:dashed; align-items:center; justify-content:center; min-height:300px; color:var(--color-text-muted)">
+            <button class="btn-add" aria-label="Thêm bàn">+</button>
+            <b style="font-size:var(--fs-sm); color:var(--color-beige); font-weight:var(--fw-semi)">Add game</b>
+            <span style="font-size:var(--fs-xs); text-align:center">Bàn mới 2–10 ghế<br>(mặc định 9)</span>
+          </article>
+
+        </div>
+
+        <p class="note" style="margin-top:var(--sp-4)">Bàn 4 đã vỡ (break) — người chơi đã chia về bàn khác. Card kéo-thả để sắp thứ tự; <b>Open Reporter</b> mở màn ghi hand của bàn (tablet). <b>Re-draw</b> xáo toàn bộ ghế ngẫu nhiên — cần xác nhận 2 bước, sinh <code>TABLE_RESEATED</code> per bàn.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <div class="note"><b>Sidebar điều hướng (khác tablet)</b><span>Desktop thay dải chip ngang bằng sidebar Series→Event→Flight cố định, tận dụng chiều ngang; event đang chọn + flight con highlight gold. Tablet (mockup-admin.html) giữ dải chip cho màn đứng.</span></div>
+  <div class="note"><b>Trạng thái nhanh ở header</b><span>Pill Clock/Reg/Delay hiển thị ngay cạnh tiêu đề để admin nắm tình hình mọi tab; chỉnh chi tiết vẫn ở tab Structure → Info.</span></div>
+  <div class="note"><b>Không sync phần mềm ngoài</b><span>Bỏ "Import from PokerLens" — blind levels nhập tay hoặc Clone từ event khác. Field/Info bấm Cập nhật mới ghi event (chỉ gợi ý, không tự cập nhật).</span></div>
+  <div class="note"><b>Re-draw là hành động nguy hiểm</b><span>Nút outline danger, xác nhận 2 bước. Add game / sửa bàn là outline trung tính. OPEN REPORTER mở reporter bàn (vẫn là tablet — không làm reporter desktop).</span></div>
+</div>
+
+</body>
+</html>

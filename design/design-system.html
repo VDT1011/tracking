@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quads Live — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* ============ STYLE RIÊNG TRANG STYLEGUIDE ============ */
+
+body {
+  background:
+    radial-gradient(1100px 500px at 50% -10%, var(--color-sheen), transparent 70%),
+    var(--color-bg);
+}
+
+/* ---------- Khung trang ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: var(--z-top);
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: 0 var(--sp-6);
+  height: 64px;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+.wordmark { display: inline-flex; align-items: center; gap: 10px; color: var(--color-text); }
+.wordmark .mk-sq { width: 10px; height: 10px; background: var(--color-gold); }
+.wordmark b { font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); font-size: var(--fs-base); }
+.wordmark span { font-weight: var(--fw-reg); letter-spacing: var(--ls-wide); color: var(--color-beige); font-size: var(--fs-base); }
+.topbar-tag { color: var(--color-text-muted); font-size: var(--fs-xs); border-left: 1px solid var(--color-border); padding-left: var(--sp-4); }
+.topbar-nav { margin-left: auto; display: flex; gap: var(--sp-2); }
+
+.layout {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 220px 1fr;
+  gap: var(--sp-8); padding: var(--sp-8) var(--sp-6) var(--sp-10);
+}
+.sidenav { position: sticky; top: 96px; align-self: start; display: flex; flex-direction: column; gap: 2px; }
+.sidenav a {
+  font-size: var(--fs-sm); color: var(--color-text-muted);
+  padding: 7px 10px; border-left: 1px solid var(--color-border);
+}
+.sidenav a:hover { color: var(--color-gold); border-left-color: var(--color-gold); background: var(--color-gold-faint); }
+.sidenav .nav-cap { font-size: var(--fs-2xs); color: var(--color-beige); padding: 14px 10px 6px; }
+
+/* ---------- Hero ---------- */
+.hero { margin-bottom: var(--sp-9); }
+.hero h1 { font-size: var(--fs-3xl); font-weight: var(--fw-heavy); letter-spacing: -0.02em; line-height: var(--lh-tight); }
+.hero p { color: var(--color-text-muted); max-width: 640px; margin-top: var(--sp-3); }
+.principles { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-2); margin-top: var(--sp-6); }
+.principle { border: 1px solid var(--color-border); background: var(--color-surface-1); padding: var(--sp-4); }
+.principle b { display: block; font-size: var(--fs-sm); color: var(--color-gold); margin-bottom: 4px; }
+.principle span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); display: block; }
+
+/* ---------- Section ---------- */
+section { margin-bottom: var(--sp-10); scroll-margin-top: 88px; }
+.sec-head { display: flex; align-items: baseline; gap: var(--sp-3); border-top: 1px solid var(--color-border-strong); padding-top: var(--sp-4); margin-bottom: var(--sp-2); }
+.sec-head .idx { font-size: var(--fs-sm); color: var(--color-gold); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.sec-head h2 { font-size: var(--fs-lg); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.sec-note { color: var(--color-text-muted); font-size: var(--fs-sm); max-width: 720px; margin-bottom: var(--sp-5); }
+.sec-note b { color: var(--color-beige); font-weight: var(--fw-semi); }
+
+.demo {
+  border: 1px solid var(--color-border); background: var(--color-surface-1);
+  padding: var(--sp-6); display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: flex-start;
+}
+.demo + .demo { border-top: 0; }
+.demo--col { flex-direction: column; align-items: stretch; }
+.demo--dark { background: var(--color-bg); }
+.demo-cap {
+  width: 100%; font-size: var(--fs-2xs); color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: var(--ls-caps); margin-bottom: var(--sp-1);
+}
+.usage { font-size: var(--fs-sm); color: var(--color-text-muted); border: 1px dashed var(--color-border); border-top: 0; padding: var(--sp-3) var(--sp-6); }
+.demo--center { justify-content: center; gap: var(--sp-8); align-items: center; }
+.demo--bare { padding: 0; border: 0; }
+.demo-gap-top { margin-top: var(--sp-3); }
+.row-wrap { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.grow { flex: 1; }
+.usage b { color: var(--color-beige); font-weight: var(--fw-semi); }
+code { font-family: var(--font-mono); font-size: 0.92em; color: var(--color-gold-bright); background: var(--color-gold-faint); padding: 1px 5px; }
+
+/* ---------- 01 Màu ---------- */
+.sw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); width: 100%; }
+.sw { display: flex; gap: var(--sp-3); align-items: center; border: 1px solid var(--color-border); padding: var(--sp-2); background: var(--color-bg); }
+.sw-chip { width: 56px; height: 56px; flex: none; border: 1px solid var(--color-border); }
+.sw-info b { display: block; font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: var(--fw-med); color: var(--color-text); }
+.sw-info span { display: block; font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--color-gold); margin: 2px 0; }
+.sw-info p { font-size: var(--fs-2xs); color: var(--color-text-muted); line-height: var(--lh-snug); }
+.sw-cap { grid-column: 1 / -1; font-size: var(--fs-2xs); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); margin-top: var(--sp-3); }
+.sw-cap:first-child { margin-top: 0; }
+
+.sw--bg{background:var(--color-bg)} .sw--s1{background:var(--color-surface-1)} .sw--s2{background:var(--color-surface-2)} .sw--s3{background:var(--color-surface-3)}
+.sw--text{background:var(--color-text)} .sw--muted{background:var(--color-text-muted)} .sw--beige{background:var(--color-beige)}
+.sw--gold{background:var(--color-gold)} .sw--goldb{background:var(--color-gold-bright)} .sw--goldd{background:var(--color-gold-deep)}
+.sw--golds{background:var(--color-gold-soft)} .sw--goldf{background:var(--color-gold-faint)} .sw--ink{background:var(--color-ink-on-gold)}
+.sw--success{background:var(--color-success)} .sw--danger{background:var(--color-danger)} .sw--dangert{background:var(--color-danger-text)}
+.sw--warning{background:var(--color-warning)} .sw--info{background:var(--color-info)}
+.sw--border{background:var(--color-border)} .sw--borders{background:var(--color-border-strong)} .sw--overlay{background:var(--color-overlay)}
+.sw--cface{background:var(--card-face)} .sw--cred{background:var(--card-red)} .sw--cblack{background:var(--card-black)}
+.sw--cgreen{background:var(--card-green)} .sw--cblue{background:var(--card-blue)}
+.sw--inksucc{background:var(--color-ink-on-success)} .sw--inkdang{background:var(--color-ink-on-danger)}
+.sw--felthi{background:var(--felt-hi)} .sw--felt{background:var(--felt)} .sw--feltd{background:var(--felt-deep)} .sw--rail{background:var(--rail)}
+
+/* ---------- 02 Type ---------- */
+.ts-row { display: grid; grid-template-columns: 260px 1fr; gap: var(--sp-5); align-items: baseline; padding: var(--sp-3) 0; border-bottom: 1px solid var(--color-border); width: 100%; }
+.ts-row:last-child { border-bottom: 0; }
+.ts-meta { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--color-text-muted); line-height: 1.6; }
+.ts-meta b { color: var(--color-gold); font-weight: var(--fw-med); display: block; }
+.t-4xl{font-size:var(--fs-4xl);font-weight:var(--fw-heavy);letter-spacing:var(--ls-num);line-height:var(--lh-tight)}
+.t-3xl{font-size:var(--fs-3xl);font-weight:var(--fw-heavy);letter-spacing:var(--ls-num);line-height:var(--lh-tight)}
+.t-2xl{font-size:var(--fs-2xl);font-weight:var(--fw-bold);letter-spacing:var(--ls-num);line-height:var(--lh-tight)}
+.t-xl{font-size:var(--fs-xl);font-weight:var(--fw-bold);line-height:var(--lh-tight)}
+.t-lg{font-size:var(--fs-lg);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:var(--ls-caps)}
+.t-md{font-size:var(--fs-md);font-weight:var(--fw-semi)}
+.t-base{font-size:var(--fs-base)}
+.t-sm{font-size:var(--fs-sm);color:var(--color-text-muted)}
+.t-xs{font-size:var(--fs-xs);color:var(--color-text-muted)}
+.t-2xs{font-size:var(--fs-2xs);color:var(--color-beige);text-transform:uppercase;letter-spacing:var(--ls-caps);font-weight:var(--fw-semi)}
+.tnum-demo { display: flex; gap: var(--sp-8); }
+.tnum-demo > div { font-size: var(--fs-xl); font-weight: var(--fw-bold); line-height: 1.4; }
+.tnum-demo .lbl { font-size: var(--fs-2xs); color: var(--color-text-muted); font-weight: var(--fw-reg); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.tnum-demo .bad { font-variant-numeric: normal; }
+
+/* ---------- 03 Spacing ---------- */
+.sp-row { display: grid; grid-template-columns: 120px 60px 1fr; gap: var(--sp-4); align-items: center; padding: 5px 0; width: 100%; }
+.sp-row code { background: none; padding: 0; }
+.sp-row .px { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--color-text-muted); }
+.sp-bar { height: 14px; background: var(--color-gold-soft); border-left: 2px solid var(--color-gold); }
+
+/* ---------- 04 Button ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  min-height: 40px; padding: 0 var(--sp-4);
+  font-size: var(--fs-base); font-weight: var(--fw-semi); line-height: 1;
+  background: var(--color-surface-2); color: var(--color-text);
+  border: 1px solid var(--color-border);
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+.btn:hover { background: var(--color-surface-3); border-color: var(--color-border-strong); }
+.btn:active { transform: translateY(1px); }
+.btn--primary { background: var(--color-gold); color: var(--color-ink-on-gold); border-color: transparent; font-weight: var(--fw-bold); }
+.btn--primary:hover { background: var(--color-gold-bright); border-color: transparent; }
+.btn--primary:active { background: var(--color-gold-deep); }
+.btn--outline { background: transparent; border-color: var(--color-border-strong); color: var(--color-beige); }
+.btn--outline:hover { background: var(--color-overlay); color: var(--color-text); border-color: var(--color-beige); }
+.btn--ghost { background: transparent; border-color: transparent; color: var(--color-beige); }
+.btn--ghost:hover { background: var(--color-overlay); color: var(--color-text); }
+.btn--danger { background: var(--color-danger-soft); border-color: var(--color-danger-line); color: var(--color-danger-text); }
+.btn--danger:hover { border-color: var(--color-danger); }
+.btn--lg { min-height: var(--tap-lg); padding: 0 var(--sp-6); font-size: var(--fs-md); }
+.btn:disabled { opacity: 0.38; }
+.btn:disabled:hover { background: var(--color-surface-2); border-color: var(--color-border); transform: none; }
+.btn--primary:disabled:hover { background: var(--color-gold); }
+/* mô phỏng state tĩnh cho styleguide */
+.demo-hover.btn { background: var(--color-surface-3); border-color: var(--color-border-strong); }
+.demo-hover.btn--primary { background: var(--color-gold-bright); }
+.demo-hover.btn--outline { background: var(--color-overlay); color: var(--color-text); border-color: var(--color-beige); }
+.demo-hover.btn--ghost { background: var(--color-overlay); color: var(--color-text); }
+.demo-hover.btn--danger { background: var(--color-danger-soft); border-color: var(--color-danger); }
+.demo-focus { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+/* ---------- 05 Action bar reporter (v2 — quy ước màu chức năng Triton) ----------
+   ALL-IN = danger đặc · RAISE/BET + CTA (DEAL, END HAND) = gold đặc
+   CALL/CHECK = success đặc · FOLD = outline trung tính. */
+.abar { display: flex; gap: var(--sp-2); align-items: stretch; width: 100%; }
+.ab {
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-height: var(--tap-lg); padding: 0 var(--sp-4);
+  font-size: var(--fs-lg); font-weight: var(--fw-bold); line-height: 1;
+  text-transform: uppercase; letter-spacing: var(--ls-caps);
+  border: 1px solid transparent;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.ab span { font-size: var(--fs-md); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+.ab:active { transform: translateY(1px); }
+.ab--fold { flex: 1; background: transparent; border-color: var(--color-border-strong); color: var(--color-text); }
+.ab--fold:hover { background: var(--color-overlay); border-color: var(--color-beige); }
+.ab--icon {
+  width: var(--tap-lg); flex: none; padding: 0;
+  background: var(--color-surface-2); border-color: var(--color-border); color: var(--color-beige);
+  font-size: var(--fs-xl); text-transform: none; letter-spacing: 0;
+}
+.ab--icon small { font-size: var(--fs-2xs); font-weight: var(--fw-semi); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.ab--icon:hover { background: var(--color-surface-3); border-color: var(--color-border-strong); }
+.ab--void { color: var(--color-danger-text); border-color: var(--color-danger-line); background: var(--color-danger-soft); }
+.ab--void:hover { border-color: var(--color-danger); }
+.ab--allin { flex: 1.1; background: var(--color-danger); color: var(--color-ink-on-danger); }
+.ab--allin:hover { background: var(--color-danger-bright); }
+.ab--allin:active { background: var(--color-danger-deep); }
+.ab--raise { flex: 1.15; background: var(--color-gold); color: var(--color-ink-on-gold); }
+.ab--raise:hover { background: var(--color-gold-bright); }
+.ab--raise:active { background: var(--color-gold-deep); }
+.ab--call { flex: 1.4; background: var(--color-success); color: var(--color-ink-on-success); }
+.ab--call:hover { background: var(--color-success-bright); }
+.ab--call:active { background: var(--color-success-deep); }
+.ab--cta { flex: none; min-width: 200px; background: var(--color-gold); color: var(--color-ink-on-gold); }
+.ab--cta:hover { background: var(--color-gold-bright); }
+.ab--cta:active { background: var(--color-gold-deep); }
+.ab:disabled { opacity: 0.35; }
+.ab-spacer { flex: 0.5; }
+.rchip {
+  min-height: var(--tap-min); display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
+  padding: 0 var(--sp-5); background: transparent;
+  border: 1px solid var(--color-border-strong); color: var(--color-text);
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.rchip b { font-size: var(--fs-sm); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.rchip span { font-size: var(--fs-md); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.rchip:hover { background: var(--color-overlay); border-color: var(--color-beige); }
+.rchip--custom { border-style: dashed; }
+
+/* ---------- 06 Lá bài ---------- */
+.pcard {
+  position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+  width: var(--card-w-md); height: var(--card-h-md); flex: none;
+  background: var(--card-face); color: var(--card-black);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 0 0 1px var(--card-face-edge), var(--shadow-card);
+}
+.pcard b { font-size: 16px; line-height: 1; font-weight: var(--fw-heavy); letter-spacing: -0.02em; }
+.pcard i { font-style: normal; font-size: 12px; line-height: 1; margin-top: 2px; }
+.pcard--red { color: var(--card-red); }
+.pcard--lg { width: var(--card-w-lg); height: var(--card-h-lg); }
+.pcard--lg b { font-size: 25px; } .pcard--lg i { font-size: 17px; margin-top: 3px; }
+.pcard--sm { width: var(--card-w-sm); height: var(--card-h-sm); flex-direction: row; gap: 1px; }
+.pcard--sm b { font-size: 11px; } .pcard--sm i { font-size: 10px; margin-top: 0; }
+.pcard--back {
+  background:
+    repeating-linear-gradient(45deg, var(--card-back-line) 0 1px, transparent 1px 5px),
+    var(--color-surface-2);
+  box-shadow: inset 0 0 0 1px var(--color-border-strong), var(--shadow-card);
+}
+.pcard--slot { background: transparent; border: 1px dashed var(--color-border-strong); box-shadow: none; }
+.cardrow { display: flex; gap: var(--sp-2); align-items: flex-end; }
+
+/* ---------- Badge vị trí + nút dealer ---------- */
+.pos {
+  display: inline-flex; align-items: center;
+  font-size: var(--fs-2xs); font-weight: var(--fw-semi); letter-spacing: var(--ls-caps);
+  color: var(--color-beige); border: 1px solid var(--color-border-strong);
+  padding: 2px 6px; text-transform: uppercase; flex: none;
+}
+.dbtn {
+  width: 18px; height: 18px; border-radius: 50%; flex: none; /* nút dealer là vật thể tròn ngoài đời */
+  background: var(--color-gold); color: var(--color-ink-on-gold);
+  font-size: 11px; font-weight: var(--fw-heavy);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* ---------- 07 Seat ---------- */
+/* Seat card (logger) */
+.seat {
+  width: 380px; min-height: 116px;
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  padding: var(--sp-3) var(--sp-4);
+}
+.seat-top { display: flex; align-items: center; gap: var(--sp-2); }
+.seat-name { font-size: var(--fs-md); font-weight: var(--fw-semi); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seat-stack { display: flex; align-items: baseline; gap: var(--sp-2); }
+.seat-stack b { font-size: var(--fs-xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+.seat-stack span { font-size: var(--fs-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.seat-note {
+  margin-top: auto; text-align: center; padding: 7px var(--sp-2);
+  background: var(--color-gold-soft); color: var(--color-gold);
+  font-size: var(--fs-sm); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps);
+}
+.seat--fold { opacity: 0.45; }
+/* v2: to-act = success (xanh lá, theo Triton) — gold để dành cho winner */
+.seat--acting { border: 2px solid var(--seat-toact); background: var(--seat-toact-soft); padding: calc(var(--sp-3) - 1px) calc(var(--sp-4) - 1px); }
+.seat--acting .seat-note { background: var(--seat-toact); color: var(--color-ink-on-success); }
+.seat--winner { border-color: var(--seat-winner); background: var(--seat-winner-soft); }
+.seat--winner .seat-note { background: var(--seat-winner); color: var(--color-ink-on-gold); }
+.seat--bust .seat-stack b { color: var(--color-text-muted); }
+.seat--absent { border-style: dashed; }
+.seat--absent .seat-name, .seat--absent .seat-stack b { color: var(--color-text-muted); }
+.seat-note--absent { background: var(--color-info-soft); color: var(--color-info); }
+/* nhãn trạng thái trên seat */
+.st {
+  font-size: var(--fs-xs); font-weight: var(--fw-semi); letter-spacing: var(--ls-caps); text-transform: uppercase;
+  padding: 3px 8px; border: 1px solid var(--color-border); color: var(--color-text-muted); flex: none;
+}
+.st--check { color: var(--color-beige); border-color: var(--color-border-strong); }
+.st--bet { color: var(--color-gold); background: var(--color-gold-soft); border-color: transparent; font-variant-numeric: tabular-nums; }
+.st--act { color: var(--color-ink-on-success); background: var(--seat-toact); border-color: transparent; } /* v2: to-act success */
+.st--absent { color: var(--color-info); border-color: var(--color-info-line); }
+.st--bust { color: var(--color-danger-text); border-color: var(--color-danger-line); }
+.st--win { color: var(--color-ink-on-gold); background: var(--seat-winner); border-color: transparent; }
+.st--satout { color: var(--color-ink-on-danger); background: var(--seat-satout); border-color: transparent; } /* v2: Sit out */
+
+/* v2 — Seat pod reporter (bàn oval, mockup-logger): avatar + plate + bar trạng thái */
+.rseat { position: relative; width: 132px; display: flex; flex-direction: column; align-items: center; gap: 4px; flex: none; }
+.rseat-ava {
+  position: relative; width: 56px; height: 56px; flex: none;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2); border: 1px solid var(--color-border-strong);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--color-beige);
+  box-shadow: var(--shadow-1);
+}
+.rseat-plate {
+  width: 100%;
+  background: var(--color-surface-1); border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); overflow: hidden;
+  padding: 4px 8px 5px; text-align: center;
+  display: flex; flex-direction: column; gap: 1px;
+  box-shadow: var(--shadow-1);
+}
+.rseat-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); line-height: var(--lh-snug); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rseat-stack { font-size: var(--fs-base); font-weight: var(--fw-heavy); line-height: var(--lh-tight); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); }
+.rseat-bar {
+  margin: 3px -8px -5px; padding: 3px 4px 4px;
+  font-size: var(--fs-2xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  font-variant-numeric: tabular-nums;
+  background: var(--color-surface-2); color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+}
+.rseat .pos { position: absolute; top: -7px; left: -20px; z-index: 4; background: var(--color-surface-1); }
+.rseat--fold { opacity: 0.45; }
+.rseat--toact .rseat-ava { border: 2px solid var(--seat-toact); }
+.rseat--toact .rseat-ava::after {
+  content: ""; position: absolute; inset: -6px;
+  border: 2px solid var(--seat-toact); border-radius: var(--radius-full);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.rseat--toact .rseat-plate { border-color: var(--seat-toact); }
+.rseat--toact .rseat-bar { background: var(--seat-toact); color: var(--color-ink-on-success); border-top-color: transparent; }
+.rseat--winner .rseat-ava { border: 2px solid var(--seat-winner); box-shadow: 0 0 0 4px var(--seat-winner-soft), var(--shadow-1); }
+.rseat--winner .rseat-plate { border-color: var(--seat-winner); background: var(--color-surface-2); box-shadow: var(--shadow-2); }
+.rseat--winner .rseat-bar { background: var(--seat-winner); color: var(--color-ink-on-gold); border-top-color: transparent; }
+.rs-flag {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%); z-index: 4;
+  font-size: var(--fs-2xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  background: var(--seat-satout); color: var(--color-ink-on-danger);
+  padding: 2px 8px; border-radius: var(--radius-sm); white-space: nowrap;
+}
+.rseat--satout .rseat-ava { border-color: var(--color-danger-line); }
+.rseat--satout .rseat-name, .rseat--satout .rseat-stack { color: var(--color-text-muted); }
+.rseat--empty .rseat-ava {
+  background: transparent; border: 1px dashed var(--seat-empty-line); box-shadow: none;
+  color: var(--color-text-muted); font-size: var(--fs-xl); font-weight: var(--fw-reg);
+}
+.rseat--empty .rseat-plate { border-style: dashed; box-shadow: none; }
+.rseat--empty .rseat-name { color: var(--color-text-muted); }
+
+/* Seat plate (viewer) */
+.plate { width: 172px; background: var(--color-surface-1); border: 1px solid var(--color-border); box-shadow: var(--shadow-1); }
+.plate-hole { display: flex; gap: 4px; justify-content: center; padding: var(--sp-2) 0 0; }
+.plate-head { display: flex; align-items: center; gap: 6px; padding: 7px 9px 0; }
+.plate-name { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.plate-stack { display: flex; align-items: baseline; gap: 6px; padding: 2px 9px 8px; }
+.plate-stack b { font-size: var(--fs-md); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; }
+.plate-stack span { font-size: var(--fs-2xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.plate-bar {
+  text-align: center; font-size: var(--fs-2xs); font-weight: var(--fw-bold);
+  text-transform: uppercase; letter-spacing: var(--ls-caps); padding: 4px 6px;
+}
+.plate-bar--win { background: var(--seat-winner); color: var(--color-ink-on-gold); font-variant-numeric: tabular-nums; }
+.plate-bar--rank { background: var(--color-gold-soft); color: var(--color-gold); }
+.plate-bar--bust { background: var(--color-danger-soft); color: var(--color-danger-text); }
+.plate-bar--muck { background: var(--color-surface-2); color: var(--color-text-muted); }
+.plate-bar--act { background: var(--seat-toact); color: var(--color-ink-on-success); } /* v2: to-act success */
+.plate--fold { opacity: 0.45; }
+.plate--acting { border: 2px solid var(--seat-toact); margin: -1px; }
+.plate--winner { border: 2px solid var(--seat-winner); margin: -1px; background: var(--color-surface-2); box-shadow: var(--shadow-2); }
+.plate--absent { border-style: dashed; }
+.plate--absent .plate-name { color: var(--color-text-muted); }
+
+/* ---------- 08 Badge ---------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: var(--fs-xs); font-weight: var(--fw-semi); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  padding: 5px 10px; border: 1px solid transparent; font-variant-numeric: tabular-nums;
+}
+.badge--level { color: var(--color-beige); border-color: var(--color-border-strong); }
+.badge--delayed { color: var(--color-gold); background: var(--color-gold-soft); border-color: var(--color-gold); font-weight: var(--fw-bold); }
+.badge--live { color: var(--color-success); background: var(--color-success-soft); border-color: var(--color-success-line); }
+.badge--live .dot { animation: pulse 1.6s ease-in-out infinite; }
+.badge--rank { color: var(--color-gold); border-color: var(--color-gold-deep); text-transform: none; letter-spacing: 0.02em; font-size: var(--fs-sm); }
+.badge--practice { color: var(--color-info); background: var(--color-info-soft); border-color: var(--color-info-line); }
+/* keyframes pulse dùng bản chung trong tokens.css */
+
+/* ---------- 09 Pot & Board ---------- */
+.pot { text-align: center; }
+.pot-label { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-wide); }
+.pot-num { font-size: var(--fs-3xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tight); margin-top: 2px; }
+.pot-bb { font-size: var(--fs-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+/* ---------- 10 Action log ---------- */
+.alog { width: 100%; background: var(--color-surface-1); border: 1px solid var(--color-border); }
+.alog-street {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: 8px var(--sp-4); background: var(--color-surface-2); border-top: 1px solid var(--color-border);
+}
+.alog-street:first-child { border-top: 0; }
+.alog-street b { font-size: var(--fs-xs); font-weight: var(--fw-bold); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--color-beige); }
+.alog-street .cards { display: flex; gap: 3px; }
+.alog-street .potend { margin-left: auto; font-size: var(--fs-xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.alog-row {
+  display: grid; grid-template-columns: 64px 1fr auto 104px 110px; gap: var(--sp-3); align-items: center;
+  padding: 7px var(--sp-4); border-top: 1px solid var(--color-border); font-size: var(--fs-base);
+}
+.alog-row .nm { font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.alog-row .amt { text-align: right; font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; }
+.alog-row .left { text-align: right; font-size: var(--fs-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.alog-row--sys { grid-template-columns: 64px 1fr; color: var(--color-text-muted); font-size: var(--fs-sm); }
+.alog-row--sys.win { color: var(--color-gold); font-weight: var(--fw-semi); font-size: var(--fs-base); }
+.act--fold, .act--check, .act--post { color: var(--color-text-muted); }
+.act--call { color: var(--color-beige); }
+.act--bet, .act--raise { color: var(--color-gold); font-weight: var(--fw-semi); }
+.act--allin { color: var(--color-danger-text); font-weight: var(--fw-bold); } /* v2: all-in = danger (Triton) */
+.act--show { color: var(--color-beige); }
+
+/* ---------- 11 Form ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 260px; }
+.field > label { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.input {
+  background: var(--color-bg); border: 1px solid var(--color-border-strong);
+  min-height: 44px; padding: 10px var(--sp-3); width: 100%;
+  transition: border-color var(--t-fast);
+}
+.input:hover { border-color: var(--color-beige); }
+.input:focus { border-color: var(--color-gold); outline: none; box-shadow: 0 0 0 1px var(--color-gold); }
+.input:disabled { opacity: 0.45; }
+.input::placeholder { color: var(--color-text-muted); }
+textarea.input { min-height: 96px; resize: vertical; line-height: var(--lh-base); }
+.selwrap { position: relative; }
+.selwrap::after { content: "▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--color-beige); pointer-events: none; font-size: var(--fs-sm); }
+.selwrap select { appearance: none; -webkit-appearance: none; padding-right: var(--sp-7); }
+.field-help { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.demo-focus-input { border-color: var(--color-gold); box-shadow: 0 0 0 1px var(--color-gold); }
+
+/* ---------- 12 Sync ---------- */
+.sync { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-sm); font-weight: var(--fw-med); font-variant-numeric: tabular-nums; }
+.sync--ok { color: var(--color-success); }
+.sync--pending { color: var(--color-warning); }
+.sync--pending .dot { animation: pulse 1.2s ease-in-out infinite; }
+.sync--off { color: var(--color-danger-text); }
+.sync small { color: var(--color-text-muted); font-size: var(--fs-xs); font-weight: var(--fw-reg); }
+
+/* ---------- 13 Toast & banner ---------- */
+.banner {
+  width: 100%; display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4); border: 1px solid;
+}
+.banner b { font-size: var(--fs-base); font-weight: var(--fw-semi); }
+.banner span { font-size: var(--fs-sm); color: var(--color-text-muted); }
+.banner .tail { margin-left: auto; font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums; flex: none; }
+.banner--offline { background: var(--color-danger-soft); border-color: var(--color-danger-line); }
+.banner--offline b, .banner--offline .tail, .banner--offline .dot { color: var(--color-danger-text); }
+.toast {
+  width: 400px; background: var(--color-surface-2);
+  border: 1px solid var(--color-warning-line); border-left: 3px solid var(--color-warning);
+  box-shadow: var(--shadow-2); padding: var(--sp-4);
+}
+.toast h4 { font-size: var(--fs-base); font-weight: var(--fw-semi); color: var(--color-warning); margin-bottom: 4px; }
+.toast p { font-size: var(--fs-sm); color: var(--color-text-muted); margin-bottom: var(--sp-3); }
+.toast-actions { display: flex; gap: var(--sp-2); }
+
+/* ================== v2 — TRITON REDESIGN COMPONENTS ================== */
+
+/* ---------- 14 Card picker (deck 4 màu — tokens.css mục 14) ---------- */
+.pgrid { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.prow { display: flex; gap: 5px; align-items: center; }
+.prow .suit { width: 26px; text-align: center; font-size: var(--fs-md); flex: none; }
+.pbtn {
+  flex: 1; height: var(--tap-min); min-width: 0;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  background: var(--card-face);
+  border: 1px solid var(--card-face-edge); border-radius: var(--radius-sm);
+  font-size: var(--fs-base); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums;
+  line-height: 1; padding: 0;
+}
+.pbtn i { font-style: normal; font-size: var(--fs-xs); }
+.prow--s .pbtn { color: var(--card-black); }
+.prow--h .pbtn { color: var(--card-red); }
+.prow--c .pbtn { color: var(--card-green); }
+.prow--d .pbtn { color: var(--card-blue); }
+.prow .suit--s { color: var(--color-beige); }
+.prow .suit--h { color: var(--color-danger-text); }
+.prow .suit--c { color: var(--color-success); }
+.prow .suit--d { color: var(--color-info); }
+.pbtn--used { opacity: 0.22; pointer-events: none; }
+.pbtn--sel { outline: 3px solid var(--seat-toact); outline-offset: -1px; }
+
+/* ---------- 15 Blind level row (admin Structure) ---------- */
+.blhead, .blrow { display: grid; grid-template-columns: 44px 1fr 1fr 1fr 86px 64px 1.3fr 44px 44px; gap: var(--sp-2); align-items: center; width: 100%; }
+.blhead span { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.blrow { padding: var(--sp-1) 0; border-top: 1px solid var(--color-border); }
+.blrow .input { min-height: 44px; padding: 8px var(--sp-2); }
+.blrow--current { background: var(--color-gold-faint); border-top-color: var(--color-gold); }
+.bl-star { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 0; color: var(--color-text-muted); font-size: var(--fs-md); }
+.bl-star--on { color: var(--color-gold); }
+.bl-clone, .bl-del { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--color-border); color: var(--color-beige); font-size: var(--fs-base); }
+.bl-del { color: var(--color-danger-text); border-color: transparent; }
+.bl-del:hover { border-color: var(--color-danger-line); background: var(--color-danger-soft); }
+
+/* ---------- 16 Table card (admin Seating Chart) ---------- */
+.tcard { width: 360px; background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-2); }
+.tcard-head { display: flex; align-items: center; gap: var(--sp-2); }
+.tcard-head h3 { font-size: var(--fs-md); font-weight: var(--fw-bold); }
+.tcard-head h3 .tnum { color: var(--color-gold); }
+.tcard-head .tail { margin-left: auto; display: flex; gap: var(--sp-1); }
+.tc-btn { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--color-border); color: var(--color-beige); font-size: var(--fs-base); }
+.toval { position: relative; height: 220px; }
+.toval-felt {
+  position: absolute; inset: 26px 48px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(ellipse at 50% 42%, var(--felt-hi), var(--felt) 64%, var(--felt-deep) 100%);
+  border: 6px solid var(--rail);
+  box-shadow: 0 0 0 1px var(--rail-edge), inset 0 0 0 1px var(--rail-edge), var(--shadow-1);
+}
+.topen {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--tap-sm); padding: 0 var(--sp-4);
+  font-size: var(--fs-xs); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  color: var(--color-gold); background: var(--felt-pill); border: 1px solid var(--color-gold-deep);
+}
+.topen:hover { background: var(--color-gold); color: var(--color-ink-on-gold); }
+.tseat {
+  position: absolute; transform: translate(-50%, -50%); z-index: 1;
+  width: 38px; height: 38px; border-radius: var(--radius-full);
+  background: var(--color-surface-2); border: 1px solid var(--color-gold-deep);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--fs-2xs); font-weight: var(--fw-bold); color: var(--color-beige);
+  box-shadow: var(--shadow-1);
+}
+.tseat--empty { background: transparent; border-style: dashed; border-color: var(--seat-empty-line); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.tv-1 { left: 32%; top: 88%; } .tv-2 { left: 13%; top: 70%; } .tv-3 { left: 13%; top: 36%; }
+.tv-4 { left: 30%; top: 12%; } .tv-5 { left: 50%; top: 9%; }  .tv-6 { left: 70%; top: 12%; }
+.tv-7 { left: 87%; top: 36%; } .tv-8 { left: 87%; top: 70%; } .tv-9 { left: 68%; top: 88%; }
+
+/* ---------- 17 Tab bar + hand chip + side panel + switch/checkbox ---------- */
+.rtabs { display: flex; align-items: stretch; gap: var(--sp-1); border-bottom: 1px solid var(--color-border); width: 100%; }
+.rtab {
+  min-height: var(--tap-min); padding: 0 var(--sp-4);
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0;
+  font-size: var(--fs-base); font-weight: var(--fw-semi); color: var(--color-text-muted);
+}
+.rtab small { font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+.rtab:hover { color: var(--color-beige); }
+.rtab--active { color: var(--color-gold); border-bottom-color: var(--color-gold); }
+.rtab:disabled { opacity: 0.4; }
+.hstrip { display: flex; gap: var(--sp-2); width: 100%; }
+.hchip {
+  min-width: 64px; min-height: var(--tap-min);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--color-border-strong); color: var(--color-beige);
+  font-size: var(--fs-sm); font-weight: var(--fw-semi); font-variant-numeric: tabular-nums;
+}
+.hchip--active { background: var(--color-gold); border-color: transparent; color: var(--color-ink-on-gold); font-weight: var(--fw-bold); }
+.spanel-demo {
+  width: 420px; background: var(--color-surface-1); border: 1px solid var(--color-border-strong);
+  box-shadow: var(--shadow-2); padding: var(--sp-5);
+  display: flex; flex-direction: column; gap: var(--sp-4);
+}
+.sp-head { display: flex; align-items: baseline; gap: var(--sp-3); }
+.sp-head h4 { font-size: var(--fs-xl); font-weight: var(--fw-heavy); }
+.sp-head .pid { font-size: var(--fs-md); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.sp-sec { display: flex; flex-direction: column; gap: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--color-border); }
+.sp-sec h5 { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-wide); }
+.sbtn {
+  min-height: var(--tap-min); padding: 0 var(--sp-6); align-self: flex-start;
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  font-size: var(--fs-base); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps);
+  border: 1px solid transparent;
+}
+.sbtn--bust { background: var(--color-danger); color: var(--color-ink-on-danger); }
+.sbtn--bust:hover { background: var(--color-danger-bright); }
+.sbtn--stand { background: var(--color-gold); color: var(--color-ink-on-gold); }
+.sbtn--stand:hover { background: var(--color-gold-bright); }
+.swrow { display: flex; align-items: center; gap: var(--sp-3); min-height: var(--tap-sm); }
+.swrow b { font-size: var(--fs-base); font-weight: var(--fw-semi); }
+.switch {
+  width: 46px; height: 26px; flex: none; position: relative;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-3); border: 1px solid var(--color-border-strong);
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.switch::after {
+  content: ""; position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px; border-radius: var(--radius-full);
+  background: var(--color-beige); transition: left var(--t-fast), background var(--t-fast);
+}
+.switch--on { background: var(--color-gold-soft); border-color: var(--color-gold); }
+.switch--on::after { left: 23px; background: var(--color-gold); }
+.chkrow { display: flex; align-items: center; gap: var(--sp-3); min-height: var(--tap-sm); cursor: pointer; }
+.chk {
+  width: 22px; height: 22px; flex: none;
+  border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--fs-sm); color: var(--color-ink-on-gold);
+}
+.chk--on { background: var(--color-gold); border-color: transparent; }
+.upbox {
+  border: 1px dashed var(--color-border-strong);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-2);
+  min-height: 150px; padding: var(--sp-5); text-align: center; flex: 1;
+}
+.upbox b { font-size: var(--fs-base); font-weight: var(--fw-semi); }
+.upbox span { font-size: var(--fs-sm); color: var(--color-text-muted); line-height: var(--lh-snug); }
+
+footer.page-end { border-top: 1px solid var(--color-border); margin-top: var(--sp-10); padding: var(--sp-6); text-align: center; color: var(--color-text-muted); font-size: var(--fs-xs); }
+
+/* ---------- Bo tròn theo token (tokens.css mục 10) ---------- */
+.principle, .sw, .banner, .btn, .rchip, .seat, .input, .toast { border-radius: var(--radius-md); }
+.ab, .hchip, .sbtn, .bl-clone, .bl-del, .tc-btn { border-radius: var(--radius-md); }
+.tcard, .spanel-demo, .upbox { border-radius: var(--radius-lg); }
+.topen, .switch { border-radius: var(--radius-full); }
+.sw-chip, .pos, .st, .seat-note, .rs-flag, .chk { border-radius: var(--radius-sm); }
+.plate, .alog { border-radius: var(--radius-md); overflow: hidden; }
+.badge { border-radius: var(--radius-full); }
+.demo { border-radius: var(--radius-lg); }
+/* :has() chỉ phục vụ khung tài liệu này — KHÔNG port pattern sang React (dùng modifier class) */
+.demo:has(+ .demo), .demo:has(+ .usage) { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.demo + .demo { border-top-left-radius: 0; border-top-right-radius: 0; }
+.usage { border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
+.mk-sq { border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+  <span class="topbar-tag">Design System · v2 Triton redesign · 06/2026 · nguồn chân lý cho port Vite + React</span>
+  <nav class="topbar-nav">
+    <a class="btn btn--outline" href="mockup-logger.html">Reporter ▸</a>
+    <a class="btn btn--outline" href="mockup-admin.html">Admin tablet ▸</a>
+    <a class="btn btn--outline" href="mockup-admin-desktop.html">Admin desktop ▸</a>
+    <a class="btn btn--primary" href="mockup-viewer-mobile.html">Viewer mobile ▸</a>
+    <a class="btn btn--outline" href="mockup-viewer.html">Viewer · bàn ▸</a>
+    <a class="btn btn--outline" href="mockup-viewer-desktop.html">Viewer · giải ▸</a>
+  </nav>
+</header>
+
+<div class="layout">
+
+<aside class="sidenav">
+  <span class="nav-cap">Nền tảng</span>
+  <a href="#mau">01 · Màu sắc</a>
+  <a href="#chu">02 · Typography</a>
+  <a href="#spacing">03 · Spacing</a>
+  <span class="nav-cap">Component</span>
+  <a href="#button">04 · Button</a>
+  <a href="#pad">05 · Action bar reporter</a>
+  <a href="#labai">06 · Lá bài</a>
+  <a href="#seat">07 · Seat</a>
+  <a href="#badge">08 · Badge</a>
+  <a href="#potboard">09 · Pot &amp; Board</a>
+  <a href="#log">10 · Action log</a>
+  <a href="#form">11 · Form admin</a>
+  <a href="#sync">12 · Sync indicator</a>
+  <a href="#toast">13 · Toast &amp; Banner</a>
+  <span class="nav-cap">v2 — Triton redesign</span>
+  <a href="#picker">14 · Card picker</a>
+  <a href="#blind">15 · Blind level row</a>
+  <a href="#tablecard">16 · Table card</a>
+  <a href="#tabside">17 · Tab bar &amp; Side panel</a>
+</aside>
+
+<main>
+
+<div class="hero">
+  <h1>Quads Live<br>Design System</h1>
+  <p>Hệ giao diện cho tracking giải đấu No-Limit Hold'em của CLB Quads Poker — tông broadcast tối ấm,
+  gold làm điểm nhấn tiết chế. Mọi giá trị lấy từ <code>tokens.css</code>; không hardcode màu trong component.</p>
+  <div class="principles">
+    <div class="principle"><b>Bo tròn theo token</b><span>radius-sm 6px (badge, nhãn) · radius-md 10px (nút, seat, input) · radius-lg 14px (panel) · lá bài 5px. Không hardcode px.</span></div>
+    <div class="principle"><b>Tabular numerals</b><span>Mọi số chip / stack / pot / BB dùng font-variant-numeric: tabular-nums để cột số không nhảy.</span></div>
+    <div class="principle"><b>Gold tiết chế</b><span>Gold chỉ dành cho: action chính, người đang action, winner, badge DELAYED. Không trang trí tràn lan.</span></div>
+    <div class="principle"><b>State không chỉ bằng màu</b><span>Mọi trạng thái kèm label chữ, độ mờ hoặc viền — đọc được cả khi không phân biệt màu. Contrast chữ ≥ 4.5:1.</span></div>
+  </div>
+</div>
+
+<!-- ============ 01 MÀU ============ -->
+<section id="mau">
+  <div class="sec-head"><span class="idx">01</span><h2>Màu sắc</h2></div>
+  <p class="sec-note">Palette ấm trích từ beta.quadspoker.vn. Nhóm <b>ngữ nghĩa</b> (danger / warning / info) là phần tự bổ sung,
+  chọn tông đất nung — hổ phách — xanh xám bụi để không phá nhiệt độ màu của brand. Mỗi màu ngữ nghĩa có bản <code>-soft</code> (nền 12–14%) và <code>-line</code> (viền 40–45%).</p>
+  <div class="demo demo--col demo--dark">
+    <div class="sw-grid">
+      <span class="sw-cap">Nền &amp; bề mặt</span>
+      <div class="sw"><span class="sw-chip sw--bg"></span><span class="sw-info"><b>--color-bg</b><span>#0A0908</span><p>Nền trang</p></span></div>
+      <div class="sw"><span class="sw-chip sw--s1"></span><span class="sw-info"><b>--color-surface-1</b><span>#1B1711</span><p>Panel, card</p></span></div>
+      <div class="sw"><span class="sw-chip sw--s2"></span><span class="sw-info"><b>--color-surface-2</b><span>#2A2621</span><p>Nút trung tính, hàng nổi</p></span></div>
+      <div class="sw"><span class="sw-chip sw--s3"></span><span class="sw-info"><b>--color-surface-3</b><span>#363027</span><p>Hover của surface-2 (tự bổ sung)</p></span></div>
+      <span class="sw-cap">Chữ</span>
+      <div class="sw"><span class="sw-chip sw--text"></span><span class="sw-info"><b>--color-text</b><span>#F9F9F9</span><p>Chữ chính</p></span></div>
+      <div class="sw"><span class="sw-chip sw--muted"></span><span class="sw-info"><b>--color-text-muted</b><span>#9A9281</span><p>Meta, chữ phụ (4.9:1 trên surface-2)</p></span></div>
+      <div class="sw"><span class="sw-chip sw--beige"></span><span class="sw-info"><b>--color-beige</b><span>#C8BEA7</span><p>Nhãn, giá trị phụ nổi</p></span></div>
+      <span class="sw-cap">Accent gold — chữ ký brand</span>
+      <div class="sw"><span class="sw-chip sw--gold"></span><span class="sw-info"><b>--color-gold</b><span>#DAB37A</span><p>CTA, đang action, winner, DELAYED</p></span></div>
+      <div class="sw"><span class="sw-chip sw--goldb"></span><span class="sw-info"><b>--color-gold-bright</b><span>#E8CA94</span><p>Hover của gold</p></span></div>
+      <div class="sw"><span class="sw-chip sw--goldd"></span><span class="sw-info"><b>--color-gold-deep</b><span>#BE9858</span><p>Pressed, viền badge hạng bài</p></span></div>
+      <div class="sw"><span class="sw-chip sw--golds"></span><span class="sw-info"><b>--color-gold-soft</b><span>gold / 18%</span><p>Nền nhấn: winner, bet, note action</p></span></div>
+      <div class="sw"><span class="sw-chip sw--goldf"></span><span class="sw-info"><b>--color-gold-faint</b><span>gold / 8%</span><p>Nền seat đang action</p></span></div>
+      <div class="sw"><span class="sw-chip sw--ink"></span><span class="sw-info"><b>--color-ink-on-gold</b><span>#181206</span><p>Chữ trên nền gold đặc (9.5:1)</p></span></div>
+      <span class="sw-cap">Ngữ nghĩa (tự bổ sung — kèm bản -soft và -line)</span>
+      <div class="sw"><span class="sw-chip sw--success"></span><span class="sw-info"><b>--color-success</b><span>#6FE0A0</span><p>Đã đồng bộ, LIVE (có sẵn trên site)</p></span></div>
+      <div class="sw"><span class="sw-chip sw--danger"></span><span class="sw-info"><b>--color-danger</b><span>#E0654F</span><p>Fold, bust, mất mạng — viền &amp; chữ lớn</p></span></div>
+      <div class="sw"><span class="sw-chip sw--dangert"></span><span class="sw-info"><b>--color-danger-text</b><span>#E87B61</span><p>Chữ danger cỡ nhỏ trên nền tint (≥4.5:1)</p></span></div>
+      <div class="sw"><span class="sw-chip sw--warning"></span><span class="sw-info"><b>--color-warning</b><span>#E89B4B</span><p>All-in, đang chờ đồng bộ, lease</p></span></div>
+      <div class="sw"><span class="sw-chip sw--info"></span><span class="sw-info"><b>--color-info</b><span>#8FAEC2</span><p>Practice, ghế vắng, thông báo trung tính</p></span></div>
+      <span class="sw-cap">Viền &amp; lớp phủ</span>
+      <div class="sw"><span class="sw-chip sw--border"></span><span class="sw-info"><b>--color-border</b><span>F3EDE0 / 12%</span><p>Hairline mặc định</p></span></div>
+      <div class="sw"><span class="sw-chip sw--borders"></span><span class="sw-info"><b>--color-border-strong</b><span>F3EDE0 / 28%</span><p>Viền outline, hover</p></span></div>
+      <div class="sw"><span class="sw-chip sw--overlay"></span><span class="sw-info"><b>--color-overlay</b><span>F3EDE0 / 10%</span><p>Hover sáng ấm trên nền tối</p></span></div>
+      <span class="sw-cap">Lá bài (hiển thị 2 màu — board, pocket, log)</span>
+      <div class="sw"><span class="sw-chip sw--cface"></span><span class="sw-info"><b>--card-face</b><span>#F9F9F9</span><p>Mặt lá</p></span></div>
+      <div class="sw"><span class="sw-chip sw--cred"></span><span class="sw-info"><b>--card-red</b><span>#C73B27</span><p>♥ ♦ — 4.9:1 trên mặt lá</p></span></div>
+      <div class="sw"><span class="sw-chip sw--cblack"></span><span class="sw-info"><b>--card-black</b><span>#1A1814</span><p>♠ ♣</p></span></div>
+      <span class="sw-cap">v2 — deck 4 màu (CHỈ card picker reporter) + chữ trên nền semantic đặc</span>
+      <div class="sw"><span class="sw-chip sw--cgreen"></span><span class="sw-info"><b>--card-green</b><span>#2E7747</span><p>♣ trong picker — green rừng ấm, 5.2:1</p></span></div>
+      <div class="sw"><span class="sw-chip sw--cblue"></span><span class="sw-info"><b>--card-blue</b><span>#31647F</span><p>♦ trong picker — petrol bụi (họ --color-info), 6.1:1</p></span></div>
+      <div class="sw"><span class="sw-chip sw--inksucc"></span><span class="sw-info"><b>--color-ink-on-success</b><span>#0E281A</span><p>Chữ trên nút CALL/CHECK success đặc (9.6:1)</p></span></div>
+      <div class="sw"><span class="sw-chip sw--inkdang"></span><span class="sw-info"><b>--color-ink-on-danger</b><span>#2B0D07</span><p>Chữ trên nút ALL-IN danger đặc (5.3:1)</p></span></div>
+      <span class="sw-cap">Bàn nỉ (viewer)</span>
+      <div class="sw"><span class="sw-chip sw--felthi"></span><span class="sw-info"><b>--felt-hi</b><span>#2E3B27</span><p>Tâm nỉ olive ấm</p></span></div>
+      <div class="sw"><span class="sw-chip sw--felt"></span><span class="sw-info"><b>--felt</b><span>#1E2818</span><p>Nỉ chính</p></span></div>
+      <div class="sw"><span class="sw-chip sw--feltd"></span><span class="sw-info"><b>--felt-deep</b><span>#131A0F</span><p>Mép nỉ</p></span></div>
+      <div class="sw"><span class="sw-chip sw--rail"></span><span class="sw-info"><b>--rail</b><span>#271F14</span><p>Thành bàn da nâu</p></span></div>
+    </div>
+  </div>
+  <p class="usage"><b>Ghi chú:</b> chữ muted không đặt trên surface-3 (rơi dưới 4.5:1). Gold đặc chỉ đi cùng <code>--color-ink-on-gold</code>, không bao giờ đi cùng chữ trắng.</p>
+</section>
+
+<!-- ============ 02 TYPOGRAPHY ============ -->
+<section id="chu">
+  <div class="sec-head"><span class="idx">02</span><h2>Typography</h2></div>
+  <p class="sec-note">Font duy nhất: <b>Inter</b> (400 / 500 / 600 / 700 / 800), fallback <code>system-ui</code>.
+  Hai giọng chữ: <b>số liệu</b> (đậm, tabular, tracking −1%) và <b>micro-label</b> (11px, uppercase, tracking +8%) — nhịp thị giác kiểu đồ họa broadcast.</p>
+  <div class="demo demo--col">
+    <div class="ts-row"><span class="ts-meta"><b>--fs-4xl · 48px · 800</b>hero, số khổng lồ</span><span class="t-4xl tnum">1.9M</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-3xl · 38px · 800</b>pot viewer</span><span class="t-3xl tnum">Pot 1.9M — 118.5 BB</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-2xl · 30px · 700</b>pot logger</span><span class="t-2xl tnum">180K ≈ 11.3 BB</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-xl · 24px · 700</b>stack trên seat logger</span><span class="t-xl tnum">820K</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-lg · 20px · 700 · caps</b>nhãn action pad</span><span class="t-lg">Call 60K</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-md · 17px · 600</b>tên người chơi logger</span><span class="t-md">Phạm T. Nghĩa</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-base · 15px · 400</b>body, hàng action log</span><span class="t-base">Reporter đứng tại bàn bấm action của từng người chơi.</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-sm · 13px · 400</b>meta, quy đổi BB</span><span class="t-sm tnum">51.3 BB · còn 24 người</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-xs · 12px · 600</b>badge</span><span class="t-xs">DELAYED 30:00</span></div>
+    <div class="ts-row"><span class="ts-meta"><b>--fs-2xs · 11px · 600 · caps</b>micro-label</span><span class="t-2xs">Main Pot · Preflop · Hands gần đây</span></div>
+  </div>
+  <div class="demo">
+    <div class="demo-cap">Tabular-nums — bắt buộc cho mọi số liệu (cột số thẳng hàng, không nhảy khi đếm)</div>
+    <div class="tnum-demo">
+      <div class="tnum"><span class="lbl">Đúng — .tnum</span><br>1.111.111<br>8.808.808</div>
+      <div class="bad"><span class="lbl">Sai — proportional</span><br>1.111.111<br>8.808.808</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 SPACING ============ -->
+<section id="spacing">
+  <div class="sec-head"><span class="idx">03</span><h2>Spacing</h2></div>
+  <p class="sec-note">Bậc 4px. Padding panel: <code>--sp-4…6</code>; gap giữa khối lớn: <code>--sp-2…3</code> (logger nén) hoặc <code>--sp-6</code> (viewer thoáng).</p>
+  <div class="demo demo--col">
+    <div class="sp-row"><code>--sp-1</code><span class="px">4px</span><span class="sp-bar" style="width:var(--sp-1)"></span></div>
+    <div class="sp-row"><code>--sp-2</code><span class="px">8px</span><span class="sp-bar" style="width:var(--sp-2)"></span></div>
+    <div class="sp-row"><code>--sp-3</code><span class="px">12px</span><span class="sp-bar" style="width:var(--sp-3)"></span></div>
+    <div class="sp-row"><code>--sp-4</code><span class="px">16px</span><span class="sp-bar" style="width:var(--sp-4)"></span></div>
+    <div class="sp-row"><code>--sp-5</code><span class="px">20px</span><span class="sp-bar" style="width:var(--sp-5)"></span></div>
+    <div class="sp-row"><code>--sp-6</code><span class="px">24px</span><span class="sp-bar" style="width:var(--sp-6)"></span></div>
+    <div class="sp-row"><code>--sp-7</code><span class="px">32px</span><span class="sp-bar" style="width:var(--sp-7)"></span></div>
+    <div class="sp-row"><code>--sp-8</code><span class="px">40px</span><span class="sp-bar" style="width:var(--sp-8)"></span></div>
+    <div class="sp-row"><code>--sp-9</code><span class="px">48px</span><span class="sp-bar" style="width:var(--sp-9)"></span></div>
+    <div class="sp-row"><code>--sp-10</code><span class="px">64px</span><span class="sp-bar" style="width:var(--sp-10)"></span></div>
+  </div>
+</section>
+
+<!-- ============ 04 BUTTON ============ -->
+<section id="button">
+  <div class="sec-head"><span class="idx">04</span><h2>Button</h2></div>
+  <p class="sec-note">4 biến thể × 2 cỡ. <b>Primary gold</b> chỉ dành cho action chính của màn hình (mỗi vùng nhìn tối đa một nút gold).
+  Cỡ lớn <code>--tap-lg</code> (64px) cho môi trường tablet đứng thao tác.</p>
+  <div class="demo">
+    <div class="demo-cap">Biến thể — mặc định / hover / focus / disabled</div>
+    <button class="btn btn--primary">Bắt đầu hand</button>
+    <button class="btn btn--primary demo-hover">Bắt đầu hand</button>
+    <button class="btn btn--primary demo-focus">Bắt đầu hand</button>
+    <button class="btn btn--primary" disabled>Bắt đầu hand</button>
+  </div>
+  <div class="demo">
+    <button class="btn btn--outline">Nhập board</button>
+    <button class="btn btn--outline demo-hover">Nhập board</button>
+    <button class="btn btn--outline demo-focus">Nhập board</button>
+    <button class="btn btn--outline" disabled>Nhập board</button>
+  </div>
+  <div class="demo">
+    <button class="btn btn--ghost">Xem lịch sử</button>
+    <button class="btn btn--ghost demo-hover">Xem lịch sử</button>
+    <button class="btn btn--ghost demo-focus">Xem lịch sử</button>
+    <button class="btn btn--ghost" disabled>Xem lịch sử</button>
+  </div>
+  <div class="demo">
+    <button class="btn btn--danger">Void hand</button>
+    <button class="btn btn--danger demo-hover">Void hand</button>
+    <button class="btn btn--danger demo-focus">Void hand</button>
+    <button class="btn btn--danger" disabled>Void hand</button>
+  </div>
+  <div class="demo">
+    <div class="demo-cap">Cỡ — thường 40px / action-pad ≥ 64px (tablet)</div>
+    <button class="btn btn--primary">Xác nhận</button>
+    <button class="btn btn--primary btn--lg">Xác nhận kết quả hand</button>
+    <button class="btn btn--outline btn--lg">Đối soát stack</button>
+  </div>
+  <p class="usage"><b>Dùng khi:</b> primary = publish/xác nhận; outline = thao tác phụ rõ ràng; ghost = điều hướng; danger = hành động phá hủy (void). Disabled luôn kèm <code>opacity .38</code> + <code>cursor: not-allowed</code> — không chỉ đổi màu.</p>
+</section>
+
+<!-- ============ 05 ACTION BAR REPORTER (v2) ============ -->
+<section id="pad">
+  <div class="sec-head"><span class="idx">05</span><h2>Action bar — reporter</h2></div>
+  <p class="sec-note">Quy ước màu chức năng theo Triton, diễn đạt bằng palette Quads:
+  <b>FOLD</b> outline trung tính · <b>ALL-IN</b> danger đặc · <b>RAISE / BET</b> gold đặc (chữ <code>--color-ink-on-gold</code>) ·
+  <b>CALL / CHECK</b> success đặc (chữ tối <code>--color-ink-on-success</code> để đạt ≥4.5:1).
+  CTA vòng đời hand (<b>DEAL</b>, <b>END HAND</b>) dùng gold đặc. Nút bấm liên tục — tap ≥ <code>--tap-lg</code> 64px.</p>
+  <div class="demo demo--col demo--dark">
+    <div class="demo-cap">Giữa hand — có bet trước mặt (Call kèm số tiền; Raise mở nhập số)</div>
+    <div class="abar">
+      <button class="ab ab--fold">Fold</button>
+      <button class="ab ab--icon" aria-label="Undo">↺<small>Undo</small></button>
+      <button class="ab ab--icon ab--void" aria-label="Void hand">🗑<small>Void</small></button>
+      <span class="ab-spacer"></span>
+      <button class="ab ab--allin">All-in<span class="tnum">439,000</span></button>
+      <button class="ab ab--raise">Raise…</button>
+      <button class="ab ab--call">Call<span class="tnum">34,000</span></button>
+    </div>
+    <div class="demo-cap demo-gap-top">Street mới — chưa có bet (Bet thay Raise, Check thay Call)</div>
+    <div class="abar">
+      <button class="ab ab--fold">Fold</button>
+      <button class="ab ab--icon" aria-label="Undo">↺<small>Undo</small></button>
+      <button class="ab ab--icon ab--void" aria-label="Void hand">🗑<small>Void</small></button>
+      <span class="ab-spacer"></span>
+      <button class="ab ab--allin">All-in</button>
+      <button class="ab ab--raise">Bet…</button>
+      <button class="ab ab--call">Check</button>
+    </div>
+    <div class="demo-cap demo-gap-top">CTA vòng đời hand — gold, mỗi thời điểm chỉ một nút</div>
+    <div class="row-wrap">
+      <button class="ab ab--cta">Deal<span class="tnum">Hand #130</span></button>
+      <button class="ab ab--cta">End hand<span class="tnum">#129 · publish</span></button>
+    </div>
+    <div class="demo-cap demo-gap-top">Raise nhanh (mở sau khi bấm Raise…) — ≥ --tap-min 56px</div>
+    <div class="row-wrap">
+      <button class="rchip"><b>Min</b><span class="tnum">84,000</span></button>
+      <button class="rchip"><b>2.5x</b><span class="tnum">125,000</span></button>
+      <button class="rchip"><b>3x</b><span class="tnum">150,000</span></button>
+      <button class="rchip"><b>Pot</b><span class="tnum">208,000</span></button>
+      <button class="rchip rchip--custom"><b>Tự nhập</b><span>…</span></button>
+    </div>
+  </div>
+  <p class="usage"><b>Quy tắc:</b> đỏ chỉ dành cho ALL-IN và hành động phá hủy (Void); vàng cho RAISE/BET và CTA chính; xanh lá cho CALL/CHECK/xác nhận; FOLD cố ý trung tính (bấm nhiều nhất — không gào màu). Engine quyết định nút nào hợp lệ, nút khóa mờ 35%. Raise hiển thị theo nghĩa "raise to X".</p>
+</section>
+
+<!-- ============ 06 LÁ BÀI ============ -->
+<section id="labai">
+  <div class="sec-head"><span class="idx">06</span><h2>Lá bài</h2></div>
+  <p class="sec-note">3 cỡ chuẩn: <b>lg 56×78</b> (board viewer) · <b>md 36×50</b> (seat, board logger) · <b>sm 22×30</b> (inline action log).
+  Mặt lá sáng để nổi trên nền tối; ♥♦ đỏ ấm <code>--card-red</code>, ♠♣ <code>--card-black</code>. Bo góc <code>--radius-card</code> (5px).</p>
+  <div class="demo demo--dark">
+    <div class="demo-cap">Cỡ lg — đủ 4 chất</div>
+    <div class="cardrow">
+      <span class="pcard pcard--lg" aria-label="A bích"><b>A</b><i>♠</i></span>
+      <span class="pcard pcard--lg pcard--red" aria-label="K cơ"><b>K</b><i>♥</i></span>
+      <span class="pcard pcard--lg pcard--red" aria-label="Q rô"><b>Q</b><i>♦</i></span>
+      <span class="pcard pcard--lg" aria-label="J chuồn"><b>J</b><i>♣</i></span>
+      <span class="pcard pcard--lg pcard--back" aria-label="Mặt sau lá bài"></span>
+      <span class="pcard pcard--lg pcard--slot" aria-label="Slot trống"></span>
+    </div>
+  </div>
+  <div class="demo demo--dark">
+    <div class="demo-cap">Cỡ md — seat / board logger</div>
+    <div class="cardrow">
+      <span class="pcard"><b>K</b><i>♠</i></span>
+      <span class="pcard pcard--red"><b>Q</b><i>♦</i></span>
+      <span class="pcard"><b>4</b><i>♣</i></span>
+      <span class="pcard pcard--red"><b>9</b><i>♥</i></span>
+      <span class="pcard pcard--back"></span>
+      <span class="pcard pcard--slot"></span>
+    </div>
+    <div class="demo-cap demo-gap-top">Cỡ sm — inline trong log</div>
+    <div class="cardrow">
+      <span class="pcard pcard--sm pcard--red"><b>K</b><i>♦</i></span>
+      <span class="pcard pcard--sm"><b>K</b><i>♣</i></span>
+      <span class="pcard pcard--sm"><b>T</b><i>♠</i></span>
+      <span class="pcard pcard--sm pcard--red"><b>2</b><i>♥</i></span>
+      <span class="pcard pcard--sm pcard--back"></span>
+      <span class="pcard pcard--sm pcard--slot"></span>
+    </div>
+  </div>
+  <p class="usage"><b>Ghi chú:</b> slot trống dùng viền dashed (chờ chia); mặt sau dùng vân chéo gold 22% trên surface-2. Ký hiệu chất là ký tự text ♠♥♦♣ — không dùng ảnh, không emoji. Lá bài ghi dạng <code>Ks</code>, <code>Qd</code> trong dữ liệu.
+  <b>v2:</b> lá HIỂN THỊ luôn 2 màu như trên — deck 4 màu (<code>--card-green</code> ♣, <code>--card-blue</code> ♦) chỉ dùng trong card picker của reporter, xem mục 14.</p>
+</section>
+
+<!-- ============ 07 SEAT ============ -->
+<section id="seat">
+  <div class="sec-head"><span class="idx">07</span><h2>Seat — reporter pod &amp; viewer plate</h2></div>
+  <p class="sec-note">v2: reporter dùng <b>bàn oval dọc + seat pod</b> (avatar tròn, plate tên + stack, bar trạng thái) theo bố cục Triton.
+  Quy ước trạng thái: <b>to-act = success</b> (xanh lá, vòng pulse) · <b>winner = gold</b> · <b>Sit out = badge danger</b> · ghế trống = dashed.
+  Ghế <b>neo theo ghế vật lý G1–G9 cố định</b> — badge vị trí SB/BB và chấm D xoay theo button. Mọi state có label chữ đi kèm, không chỉ màu.</p>
+
+  <div class="demo demo--dark">
+    <div class="demo-cap">Seat pod (reporter, v2) — 6 states: bình thường / to-act / winner / sit out / fold / trống</div>
+    <div class="rseat">
+      <span class="rseat-ava">HK<span class="pos">CO</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Hoàng Gia Khánh</span><b class="rseat-stack tnum">521,000</b></span>
+    </div>
+    <div class="rseat rseat--toact">
+      <span class="rseat-ava">DN</span>
+      <span class="rseat-plate"><span class="rseat-name">Đỗ Thành Nam</span><b class="rseat-stack tnum">439,000</b><span class="rseat-bar tnum">Đến lượt · cần 34,000</span></span>
+    </div>
+    <div class="rseat rseat--winner">
+      <span class="rseat-ava">NH<span class="pos">BTN</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Nguyễn Trung Hiếu</span><b class="rseat-stack tnum">402,000</b><span class="rseat-bar tnum">Win +86,000</span></span>
+    </div>
+    <div class="rseat rseat--satout">
+      <span class="rseat-ava">DV<span class="rs-flag">Sit out</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đinh Văn Vũ</span><b class="rseat-stack tnum">200,000</b></span>
+    </div>
+    <div class="rseat rseat--fold">
+      <span class="rseat-ava">TB<span class="pos">SB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Trần Quốc Bảo</span><b class="rseat-stack tnum">435,000</b><span class="rseat-bar">Fold</span></span>
+    </div>
+    <div class="rseat rseat--empty">
+      <span class="rseat-ava">+</span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+  </div>
+
+  <div class="demo demo--dark">
+    <div class="demo-cap">Seat card (admin / đối soát) — các state chữ</div>
+    <article class="seat">
+      <div class="seat-top"><span class="pos">UTG+2</span><h3 class="seat-name">J. Koon</h3><span class="st st--check">Đã check</span></div>
+      <div class="seat-stack"><b>1.5M</b><span>93.8 BB</span></div>
+    </article>
+    <article class="seat seat--acting">
+      <div class="seat-top"><span class="gno">G9</span><span class="pos">BTN</span><span class="dbtn">D</span><h3 class="seat-name">E. Tsang</h3><span class="st st--act">Đến lượt</span></div>
+      <div class="seat-stack"><b>820K</b><span>51.3 BB</span></div>
+      <div class="seat-note">Đang action — cần 60K để theo</div>
+    </article>
+    <article class="seat seat--fold">
+      <div class="seat-top"><span class="pos">CO</span><h3 class="seat-name">S. Chidwick</h3><span class="st">Fold</span></div>
+      <div class="seat-stack"><b>2.1M</b><span>131.3 BB</span></div>
+    </article>
+    <article class="seat seat--absent">
+      <div class="seat-top"><span class="pos">HJ</span><h3 class="seat-name">W.K. Yong</h3><span class="st st--satout">Sit out</span></div>
+      <div class="seat-stack"><b>540K</b><span>33.8 BB</span></div>
+      <div class="seat-note seat-note--absent">Blind tự post — không được chia bài</div>
+    </article>
+    <article class="seat seat--winner">
+      <div class="seat-top"><span class="pos">UTG+1</span><h3 class="seat-name">P. Ivey</h3><span class="st st--win">Winner</span></div>
+      <div class="seat-stack"><b>1.96M</b><span>122.5 BB</span></div>
+      <div class="seat-note">Thắng +980K — Set of Kings</div>
+    </article>
+    <article class="seat seat--bust">
+      <div class="seat-top"><span class="pos">SB</span><h3 class="seat-name">Phạm T. Nghĩa</h3><span class="st st--bust">Bust</span></div>
+      <div class="seat-stack"><b>0</b><span>0 BB</span></div>
+    </article>
+  </div>
+
+  <div class="demo demo--dark">
+    <div class="demo-cap">Seat plate (viewer) — 6 states</div>
+    <div class="plate">
+      <div class="plate-head"><span class="pos">LJ</span><span class="plate-name">M. Badziakouski</span></div>
+      <div class="plate-stack"><b class="tnum">720K</b><span>45 BB</span></div>
+    </div>
+    <div class="plate plate--acting">
+      <div class="plate-head"><span class="gno">G9</span><span class="pos">BTN</span><span class="dbtn">D</span><span class="plate-name">E. Tsang</span></div>
+      <div class="plate-stack"><b class="tnum">820K</b><span>51.3 BB</span></div>
+      <div class="plate-bar plate-bar--act">Đang action</div>
+    </div>
+    <div class="plate plate--fold">
+      <div class="plate-head"><span class="pos">CO</span><span class="plate-name">S. Chidwick</span></div>
+      <div class="plate-stack"><b class="tnum">2.1M</b><span>131.3 BB</span></div>
+      <div class="plate-bar plate-bar--muck">Fold</div>
+    </div>
+    <div class="plate plate--absent">
+      <div class="plate-head"><span class="pos">HJ</span><span class="plate-name">W.K. Yong</span></div>
+      <div class="plate-stack"><b class="tnum">540K</b><span>33.8 BB</span></div>
+      <div class="plate-bar plate-bar--muck">Vắng mặt</div>
+    </div>
+    <div class="plate plate--winner">
+      <div class="plate-hole">
+        <span class="pcard pcard--red"><b>K</b><i>♦</i></span>
+        <span class="pcard"><b>K</b><i>♣</i></span>
+      </div>
+      <div class="plate-head"><span class="pos">UTG+1</span><span class="plate-name">Phil Ivey</span></div>
+      <div class="plate-stack"><b class="tnum">1.96M</b><span>122.5 BB</span></div>
+      <div class="plate-bar plate-bar--win tnum">Winner +980K</div>
+      <div class="plate-bar plate-bar--rank">Set of Kings</div>
+    </div>
+    <div class="plate">
+      <div class="plate-hole">
+        <span class="pcard"><b>A</b><i>♠</i></span>
+        <span class="pcard pcard--red"><b>A</b><i>♦</i></span>
+      </div>
+      <div class="plate-head"><span class="pos">BTN</span><span class="dbtn">D</span><span class="plate-name">Elton Tsang</span></div>
+      <div class="plate-stack"><b class="tnum">0</b><span>0 BB</span></div>
+      <div class="plate-bar plate-bar--bust">Bust</div>
+    </div>
+  </div>
+  <p class="usage"><b>States (v2):</b> bình thường / to-act (viền success 2px + vòng pulse + label "Đến lượt") / fold (mờ 45% + label) / Sit out (badge danger trên avatar) / winner (viền + bar gold + số tiền thắng + hạng bài) / bust (bar danger) / trống (dashed + dấu +). Tên dài tự cắt bằng ellipsis, không xuống dòng. "Muck" giữ rõ, không mờ như Fold — chủ ý: người chơi đã theo tới showdown.</p>
+</section>
+
+<!-- ============ 08 BADGE ============ -->
+<section id="badge">
+  <div class="sec-head"><span class="idx">08</span><h2>Badge</h2></div>
+  <p class="sec-note"><b>DELAYED</b> là badge nổi nhất hệ thống (viền + nền gold, đếm mm:ss) — người xem phải luôn biết mình đang xem trễ.
+  LIVE dùng cho khu vực staff (realtime) và cho trang public khi giải không đặt delay (D = 0); giải có delay luôn hiện DELAYED.</p>
+  <div class="demo">
+    <span class="badge badge--level">Level 14 · 8K/16K</span>
+    <span class="badge badge--delayed"><span class="dot"></span>Delayed 30:00</span>
+    <span class="badge badge--live"><span class="dot"></span>Live</span>
+    <span class="badge badge--rank">Set of Kings</span>
+    <span class="badge badge--practice">Practice</span>
+  </div>
+  <div class="demo demo--dark">
+    <div class="demo-cap">v2 — badge quanh bàn: chấm D (vật thể tròn), vị trí SB/BB, cờ Sit out trên avatar</div>
+    <span class="dbtn" aria-label="Nút dealer">D</span>
+    <span class="pos">SB</span>
+    <span class="pos">BB</span>
+    <span class="pos">BTN</span>
+    <span class="rs-flag" style="position:static; transform:none">Sit out</span>
+  </div>
+  <p class="usage"><b>Hạng bài</b> lấy thẳng từ engine, giữ nguyên tiếng Anh ("Set of Kings", "Full House", "Straight") — thuật ngữ poker không dịch (quy tắc CLAUDE.md), giữ hoa thường, không uppercase.
+  <b>Sit out</b> là cờ danger đặc — đè mép trên avatar, kèm checkbox trong side panel người chơi (mục 17).</p>
+</section>
+
+<!-- ============ 09 POT & BOARD ============ -->
+<section id="potboard">
+  <div class="sec-head"><span class="idx">09</span><h2>Pot display &amp; Board row</h2></div>
+  <p class="sec-note">Pot luôn kèm quy đổi BB trong ngoặc. Board cố định 5 slot — lá chưa chia là slot dashed, người xem luôn thấy cấu trúc 5 lá.</p>
+  <div class="demo demo--dark demo--center">
+    <div class="pot">
+      <div class="pot-label">Main Pot</div>
+      <div class="pot-num tnum">1.9M</div>
+      <div class="pot-bb tnum">118.5 BB</div>
+    </div>
+    <div class="cardrow">
+      <span class="pcard pcard--lg"><b>K</b><i>♠</i></span>
+      <span class="pcard pcard--lg pcard--red"><b>Q</b><i>♦</i></span>
+      <span class="pcard pcard--lg"><b>4</b><i>♣</i></span>
+      <span class="pcard pcard--lg pcard--slot"></span>
+      <span class="pcard pcard--lg pcard--slot"></span>
+    </div>
+  </div>
+  <p class="usage"><b>Side pot:</b> khi có nhiều tầng pot, lặp lại pot display cỡ nhỏ hơn (label "Side pot 1") xếp ngang dưới main pot.</p>
+</section>
+
+<!-- ============ 10 ACTION LOG ============ -->
+<section id="log">
+  <div class="sec-head"><span class="idx">10</span><h2>Action log — viewer</h2></div>
+  <p class="sec-note">Nhóm theo street, header kèm lá vừa chia + pot chốt street. Mỗi hàng: vị trí · tên · action · số tiền · <b>stack còn lại</b>.
+  Màu action (v2 — khớp action bar): bet/raise <b>gold</b>, call beige, all-in <b>danger</b>, fold/check muted — kèm chữ nên không phụ thuộc màu.</p>
+  <div class="demo demo--col demo--dark demo--bare">
+    <div class="alog">
+      <div class="alog-street"><b>Preflop</b><span class="potend tnum">Pot 144K</span></div>
+      <div class="alog-row"><span class="pos">UTG+1</span><span class="nm">Phil Ivey</span><span class="act--raise">Raise to</span><span class="amt tnum">40K</span><span class="left tnum">còn 940K</span></div>
+      <div class="alog-row"><span class="pos">BTN</span><span class="nm">Elton Tsang</span><span class="act--call">Call</span><span class="amt tnum">40K</span><span class="left tnum">còn 876K</span></div>
+      <div class="alog-row"><span class="pos">SB</span><span class="nm">Phạm T. Nghĩa</span><span class="act--fold">Fold</span><span class="amt"></span><span class="left tnum">còn 394K</span></div>
+      <div class="alog-street">
+        <b>Flop</b>
+        <span class="cards">
+          <span class="pcard pcard--sm"><b>K</b><i>♠</i></span>
+          <span class="pcard pcard--sm pcard--red"><b>Q</b><i>♦</i></span>
+          <span class="pcard pcard--sm"><b>4</b><i>♣</i></span>
+        </span>
+        <span class="potend tnum">Pot 264K</span>
+      </div>
+      <div class="alog-row"><span class="pos">UTG+1</span><span class="nm">Phil Ivey</span><span class="act--bet">Bet</span><span class="amt tnum">60K</span><span class="left tnum">còn 880K</span></div>
+      <div class="alog-row"><span class="pos">BTN</span><span class="nm">Elton Tsang</span><span class="act--allin">All-in</span><span class="amt tnum">816K</span><span class="left tnum">còn 0</span></div>
+      <div class="alog-row alog-row--sys"><span></span><span>Uncalled 64K trả lại UTG+1 Phil Ivey</span></div>
+      <div class="alog-row alog-row--sys win"><span></span><span>Phil Ivey thắng Main Pot 1.9M với Set of Kings</span></div>
+    </div>
+  </div>
+  <p class="usage"><b>Hàng hệ thống</b> (uncalled, trao pot, void) thụt theo cột tên, muted; riêng hàng thắng pot dùng gold. Header street: PREFLOP / FLOP / TURN / RIVER / SHOWDOWN.</p>
+</section>
+
+<!-- ============ 11 FORM ============ -->
+<section id="form">
+  <div class="sec-head"><span class="idx">11</span><h2>Form admin</h2></div>
+  <p class="sec-note">Chỉ dùng ở admin console &amp; setup giải (logger không gõ chữ khi hand chạy). Nền field chìm xuống <code>--color-bg</code>, focus viền gold 2 lớp.</p>
+  <div class="demo">
+    <div class="field">
+      <label for="f1">Tên giải</label>
+      <input class="input" id="f1" type="text" value="Quads Championship I">
+      <span class="field-help">Hiển thị trên mọi trang public.</span>
+    </div>
+    <div class="field">
+      <label for="f2">Số ghế / bàn</label>
+      <span class="selwrap"><select class="input" id="f2"><option>9 ghế (mặc định)</option><option>6 ghế</option></select></span>
+    </div>
+    <div class="field">
+      <label for="f3">Focus (mô phỏng)</label>
+      <input class="input demo-focus-input" id="f3" type="text" value="8.000 / 16.000 (16.000)">
+    </div>
+    <div class="field">
+      <label for="f4">Disabled</label>
+      <input class="input" id="f4" type="text" value="Không sửa khi giải đang chạy" disabled>
+    </div>
+  </div>
+  <div class="demo">
+    <div class="field grow">
+      <label for="f5">Người chơi — paste từ Excel</label>
+      <textarea class="input" id="f5" placeholder="Dán danh sách: Tên [tab] Tên rút gọn [tab] Stack — mỗi người một dòng"></textarea>
+      <span class="field-help">Parse TSV, cảnh báo trùng tên rút gọn trước khi lưu.</span>
+    </div>
+  </div>
+  <div class="demo">
+    <div class="demo-cap">v2 — toggle switch &amp; checkbox (admin + side panel): tắt / bật</div>
+    <label class="swrow"><span class="switch" role="switch" aria-checked="false" tabindex="0"></span><b>Payouts as tickets</b></label>
+    <label class="swrow"><span class="switch switch--on" role="switch" aria-checked="true" tabindex="0"></span><b>Skip SB</b></label>
+    <label class="chkrow"><span class="chk" role="checkbox" aria-checked="false" tabindex="0"></span>Hiện số hand còn lại thay vì thời gian</label>
+    <label class="chkrow"><span class="chk chk--on" role="checkbox" aria-checked="true" tabindex="0">✓</span>Người chơi đang sit out</label>
+  </div>
+  <div class="demo">
+    <div class="demo-cap">v2 — khung upload ảnh giải (tab Overview)</div>
+    <div class="upbox">
+      <b>Ảnh header giải</b>
+      <span>Tỷ lệ bắt buộc 16:7 — ví dụ 2400×1044.</span>
+      <button class="btn btn--outline">Chọn ảnh…</button>
+    </div>
+    <div class="upbox">
+      <b>Ảnh card giải</b>
+      <span>Hiển thị 760×570, chế độ cover.</span>
+      <button class="btn btn--outline">Chọn ảnh…</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 SYNC ============ -->
+<section id="sync">
+  <div class="sec-head"><span class="idx">12</span><h2>Sync indicator</h2></div>
+  <p class="sec-note">Luôn hiển thị ở header logger. Chấm trạng thái tròn — trạng thái chờ nhấp nháy nhẹ, kèm số thao tác trong queue localStorage.</p>
+  <div class="demo demo--dark">
+    <span class="sync sync--ok"><span class="dot"></span>Đã đồng bộ <small>· 0.3s</small></span>
+    <span class="sync sync--pending"><span class="dot"></span>Đang chờ 3 thao tác</span>
+    <span class="sync sync--off"><span class="dot"></span>Mất mạng — đã lưu cục bộ</span>
+  </div>
+  <p class="usage"><b>Ngưỡng:</b> queue &gt; 0 quá 5s → chuyển pending; mất mạng/5xx → offline kèm banner (mục 13). Hồi mạng tự gửi tuần tự rồi quay về trạng thái xanh.</p>
+</section>
+
+<!-- ============ 13 TOAST & BANNER ============ -->
+<section id="toast">
+  <div class="sec-head"><span class="idx">13</span><h2>Toast &amp; Banner</h2></div>
+  <p class="sec-note">Banner offline là overlay mỏng đè mép trên vùng seats của logger (layout không-cuộn — không chen vào flow, không che action pad). Toast lease đè góc phải trên, bắt buộc có hành động.</p>
+  <div class="demo demo--col demo--dark">
+    <div class="banner banner--offline" role="alert">
+      <span class="dot"></span>
+      <b>Mất kết nối</b>
+      <span>Thao tác vẫn được ghi và lưu trên máy — tiếp tục nhập bình thường.</span>
+      <span class="tail">3 thao tác chờ gửi</span>
+    </div>
+    <div class="toast" role="alert">
+      <h4>Lease bàn này đã bị thu hồi</h4>
+      <p>Admin đã chuyển quyền ghi sang thiết bị khác. Màn hình chuyển về chế độ chỉ xem; thao tác chưa gửi đã bị vô hiệu.</p>
+      <div class="toast-actions">
+        <button class="btn btn--primary">Tải lại trạng thái</button>
+        <button class="btn btn--ghost">Liên hệ admin</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 CARD PICKER (v2) ============ -->
+<section id="picker">
+  <div class="sec-head"><span class="idx">14</span><h2>Card picker — deck 4 màu</h2></div>
+  <p class="sec-note">Bottom sheet của reporter khi nhập board / pocket cards: lưới 52 lá, <b>4 hàng theo chất</b>, mỗi hàng 13 lá A → 2 (bố cục Triton).
+  Mã màu 4 chất giúp chọn nhanh không nhầm: ♠ <code>--card-black</code> · ♥ <code>--card-red</code> · ♣ <code>--card-green</code> · ♦ <code>--card-blue</code> —
+  chữ màu trên mặt lá sáng, tất cả ≥4.5:1. Lá đã dùng mờ 22% + khóa; lá đang chọn viền success.</p>
+  <div class="demo demo--col demo--dark">
+    <div class="pgrid">
+      <div class="prow prow--s">
+        <span class="suit suit--s">♠</span>
+        <button class="pbtn">A<i>♠</i></button><button class="pbtn pbtn--used">K<i>♠</i></button><button class="pbtn">Q<i>♠</i></button><button class="pbtn">J<i>♠</i></button><button class="pbtn">10<i>♠</i></button><button class="pbtn">9<i>♠</i></button><button class="pbtn">8<i>♠</i></button><button class="pbtn">7<i>♠</i></button><button class="pbtn">6<i>♠</i></button><button class="pbtn">5<i>♠</i></button><button class="pbtn">4<i>♠</i></button><button class="pbtn">3<i>♠</i></button><button class="pbtn">2<i>♠</i></button>
+      </div>
+      <div class="prow prow--h">
+        <span class="suit suit--h">♥</span>
+        <button class="pbtn">A<i>♥</i></button><button class="pbtn">K<i>♥</i></button><button class="pbtn">Q<i>♥</i></button><button class="pbtn">J<i>♥</i></button><button class="pbtn">10<i>♥</i></button><button class="pbtn">9<i>♥</i></button><button class="pbtn">8<i>♥</i></button><button class="pbtn">7<i>♥</i></button><button class="pbtn">6<i>♥</i></button><button class="pbtn">5<i>♥</i></button><button class="pbtn">4<i>♥</i></button><button class="pbtn">3<i>♥</i></button><button class="pbtn">2<i>♥</i></button>
+      </div>
+      <div class="prow prow--c">
+        <span class="suit suit--c">♣</span>
+        <button class="pbtn">A<i>♣</i></button><button class="pbtn">K<i>♣</i></button><button class="pbtn">Q<i>♣</i></button><button class="pbtn">J<i>♣</i></button><button class="pbtn">10<i>♣</i></button><button class="pbtn">9<i>♣</i></button><button class="pbtn">8<i>♣</i></button><button class="pbtn pbtn--sel" aria-pressed="true">7<i>♣</i></button><button class="pbtn">6<i>♣</i></button><button class="pbtn">5<i>♣</i></button><button class="pbtn">4<i>♣</i></button><button class="pbtn">3<i>♣</i></button><button class="pbtn">2<i>♣</i></button>
+      </div>
+      <div class="prow prow--d">
+        <span class="suit suit--d">♦</span>
+        <button class="pbtn">A<i>♦</i></button><button class="pbtn">K<i>♦</i></button><button class="pbtn pbtn--used">Q<i>♦</i></button><button class="pbtn">J<i>♦</i></button><button class="pbtn">10<i>♦</i></button><button class="pbtn">9<i>♦</i></button><button class="pbtn">8<i>♦</i></button><button class="pbtn">7<i>♦</i></button><button class="pbtn">6<i>♦</i></button><button class="pbtn">5<i>♦</i></button><button class="pbtn">4<i>♦</i></button><button class="pbtn">3<i>♦</i></button><button class="pbtn">2<i>♦</i></button>
+      </div>
+    </div>
+  </div>
+  <p class="usage"><b>Quy tắc:</b> picker hiện dạng bottom sheet đè panel dưới của reporter, action bar vẫn truy cập được phía trên sheet; ô board đang nhập viền success (<code>.pcard--picking</code>). Nút CLEAR CARD gỡ lá khỏi ô. Lá ≥ <code>--tap-min</code> 56px chiều cao.</p>
+</section>
+
+<!-- ============ 15 BLIND LEVEL ROW (v2) ============ -->
+<section id="blind">
+  <div class="sec-head"><span class="idx">15</span><h2>Blind level row — admin Structure</h2></div>
+  <p class="sec-note">Mỗi level một hàng input: ★ đặt level hiện tại · Small blind · Big blind · Ante · Min chip · Phút · Ghi chú sau level · nhân bản · xóa.
+  Hàng level đang chạy nền <code>--color-gold-faint</code>. Blind levels <b>nhập tay</b> (hoặc Clone từ event trước) — không sync phần mềm ngoài.</p>
+  <div class="demo demo--col">
+    <div class="blhead">
+      <span></span><span>Small blind</span><span>Big blind</span><span>Ante</span><span>Min chip</span><span>Phút</span><span>Ghi chú sau level</span><span></span><span></span>
+    </div>
+    <div class="blrow">
+      <button class="bl-star" aria-label="Đặt làm level hiện tại">☆</button>
+      <input class="input tnum" value="3,000" aria-label="Small blind"><input class="input tnum" value="6,000" aria-label="Big blind"><input class="input tnum" value="6,000" aria-label="Ante"><input class="input tnum" value="(500)" aria-label="Min chip"><input class="input tnum" value="35" aria-label="Phút"><input class="input" value="Break 10 phút" aria-label="Ghi chú">
+      <button class="bl-clone" aria-label="Nhân bản level">⧉</button><button class="bl-del" aria-label="Xóa level">🗑</button>
+    </div>
+    <div class="blrow blrow--current" aria-current="true">
+      <button class="bl-star bl-star--on" aria-label="Level hiện tại">★</button>
+      <input class="input tnum" value="4,000" aria-label="Small blind"><input class="input tnum" value="8,000" aria-label="Big blind"><input class="input tnum" value="8,000" aria-label="Ante"><input class="input tnum" value="(500)" aria-label="Min chip"><input class="input tnum" value="35" aria-label="Phút"><input class="input" value="" placeholder="Ghi chú…" aria-label="Ghi chú">
+      <button class="bl-clone" aria-label="Nhân bản level">⧉</button><button class="bl-del" aria-label="Xóa level">🗑</button>
+    </div>
+  </div>
+  <p class="usage"><b>Ghi chú:</b> Min chip trong ngoặc — dùng cho race-off; cột ghi chú hiển thị lên viewer khi level kết thúc (break, chip-up, hết late reg). Xóa level là hành động danger (icon đỏ), có confirm.</p>
+</section>
+
+<!-- ============ 16 TABLE CARD (v2) ============ -->
+<section id="tablecard">
+  <div class="sec-head"><span class="idx">16</span><h2>Table card — admin Seating Chart</h2></div>
+  <p class="sec-note">Mỗi bàn một card: tiêu đề "#N: Bàn N" + kéo-thả + sửa; mini oval nỉ olive với 9 chấm ghế (avatar viền gold-deep, ghế trống dashed + số);
+  nút <b>OPEN REPORTER</b> giữa bàn mở màn ghi hand. Bố cục Triton — nỉ và viền theo palette Quads.</p>
+  <div class="demo demo--dark">
+    <article class="tcard" aria-label="Bàn 1">
+      <div class="tcard-head">
+        <h3><span class="tnum">#1:</span> Bàn 1</h3>
+        <span class="tail">
+          <button class="tc-btn" aria-label="Kéo thả">⠿</button>
+          <button class="tc-btn" aria-label="Sửa">✎</button>
+        </span>
+      </div>
+      <div class="toval">
+        <div class="toval-felt" aria-hidden="true"></div>
+        <a class="topen" href="mockup-logger.html">Open Reporter</a>
+        <span class="tseat tv-1">NH</span>
+        <span class="tseat tseat--empty tv-2">2</span>
+        <span class="tseat tv-3">TB</span>
+        <span class="tseat tv-4">VL</span>
+        <span class="tseat tv-5">DN</span>
+        <span class="tseat tv-6">HK</span>
+        <span class="tseat tseat--empty tv-7">7</span>
+        <span class="tseat tv-8">BD</span>
+        <span class="tseat tv-9">DV</span>
+      </div>
+    </article>
+  </div>
+  <p class="usage"><b>Hành động nguy hiểm</b> của màn Seating Chart: RE-DRAW (xáo toàn bộ chỗ) dùng nút outline danger + confirm 2 bước. Avatar dùng ảnh người chơi nếu có, fallback chữ cái đầu.</p>
+</section>
+
+<!-- ============ 17 TAB BAR & SIDE PANEL (v2) ============ -->
+<section id="tabside">
+  <div class="sec-head"><span class="idx">17</span><h2>Tab bar, hand chips &amp; side panel</h2></div>
+  <p class="sec-note">Tab bar gạch chân gold dùng chung cho panel dưới reporter (Next Hand / Standing / Busted / Hand History) và admin event (Overview / Structure / Seating Chart).
+  Dải chip số hand: chip active nền gold. Side panel người chơi trượt từ phải (~60% màn), sau scrim <code>--color-scrim</code>.</p>
+  <div class="demo demo--col demo--dark">
+    <div class="demo-cap">Tab bar — active gạch chân gold; tab chưa làm: disabled</div>
+    <nav class="rtabs">
+      <button class="rtab">Next Hand</button>
+      <button class="rtab">Standing Players <small>(0)</small></button>
+      <button class="rtab">Busted Players <small>(11)</small></button>
+      <button class="rtab rtab--active" aria-current="page">Hand History</button>
+      <button class="rtab" disabled>Reception · sau</button>
+    </nav>
+    <div class="demo-cap demo-gap-top">Dải chip số hand — active gold</div>
+    <div class="hstrip">
+      <button class="hchip tnum">#126</button>
+      <button class="hchip tnum">#127</button>
+      <button class="hchip tnum">#128</button>
+      <button class="hchip hchip--active tnum" aria-current="true">#129</button>
+    </div>
+  </div>
+  <div class="demo demo--dark">
+    <div class="demo-cap">Side panel người chơi (rút gọn) — BUST OUT danger, STAND UP gold</div>
+    <aside class="spanel-demo">
+      <div class="sp-head"><h4>Nguyễn Trung Hiếu</h4><span class="pid tnum">#317</span></div>
+      <div class="sp-sec" style="border-top:0; padding-top:0">
+        <button class="sbtn sbtn--bust">Bust out</button>
+      </div>
+      <div class="sp-sec">
+        <h5>Stand up</h5>
+        <button class="sbtn sbtn--stand">Stand up</button>
+      </div>
+      <div class="sp-sec">
+        <label class="chkrow"><span class="chk" role="checkbox" aria-checked="false" tabindex="0"></span>Người chơi đang sit out</label>
+      </div>
+      <div class="sp-sec">
+        <h5>Sửa thông tin</h5>
+        <div class="field"><label for="ds-chips">Current chips</label><input class="input tnum" id="ds-chips" value="402,000"></div>
+      </div>
+    </aside>
+  </div>
+  <p class="usage"><b>Phân cấp nút trong panel:</b> BUST OUT = danger đặc (loại khỏi giải); STAND UP = gold (thao tác chính không phá hủy); còn lại outline/ghost. Mọi thao tác panel ghi event — Undo gỡ được.</p>
+</section>
+
+<footer class="page-end">
+  QUADS LIVE — Design System v2 (Triton redesign) · 06/2026 · HTML thuần là nguồn chân lý khi port sang Vite + React ·
+  <a href="mockup-logger.html">Reporter</a> · <a href="mockup-admin.html">Admin</a> · <a href="mockup-viewer-mobile.html">Viewer Mobile (chuẩn chính)</a> · <a href="mockup-viewer.html">Viewer Desktop</a>
+</footer>
+
+</main>
+</div>
+</body>
+</html>
