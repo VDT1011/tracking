@@ -257,12 +257,60 @@ body {
 .note { border: 1px solid var(--color-border); background: var(--color-surface-1); border-radius: var(--radius-md); padding: var(--sp-4); }
 .note b { display: block; font-size: var(--fs-sm); color: var(--color-gold); margin-bottom: 4px; }
 .note span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); display: block; }
+
+/* ---------- Tab dạng link (menu bấm được, nhảy tới frame) ---------- */
+.adtab { text-decoration: none; }
+html { scroll-behavior: smooth; }
+
+/* ================= TAB CHIPS — tổng quan + chip count round ================= */
+.statgrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
+.cstat { background: var(--color-surface-1); padding: var(--sp-3) var(--sp-4); display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.cstat .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.cstat .v { font-size: var(--fs-xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; line-height: var(--lh-tight); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cstat .v small { font-size: var(--fs-xs); color: var(--color-text-muted); font-weight: var(--fw-reg); }
+.cstat--accent .v { color: var(--color-gold); }
+.recon { display: flex; align-items: center; gap: var(--sp-6); flex-wrap: wrap; padding: var(--sp-3) var(--sp-4); border-radius: var(--radius-md); border: 1px solid var(--color-border-strong); background: var(--color-bg); }
+.recon > div { display: flex; flex-direction: column; gap: 2px; }
+.recon .rk { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.recon .rv { font-size: var(--fs-md); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
+.recon .verdict { margin-left: auto; font-size: var(--fs-sm); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.recon--ok { border-color: var(--color-gold-deep); }
+.recon--ok .verdict { color: var(--color-gold); }
+.recon--warn { border-color: var(--color-danger-line); background: var(--color-danger-soft); }
+.recon--warn .verdict { color: var(--color-danger-text); }
+.cc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+.grid-chip { grid-template-columns: 40px 1fr 130px 80px; }
+.grid-chip .input { min-height: 40px; padding: 6px var(--sp-2); }
+.cc-tbl-head { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) var(--sp-1) 2px; }
+.cc-tbl-head h3 { font-size: var(--fs-sm); font-weight: var(--fw-bold); }
+.cc-tbl-head h3 .tnum { color: var(--color-gold); }
+.cc-tbl-head .sub { margin-left: auto; font-size: var(--fs-sm); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.delta { text-align: right; font-variant-numeric: tabular-nums; font-weight: var(--fw-semi); }
+.delta--up { color: var(--color-gold); }
+.delta--dn { color: var(--color-danger-text); }
+.delta--zero { color: var(--color-text-muted); }
+.cc-foot { display: flex; align-items: center; gap: var(--sp-3); padding-top: var(--sp-2); }
+.cc-foot .note { flex: 1; margin: 0; }
+
+/* ================= TAB VISIBLE SECTION — bật/tắt khối public ================= */
+.vis-row { display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-3) 0; border-top: 1px solid var(--color-border); }
+.vis-row:first-of-type { border-top: 0; }
+.vis-ic { width: 40px; height: 40px; flex: none; border-radius: var(--radius-md); background: var(--color-surface-2); border: 1px solid var(--color-border); display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-md); }
+.vis-b { flex: 1; min-width: 0; }
+.vis-b b { font-size: var(--fs-base); font-weight: var(--fw-semi); display: block; }
+.vis-b span { font-size: var(--fs-xs); color: var(--color-text-muted); line-height: var(--lh-snug); }
+.vis-lock { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); flex: none; }
+.vis-prev { display: flex; flex-direction: column; gap: var(--sp-2); }
+.vp-bar { display: flex; align-items: center; gap: var(--sp-3); padding: 10px var(--sp-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-bg); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.vp-bar .vtag { margin-left: auto; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-caps); color: var(--color-gold); font-weight: var(--fw-bold); }
+.vp-bar--off { border-style: dashed; opacity: 0.45; }
+.vp-bar--off .vtag { color: var(--color-text-muted); }
 </style>
 </head>
 <body>
 
 <div class="mock-chrome">
-  <b>Mockup — Admin desktop</b><span>PC ≥1280 · sidebar Series→Event→Flight · 3 tab</span>
+  <b>Mockup — Admin desktop</b><span>PC ≥1280 · sidebar Series→Event→Flight · 5 tab (Reception sau)</span>
   <nav>
     <a href="design-system.html">◂ Design System</a>
     <a href="mockup-logger.html">Reporter</a>
@@ -331,12 +379,12 @@ body {
       </div>
 
       <nav class="ad-tabs">
-        <button class="adtab adtab--active">Overview</button>
-        <button class="adtab">Structure</button>
-        <button class="adtab">Seating Chart</button>
+        <a class="adtab adtab--active" href="#overview">Overview</a>
+        <a class="adtab" href="#structure">Structure</a>
+        <a class="adtab" href="#seating">Seating Chart</a>
         <button class="adtab" disabled>Reception <small>· sau</small></button>
-        <button class="adtab" disabled>Chips <small>· sau</small></button>
-        <button class="adtab" disabled>Visible Section <small>· sau</small></button>
+        <a class="adtab" href="#chips">Chips</a>
+        <a class="adtab" href="#visible">Visible Section</a>
       </nav>
 
       <div class="ad-body">
@@ -462,12 +510,12 @@ body {
       </div>
 
       <nav class="ad-tabs">
-        <button class="adtab">Overview</button>
-        <button class="adtab adtab--active">Structure</button>
-        <button class="adtab">Seating Chart</button>
+        <a class="adtab" href="#overview">Overview</a>
+        <a class="adtab adtab--active" href="#structure">Structure</a>
+        <a class="adtab" href="#seating">Seating Chart</a>
         <button class="adtab" disabled>Reception <small>· sau</small></button>
-        <button class="adtab" disabled>Chips <small>· sau</small></button>
-        <button class="adtab" disabled>Visible Section <small>· sau</small></button>
+        <a class="adtab" href="#chips">Chips</a>
+        <a class="adtab" href="#visible">Visible Section</a>
       </nav>
 
       <div class="ad-body">
@@ -584,12 +632,12 @@ body {
       </div>
 
       <nav class="ad-tabs">
-        <button class="adtab">Overview</button>
-        <button class="adtab">Structure</button>
-        <button class="adtab adtab--active">Seating Chart</button>
+        <a class="adtab" href="#overview">Overview</a>
+        <a class="adtab" href="#structure">Structure</a>
+        <a class="adtab adtab--active" href="#seating">Seating Chart</a>
         <button class="adtab" disabled>Reception <small>· sau</small></button>
-        <button class="adtab" disabled>Chips <small>· sau</small></button>
-        <button class="adtab" disabled>Visible Section <small>· sau</small></button>
+        <a class="adtab" href="#chips">Chips</a>
+        <a class="adtab" href="#visible">Visible Section</a>
       </nav>
 
       <div class="ad-body">
@@ -696,11 +744,265 @@ body {
   </div>
 </div>
 
+<!-- =================================================================
+     FRAME D — TAB CHIPS
+     ================================================================= -->
+<div class="frame-cap" id="chips"><b>Frame D</b> · Tab Chips — Chip overview (tool tự tính) + Chip count round đối soát theo bàn</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">admin.quadspoker.vn<b>/event/5/chips</b></span></div>
+
+  <header class="topbar">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="top-tag">Admin</span>
+    <span class="top-tail">
+      <a class="top-link" href="mockup-viewer-desktop.html">Viewer ↗</a>
+      <a class="top-link" href="mockup-logger.html">Reporter ↗</a>
+      <span class="vr"></span>
+      <span class="acct"><span class="ava">AD</span>Admin ▾</span>
+    </span>
+  </header>
+
+  <div class="adwrap">
+
+    <aside class="side">
+      <div class="side-series">
+        <div class="k">Series</div>
+        <div class="side-pick"><b>Quads Winter Series 2026</b><span class="cv">▾</span></div>
+      </div>
+      <div class="side-cap"><span>Events</span><button class="add" aria-label="Thêm event">+</button></div>
+      <nav class="side-list">
+        <a class="side-ev" href="#"><span class="no tnum">#1</span><span class="nm">Opening Freezeout</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#2</span><span class="nm">Deepstack 2M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#3</span><span class="nm">Deep Stack 1M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#4</span><span class="nm">Sunday Deepstack</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev side-ev--active" href="#"><span class="no tnum">#5</span><span class="nm">5M NLH High Roller</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight side-ev--active" href="#"><span class="no tnum">1A</span><span class="nm">Day 1A — đang chạy</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight" href="#"><span class="no tnum">1B</span><span class="nm">Day 1B</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#6</span><span class="nm">Mini Main Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#7</span><span class="nm">Ladies Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#8</span><span class="nm">High Roller</span></a>
+      </nav>
+      <div class="side-foot"><button class="btn btn--outline btn--sm" style="width:100%">+ Series mới</button></div>
+    </aside>
+
+    <div class="main">
+      <div class="ad-head">
+        <div class="crumb">Quads Winter Series 2026 <b>›</b> Event #5</div>
+        <div class="ad-title">
+          <h1><span class="tnum">#5:</span> 5M NLH High Roller — Day 1A</h1>
+          <button class="ad-edit" aria-label="Sửa tên">✎</button>
+          <span class="ad-status">
+            <span class="spill spill--run"><span class="dot"></span>Clock running · Lv <b>10</b></span>
+            <span class="spill spill--open">Reg open</span>
+            <span class="spill spill--delay"><span class="dot"></span>Delay 15:00</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="ad-tabs">
+        <a class="adtab" href="#overview">Overview</a>
+        <a class="adtab" href="#structure">Structure</a>
+        <a class="adtab" href="#seating">Seating Chart</a>
+        <button class="adtab" disabled>Reception <small>· sau</small></button>
+        <a class="adtab adtab--active" href="#chips">Chips</a>
+        <a class="adtab" href="#visible">Visible Section</a>
+      </nav>
+
+      <div class="ad-body">
+        <div class="statgrid">
+          <div class="cstat"><span class="k">Total chips in play</span><span class="v tnum">24,500,000</span></div>
+          <div class="cstat"><span class="k">Average stack</span><span class="v tnum">1,020,833 <small>≈ 128 BB</small></span></div>
+          <div class="cstat cstat--accent"><span class="k">Chip leader</span><span class="v">T. Dwan <small class="tnum">1.46M</small></span></div>
+          <div class="cstat"><span class="k">Người còn lại</span><span class="v tnum">24 / 35</span></div>
+        </div>
+
+        <section class="card" aria-label="Chip count round">
+          <div class="card-head">
+            <h2>Chip count round</h2>
+            <span class="tail">
+              <span class="selwrap"><select class="input" aria-label="Chọn round"><option>Round 2 · break level 10</option><option>Round 1 · break level 6</option></select></span>
+              <button class="btn btn--outline btn--sm">+ Round mới</button>
+            </span>
+          </div>
+          <p class="note">Total &amp; average <b>tool tự tính realtime</b> từ stack reporter mỗi hand — không lấy phần mềm ngoài. Chip count round chỉ để đối soát tại break: tổng <b>counted</b> phải khớp <b>expected</b>; lệch bất thường → banner đỏ. Lưu = <b>STACK_SET</b> hàng loạt.</p>
+
+          <div class="recon recon--ok" role="status">
+            <div><span class="rk">Expected</span><span class="rv tnum">24,500,000</span></div>
+            <div><span class="rk">Counted</span><span class="rv tnum">24,500,000</span></div>
+            <div><span class="rk">Δ lệch</span><span class="rv tnum">0</span></div>
+            <span class="verdict">✓ Khớp</span>
+          </div>
+
+          <div class="cc-cols">
+            <div>
+              <div class="cc-tbl-head"><h3><span class="tnum">#1:</span> Bàn 1</h3><span class="sub">9 ghế · 8,210,000</span></div>
+              <div class="tbl-head grid-chip"><span>Seat</span><span>Player</span><span>Stack đếm</span><span>Δ</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">1</span><span>Nguyễn Trung Hiếu</span><input class="input tnum" value="402,000" aria-label="Stack ghế 1"><span class="delta delta--zero">0</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">3</span><span>Trần Quốc Bảo</span><input class="input tnum" value="435,000" aria-label="Stack ghế 3"><span class="delta delta--zero">0</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">5</span><span>Đỗ Thành Nam</span><input class="input tnum" value="441,000" aria-label="Stack ghế 5"><span class="delta delta--up">+2,000</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">9</span><span>Đinh Văn Vũ</span><input class="input tnum" value="198,000" aria-label="Stack ghế 9"><span class="delta delta--dn">−2,000</span></div>
+            </div>
+            <div>
+              <div class="cc-tbl-head"><h3><span class="tnum">#2:</span> Bàn 2</h3><span class="sub">9 ghế · 8,090,000</span></div>
+              <div class="tbl-head grid-chip"><span>Seat</span><span>Player</span><span>Stack đếm</span><span>Δ</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">1</span><span>Lê Minh Tuấn</span><input class="input tnum" value="1,205,000" aria-label="Stack ghế 1 bàn 2"><span class="delta delta--zero">0</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">4</span><span>Đặng Quang Huy</span><input class="input tnum" value="612,000" aria-label="Stack ghế 4 bàn 2"><span class="delta delta--zero">0</span></div>
+              <div class="tbl-row grid-chip"><span class="num tnum">7</span><span>Lý Hoàng Phúc</span><input class="input tnum" value="" placeholder="— chưa đếm —" aria-label="Stack ghế 7 bàn 2"><span class="delta delta--zero">·</span></div>
+            </div>
+          </div>
+
+          <div class="cc-foot">
+            <p class="note">Đang nhập <b>18/24</b> ghế · còn bàn 3 (6 ghế). Ghế ô trống = chưa đếm, chưa tính vào Counted.</p>
+            <button class="btn btn--outline">Hủy round</button>
+            <button class="btn btn--primary">Lưu · STACK_SET ×18</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =================================================================
+     FRAME E — TAB VISIBLE SECTION
+     ================================================================= -->
+<div class="frame-cap" id="visible"><b>Frame E</b> · Tab Visible Section — bật/tắt khối nội dung hiện trên trang giải public</div>
+<div class="win">
+  <div class="win-bar"><span class="tl"></span><span class="tl"></span><span class="tl"></span><span class="win-url">admin.quadspoker.vn<b>/event/5/visible</b></span></div>
+
+  <header class="topbar">
+    <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
+    <span class="top-tag">Admin</span>
+    <span class="top-tail">
+      <a class="top-link" href="mockup-viewer-desktop.html">Viewer ↗</a>
+      <a class="top-link" href="mockup-logger.html">Reporter ↗</a>
+      <span class="vr"></span>
+      <span class="acct"><span class="ava">AD</span>Admin ▾</span>
+    </span>
+  </header>
+
+  <div class="adwrap">
+
+    <aside class="side">
+      <div class="side-series">
+        <div class="k">Series</div>
+        <div class="side-pick"><b>Quads Winter Series 2026</b><span class="cv">▾</span></div>
+      </div>
+      <div class="side-cap"><span>Events</span><button class="add" aria-label="Thêm event">+</button></div>
+      <nav class="side-list">
+        <a class="side-ev" href="#"><span class="no tnum">#1</span><span class="nm">Opening Freezeout</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#2</span><span class="nm">Deepstack 2M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#3</span><span class="nm">Deep Stack 1M</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#4</span><span class="nm">Sunday Deepstack</span><span class="sdot sdot--done"></span></a>
+        <a class="side-ev side-ev--active" href="#"><span class="no tnum">#5</span><span class="nm">5M NLH High Roller</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight side-ev--active" href="#"><span class="no tnum">1A</span><span class="nm">Day 1A — đang chạy</span><span class="sdot sdot--run"></span></a>
+        <a class="side-ev side-flight" href="#"><span class="no tnum">1B</span><span class="nm">Day 1B</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#6</span><span class="nm">Mini Main Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#7</span><span class="nm">Ladies Event</span></a>
+        <a class="side-ev" href="#"><span class="no tnum">#8</span><span class="nm">High Roller</span></a>
+      </nav>
+      <div class="side-foot"><button class="btn btn--outline btn--sm" style="width:100%">+ Series mới</button></div>
+    </aside>
+
+    <div class="main">
+      <div class="ad-head">
+        <div class="crumb">Quads Winter Series 2026 <b>›</b> Event #5</div>
+        <div class="ad-title">
+          <h1><span class="tnum">#5:</span> 5M NLH High Roller — Day 1A</h1>
+          <button class="ad-edit" aria-label="Sửa tên">✎</button>
+          <span class="ad-status">
+            <span class="spill spill--run"><span class="dot"></span>Clock running · Lv <b>10</b></span>
+            <span class="spill spill--open">Reg open</span>
+            <span class="spill spill--delay"><span class="dot"></span>Delay 15:00</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="ad-tabs">
+        <a class="adtab" href="#overview">Overview</a>
+        <a class="adtab" href="#structure">Structure</a>
+        <a class="adtab" href="#seating">Seating Chart</a>
+        <button class="adtab" disabled>Reception <small>· sau</small></button>
+        <a class="adtab" href="#chips">Chips</a>
+        <a class="adtab adtab--active" href="#visible">Visible Section</a>
+      </nav>
+
+      <div class="ad-body">
+        <div class="cols-2">
+
+          <section class="card" aria-label="Khối hiển thị công khai">
+            <div class="card-head"><h2>Visible sections</h2><span class="tail"><span class="note" style="margin:0">Trang giải public · event #5</span></span></div>
+            <p class="note">Bật/tắt từng khối nội dung trên <b>live.quadspoker.vn</b>. Tắt khối nào thì viewer ẩn khối đó — admin vẫn nhập &amp; quản trị bình thường. Áp dụng qua delay (không lộ trước D).</p>
+
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">⏱</span>
+              <span class="vis-b"><b>Clock &amp; Field</b><span>Level/blinds, players remaining, hands left, đăng ký</span></span>
+              <span class="vis-lock">Luôn bật</span>
+              <span class="switch switch--on" role="switch" aria-checked="true" aria-disabled="true" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">▦</span>
+              <span class="vis-b"><b>Top stacks</b><span>Bảng chip leader trên trang Tổng quan</span></span>
+              <span class="switch switch--on" role="switch" aria-checked="true" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">♠</span>
+              <span class="vis-b"><b>Hands</b><span>Lịch sử hand + permalink chia sẻ từng hand</span></span>
+              <span class="switch switch--on" role="switch" aria-checked="true" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">◎</span>
+              <span class="vis-b"><b>Chips</b><span>Trang leaderboard chip công khai</span></span>
+              <span class="switch switch--on" role="switch" aria-checked="true" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">₫</span>
+              <span class="vis-b"><b>Payouts</b><span>Cơ cấu giải thưởng (theo toggle tickets ở Overview)</span></span>
+              <span class="switch switch--on" role="switch" aria-checked="true" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">▤</span>
+              <span class="vis-b"><b>Blind structure</b><span>Bảng blind levels đầy đủ</span></span>
+              <span class="switch switch--on" role="switch" aria-checked="true" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">▥</span>
+              <span class="vis-b"><b>Days &amp; lịch</b><span>Lịch các day của event</span></span>
+              <span class="switch" role="switch" aria-checked="false" tabindex="0"></span>
+            </div>
+            <div class="vis-row">
+              <span class="vis-ic" aria-hidden="true">🏆</span>
+              <span class="vis-b"><b>Finishers / kết quả</b><span>Bảng người về hạng — ẩn đến khi có người bị loại</span></span>
+              <span class="switch" role="switch" aria-checked="false" tabindex="0"></span>
+            </div>
+          </section>
+
+          <section class="card" aria-label="Preview trang public">
+            <div class="card-head"><h2>Preview — trang giải public</h2></div>
+            <p class="note">Khối <b>tắt</b> hiện nhạt + viền đứt — viewer không render. Thứ tự cố định theo trang Tổng quan.</p>
+            <div class="vis-prev">
+              <div class="vp-bar"><span>⏱ Clock &amp; Field</span><span class="vtag">Hiện</span></div>
+              <div class="vp-bar"><span>▦ Top stacks</span><span class="vtag">Hiện</span></div>
+              <div class="vp-bar"><span>♠ Hands</span><span class="vtag">Hiện</span></div>
+              <div class="vp-bar"><span>◎ Chips</span><span class="vtag">Hiện</span></div>
+              <div class="vp-bar"><span>₫ Payouts</span><span class="vtag">Hiện</span></div>
+              <div class="vp-bar"><span>▤ Blind structure</span><span class="vtag">Hiện</span></div>
+              <div class="vp-bar vp-bar--off"><span>▥ Days &amp; lịch</span><span class="vtag">Ẩn</span></div>
+              <div class="vp-bar vp-bar--off"><span>🏆 Finishers</span><span class="vtag">Ẩn</span></div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="notes">
   <div class="note"><b>Sidebar điều hướng (khác tablet)</b><span>Desktop thay dải chip ngang bằng sidebar Series→Event→Flight cố định, tận dụng chiều ngang; event đang chọn + flight con highlight gold. Tablet (mockup-admin.html) giữ dải chip cho màn đứng.</span></div>
   <div class="note"><b>Trạng thái nhanh ở header</b><span>Pill Clock/Reg/Delay hiển thị ngay cạnh tiêu đề để admin nắm tình hình mọi tab; chỉnh chi tiết vẫn ở tab Structure → Info.</span></div>
   <div class="note"><b>Không sync phần mềm ngoài</b><span>Bỏ "Import from PokerLens" — blind levels nhập tay hoặc Clone từ event khác. Field/Info bấm Cập nhật mới ghi event (chỉ gợi ý, không tự cập nhật).</span></div>
   <div class="note"><b>Re-draw là hành động nguy hiểm</b><span>Nút outline danger, xác nhận 2 bước. Add game / sửa bàn là outline trung tính. OPEN REPORTER mở reporter bàn (vẫn là tablet — không làm reporter desktop).</span></div>
+  <div class="note"><b>Chips &amp; Visible Section (chốt 13/06)</b><span>Đồng bộ tablet: <b>Chips</b> = chip overview tool tự tính + chip count round đối soát (desktop dàn 2 cột bàn); <b>Visible Section</b> = bật/tắt khối public + preview. Tab bar là link nhảy frame (#overview…#visible); Reception để sau.</span></div>
 </div>
 
 </body>

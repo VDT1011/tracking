@@ -533,12 +533,33 @@ body {
 .rpanel, .sheet { border-radius: var(--radius-lg); }
 .ab, .rbtn-edit, .hchip, .sheet-clear, .sheet-x, .sbtn, .sp-close, .input, .collapse-row { border-radius: var(--radius-md); }
 .mini-ava { border-radius: var(--radius-full); }
+
+/* ---------- Tab panel dạng link (menu bấm được, nhảy tới frame) ---------- */
+.rtab { text-decoration: none; }
+html { scroll-behavior: smooth; }
+
+/* ---------- Panel Standing / Busted Players (lưới người chơi cấp flight) ---------- */
+.rp-lead { font-size: var(--fs-sm); color: var(--color-text-muted); line-height: var(--lh-snug); padding: 2px var(--sp-1) var(--sp-2); }
+.rp-lead b { color: var(--color-beige); font-weight: var(--fw-semi); }
+.plist { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: var(--sp-2); padding-bottom: var(--sp-2); }
+.pcardx { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) var(--sp-3); background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-md); text-align: left; color: inherit; min-width: 0; }
+.pcardx:hover { border-color: var(--color-border-strong); background: var(--color-surface-2); }
+.pc-ava { width: 38px; height: 38px; flex: none; border-radius: var(--radius-full); background: var(--color-surface-2); border: 1px solid var(--color-gold-deep); display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-beige); }
+.pc-b { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.pc-b b { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pc-b span { font-size: var(--fs-2xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.pc-rank { flex: none; min-width: 36px; text-align: center; font-size: var(--fs-lg); font-weight: var(--fw-heavy); color: var(--color-gold); font-variant-numeric: tabular-nums; line-height: 1; }
+.pc-rank small { display: block; font-size: 9px; font-weight: var(--fw-semi); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.pc-rank--pending { color: var(--color-text-muted); }
+.pc-tag { flex: none; font-size: var(--fs-2xs); font-weight: var(--fw-semi); text-transform: uppercase; letter-spacing: var(--ls-caps); padding: 4px 9px; border-radius: var(--radius-full); white-space: nowrap; }
+.pc-tag--seat { color: var(--color-beige); border: 1px solid var(--color-border-strong); }
+.pc-tag--pending { color: var(--color-gold); background: var(--color-gold-soft); border: 1px solid var(--color-gold-deep); }
 </style>
 </head>
 <body>
 
 <div class="mock-chrome">
-  <b>Mockup — Reporter bàn</b><span>tablet portrait 820×1180 · v2 Triton redesign · 5 trạng thái</span>
+  <b>Mockup — Reporter bàn</b><span>tablet portrait 820×1180 · v2 Triton redesign · 7 trạng thái</span>
   <nav>
     <a href="design-system.html">◂ Design System</a>
     <a href="mockup-admin.html">Admin tablet</a>
@@ -618,10 +639,10 @@ body {
 
   <section class="rpanel" aria-label="Panel dưới — Hand History">
     <nav class="rtabs">
-      <button class="rtab">Next Hand</button>
-      <button class="rtab">Standing Players <small>(0)</small></button>
-      <button class="rtab">Busted Players <small>(11)</small></button>
-      <button class="rtab rtab--active" aria-current="page">Hand History</button>
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab rtab--active" href="#f1" aria-current="page">Hand History</a>
       <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
     </nav>
     <div class="rp-body">
@@ -749,10 +770,10 @@ body {
 
   <section class="rpanel" aria-label="Panel dưới — diễn biến hand #129">
     <nav class="rtabs">
-      <button class="rtab">Next Hand</button>
-      <button class="rtab">Standing Players <small>(0)</small></button>
-      <button class="rtab">Busted Players <small>(11)</small></button>
-      <button class="rtab rtab--active" aria-current="page">Hand History</button>
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab rtab--active" href="#f1" aria-current="page">Hand History</a>
       <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
     </nav>
     <div class="rp-body">
@@ -864,10 +885,10 @@ body {
 
   <section class="rpanel" aria-label="Panel dưới (bị sheet che một phần)">
     <nav class="rtabs">
-      <button class="rtab">Next Hand</button>
-      <button class="rtab">Standing Players <small>(0)</small></button>
-      <button class="rtab">Busted Players <small>(11)</small></button>
-      <button class="rtab rtab--active" aria-current="page">Hand History</button>
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab rtab--active" href="#f1" aria-current="page">Hand History</a>
       <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
     </nav>
     <div class="rp-body"></div>
@@ -985,10 +1006,10 @@ body {
 
   <section class="rpanel" aria-label="Panel dưới — kết quả hand #129">
     <nav class="rtabs">
-      <button class="rtab">Next Hand</button>
-      <button class="rtab">Standing Players <small>(0)</small></button>
-      <button class="rtab">Busted Players <small>(11)</small></button>
-      <button class="rtab rtab--active" aria-current="page">Hand History</button>
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab rtab--active" href="#f1" aria-current="page">Hand History</a>
       <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
     </nav>
     <div class="rp-body">
@@ -1098,10 +1119,10 @@ body {
 
   <section class="rpanel" aria-label="Panel dưới — Next Hand">
     <nav class="rtabs">
-      <button class="rtab rtab--active" aria-current="page">Next Hand</button>
-      <button class="rtab">Standing Players <small>(0)</small></button>
-      <button class="rtab">Busted Players <small>(11)</small></button>
-      <button class="rtab">Hand History</button>
+      <a class="rtab rtab--active" href="#f5" aria-current="page">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab" href="#f1">Hand History</a>
       <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
     </nav>
     <div class="rp-body">
@@ -1180,6 +1201,240 @@ body {
       <button class="collapse-row">Ẩn người chơi khỏi viewer<span>⌄</span></button>
     </div>
   </aside>
+
+</section>
+
+<!-- ============ FRAME 6 — TAB STANDING PLAYERS ============ -->
+<span class="frame-cap" id="f6"><b>Frame 6</b> · tab Standing Players — người trong giải chưa có ghế (cấp flight), bấm để gán ghế trống</span>
+<section class="frame" aria-label="Reporter bàn 1 — Standing Players">
+
+  <header class="rp-head">
+    <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
+    <div class="rp-crumb">
+      <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
+      <span>Quads Winter Series 2026 / #5: 5M NLH High Roller — Day 1A</span>
+    </div>
+    <span class="rp-variant">Texas Hold'em</span>
+    <span class="vr"></span>
+    <span class="sync sync--ok"><span class="dot"></span>Đã đồng bộ <small>· 0.3s</small></span>
+  </header>
+
+  <section class="rtable" aria-label="Bàn oval 9 ghế">
+    <div class="rt-felt" aria-hidden="true"></div>
+    <div class="rt-center">
+      <span class="rt-note">Chờ chia hand #130</span>
+      <div class="rt-blinds tnum">4,000 / 8,000 · ante 8,000 <small>(min chip 500)</small></div>
+    </div>
+
+    <div class="rseat rs-1">
+      <span class="rseat-ava">NH<span class="rseat-no"><b>1</b><small>seat</small></span><span class="pos">BTN</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Nguyễn Trung Hiếu</span><b class="rseat-stack tnum">402,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-2">
+      <span class="rseat-ava">+<span class="rseat-no"><b>2</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-3">
+      <span class="rseat-ava">TB<span class="rseat-no"><b>3</b><small>seat</small></span><span class="pos">SB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Trần Quốc Bảo</span><b class="rseat-stack tnum">435,000</b></span>
+    </div>
+    <div class="rseat rs-4">
+      <span class="rseat-ava">VL<span class="rseat-no"><b>4</b><small>seat</small></span><span class="pos">BB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Vũ Hải Long</span><b class="rseat-stack tnum">373,000</b></span>
+    </div>
+    <div class="rseat rs-5">
+      <span class="rseat-ava">DN<span class="rseat-no"><b>5</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đỗ Thành Nam</span><b class="rseat-stack tnum">439,000</b></span>
+    </div>
+    <div class="rseat rs-6">
+      <span class="rseat-ava">HK<span class="rseat-no"><b>6</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Hoàng Gia Khánh</span><b class="rseat-stack tnum">521,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-7">
+      <span class="rseat-ava">+<span class="rseat-no"><b>7</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-8">
+      <span class="rseat-ava">BD<span class="rseat-no"><b>8</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Bùi Tiến Dũng</span><b class="rseat-stack tnum">546,000</b></span>
+    </div>
+    <div class="rseat rseat--satout rs-9">
+      <span class="rseat-ava">DV<span class="rseat-no"><b>9</b><small>seat</small></span><span class="rs-flag">Sit out</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đinh Văn Vũ</span><b class="rseat-stack tnum">200,000</b></span>
+    </div>
+
+    <span class="dbtn rt-d rtd-1" aria-label="Nút dealer ghế 1">D</span>
+  </section>
+
+  <section class="abar" aria-label="Thao tác chính">
+    <span class="ab-hint">Chạm ghế để mở panel người chơi<br>(bust out · stand up · đổi ghế · sửa chips)</span>
+    <button class="ab ab--cta">Deal<span class="tnum">Hand #130</span></button>
+  </section>
+
+  <section class="rpanel" aria-label="Panel dưới — Standing Players">
+    <nav class="rtabs">
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab rtab--active" href="#f6" aria-current="page">Standing Players <small>(2)</small></a>
+      <a class="rtab" href="#f7">Busted Players <small>(11)</small></a>
+      <a class="rtab" href="#f1">Hand History</a>
+      <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
+    </nav>
+    <div class="rp-body">
+      <p class="rp-lead">Người <b>còn trong giải nhưng chưa ngồi ghế</b> — cấp flight, mọi bàn (vừa stand up mang theo stack, hoặc đăng ký chưa xếp). Bấm card → mở panel để gán vào ghế trống.</p>
+      <div class="plist">
+        <button class="pcardx">
+          <span class="pc-ava">PL</span>
+          <span class="pc-b"><b>Phan Lâm</b><span>Stack mang theo 312,000 · stand up 4'</span></span>
+          <span class="pc-tag pc-tag--seat">Gán ghế</span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-ava">HT</span>
+          <span class="pc-b"><b>Hồ Anh Tú</b><span>Late reg · chưa xếp ghế</span></span>
+          <span class="pc-tag pc-tag--seat">Gán ghế</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+<!-- ============ FRAME 7 — TAB BUSTED PLAYERS ============ -->
+<span class="frame-cap" id="f7"><b>Frame 7</b> · tab Busted Players — đã loại (cấp flight), hạng do admin xác nhận; lưới avatar + tên + hạng</span>
+<section class="frame" aria-label="Reporter bàn 1 — Busted Players">
+
+  <header class="rp-head">
+    <button class="rp-back" aria-label="Quay lại seating chart">‹</button>
+    <div class="rp-crumb">
+      <b>Bàn 1 ✎ <em class="tnum">Hand #130 sắp chia</em></b>
+      <span>Quads Winter Series 2026 / #5: 5M NLH High Roller — Day 1A</span>
+    </div>
+    <span class="rp-variant">Texas Hold'em</span>
+    <span class="vr"></span>
+    <span class="sync sync--ok"><span class="dot"></span>Đã đồng bộ <small>· 0.3s</small></span>
+  </header>
+
+  <section class="rtable" aria-label="Bàn oval 9 ghế">
+    <div class="rt-felt" aria-hidden="true"></div>
+    <div class="rt-center">
+      <span class="rt-note">Chờ chia hand #130</span>
+      <div class="rt-blinds tnum">4,000 / 8,000 · ante 8,000 <small>(min chip 500)</small></div>
+    </div>
+
+    <div class="rseat rs-1">
+      <span class="rseat-ava">NH<span class="rseat-no"><b>1</b><small>seat</small></span><span class="pos">BTN</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Nguyễn Trung Hiếu</span><b class="rseat-stack tnum">402,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-2">
+      <span class="rseat-ava">+<span class="rseat-no"><b>2</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-3">
+      <span class="rseat-ava">TB<span class="rseat-no"><b>3</b><small>seat</small></span><span class="pos">SB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Trần Quốc Bảo</span><b class="rseat-stack tnum">435,000</b></span>
+    </div>
+    <div class="rseat rs-4">
+      <span class="rseat-ava">VL<span class="rseat-no"><b>4</b><small>seat</small></span><span class="pos">BB</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Vũ Hải Long</span><b class="rseat-stack tnum">373,000</b></span>
+    </div>
+    <div class="rseat rs-5">
+      <span class="rseat-ava">DN<span class="rseat-no"><b>5</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đỗ Thành Nam</span><b class="rseat-stack tnum">439,000</b></span>
+    </div>
+    <div class="rseat rs-6">
+      <span class="rseat-ava">HK<span class="rseat-no"><b>6</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Hoàng Gia Khánh</span><b class="rseat-stack tnum">521,000</b></span>
+    </div>
+    <div class="rseat rseat--empty rs-7">
+      <span class="rseat-ava">+<span class="rseat-no"><b>7</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Ghế trống</span></span>
+    </div>
+    <div class="rseat rs-8">
+      <span class="rseat-ava">BD<span class="rseat-no"><b>8</b><small>seat</small></span></span>
+      <span class="rseat-plate"><span class="rseat-name">Bùi Tiến Dũng</span><b class="rseat-stack tnum">546,000</b></span>
+    </div>
+    <div class="rseat rseat--satout rs-9">
+      <span class="rseat-ava">DV<span class="rseat-no"><b>9</b><small>seat</small></span><span class="rs-flag">Sit out</span></span>
+      <span class="rseat-plate"><span class="rseat-name">Đinh Văn Vũ</span><b class="rseat-stack tnum">200,000</b></span>
+    </div>
+
+    <span class="dbtn rt-d rtd-1" aria-label="Nút dealer ghế 1">D</span>
+  </section>
+
+  <section class="abar" aria-label="Thao tác chính">
+    <span class="ab-hint">Chạm ghế để mở panel người chơi<br>(bust out · stand up · đổi ghế · sửa chips)</span>
+    <button class="ab ab--cta">Deal<span class="tnum">Hand #130</span></button>
+  </section>
+
+  <section class="rpanel" aria-label="Panel dưới — Busted Players">
+    <nav class="rtabs">
+      <a class="rtab" href="#f5">Next Hand</a>
+      <a class="rtab" href="#f6">Standing Players <small>(2)</small></a>
+      <a class="rtab rtab--active" href="#f7" aria-current="page">Busted Players <small>(11)</small></a>
+      <a class="rtab" href="#f1">Hand History</a>
+      <button class="rtab-collapse" aria-label="Thu gọn panel">⌃</button>
+    </nav>
+    <div class="rp-body">
+      <p class="rp-lead"><b>Đã bị loại</b> — cấp flight, mọi bàn. Hạng (finish position) <b>admin xác nhận tay</b> khi registration Closed; bấm card để sửa/xác nhận. 24/35 còn lại — chưa vào tiền (trả top 3).</p>
+      <div class="plist">
+        <button class="pcardx">
+          <span class="pc-rank pc-rank--pending">25?<small>hạng</small></span>
+          <span class="pc-ava">VK</span>
+          <span class="pc-b"><b>Vũ Đình Khoa</b><span>Loại L9 · 21:38</span></span>
+          <span class="pc-tag pc-tag--pending">Xác nhận</span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">26<small>hạng</small></span>
+          <span class="pc-ava">LV</span>
+          <span class="pc-b"><b>Lê Bá Vinh</b><span>Loại L9 · 21:20</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">27<small>hạng</small></span>
+          <span class="pc-ava">NT</span>
+          <span class="pc-b"><b>Ngô Tất Thành</b><span>Loại L8 · 20:55</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">28<small>hạng</small></span>
+          <span class="pc-ava">MC</span>
+          <span class="pc-b"><b>Đỗ Mạnh Cường</b><span>Loại L8 · 20:41</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">29<small>hạng</small></span>
+          <span class="pc-ava">VH</span>
+          <span class="pc-b"><b>Trịnh Văn Hậu</b><span>Loại L7 · 20:18</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">30<small>hạng</small></span>
+          <span class="pc-ava">QM</span>
+          <span class="pc-b"><b>Bùi Quang Minh</b><span>Loại L7 · 20:02</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">31<small>hạng</small></span>
+          <span class="pc-ava">VS</span>
+          <span class="pc-b"><b>Hoàng Văn Sơn</b><span>Loại L6 · 19:44</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">32<small>hạng</small></span>
+          <span class="pc-ava">HP</span>
+          <span class="pc-b"><b>Đặng Hữu Phước</b><span>Loại L6 · 19:30</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">33<small>hạng</small></span>
+          <span class="pc-ava">QT</span>
+          <span class="pc-b"><b>Lý Quốc Toản</b><span>Loại L5 · 19:08</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">34<small>hạng</small></span>
+          <span class="pc-ava">DL</span>
+          <span class="pc-b"><b>Mai Đức Lương</b><span>Loại L5 · 18:51</span></span>
+        </button>
+        <button class="pcardx">
+          <span class="pc-rank">35<small>hạng</small></span>
+          <span class="pc-ava">HD</span>
+          <span class="pc-b"><b>Tô Hải Đăng</b><span>Loại L4 · 18:33</span></span>
+        </button>
+      </div>
+    </div>
+  </section>
 
 </section>
 

@@ -519,6 +519,9 @@ body {
 .mv-og-th span { font-size: 8px; color: var(--color-beige); font-variant-numeric: tabular-nums; }
 .mv-og .tx b { font-size: var(--fs-xs); color: var(--color-beige); display: block; margin-bottom: 2px; }
 .mv-og .tx span { font-size: var(--fs-2xs); color: var(--color-text-muted); line-height: var(--lh-snug); }
+/* bottom tab dạng link (bấm chuyển frame) */
+.tab { text-decoration: none; }
+html { scroll-behavior: smooth; }
 </style>
 </head>
 <body>
@@ -540,7 +543,7 @@ body {
 <!-- ============ FRAME A — LIVE GIỮA HAND ============ -->
 <div class="phone-col">
   <span class="frame-cap"><b>Frame A</b> · live giữa hand — flop, BTN đang action</span>
-  <section class="phone" aria-label="Viewer mobile — đang live">
+  <section class="phone" id="ban-m" aria-label="Viewer mobile — đang live">
 
     <header class="m-top">
       <span class="wordmark"><span class="mk-sq"></span><b>QUADS</b><span>LIVE</span></span>
@@ -625,10 +628,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng">
       <span class="tabs">
-        <button class="tab">Tổng quan</button>
-        <button class="tab tab--active">Bàn</button>
-        <button class="tab">Hands</button>
-        <button class="tab">Chips</button>
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab tab--active" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
       </span>
       <button class="share" aria-label="Chia sẻ hand">↗</button>
     </nav>
@@ -746,10 +749,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng">
       <span class="tabs">
-        <button class="tab">Tổng quan</button>
-        <button class="tab tab--active">Bàn</button>
-        <button class="tab">Hands</button>
-        <button class="tab">Chips</button>
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab tab--active" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
       </span>
       <button class="share" aria-label="Chia sẻ hand">↗</button>
     </nav>
@@ -845,10 +848,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng">
       <span class="tabs">
-        <button class="tab">Tổng quan</button>
-        <button class="tab tab--active">Bàn</button>
-        <button class="tab">Hands</button>
-        <button class="tab">Chips</button>
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab tab--active" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
       </span>
       <button class="share" aria-label="Chia sẻ hand">↗</button>
     </nav>
@@ -942,10 +945,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng">
       <span class="tabs">
-        <button class="tab">Tổng quan</button>
-        <button class="tab tab--active">Bàn</button>
-        <button class="tab">Hands</button>
-        <button class="tab">Chips</button>
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab tab--active" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
       </span>
       <button class="share" aria-label="Chia sẻ hand">↗</button>
     </nav>
@@ -1069,9 +1072,9 @@ body {
       <div class="mv-pad">
         <div class="mv-card">
           <div class="mv-card-h"><b>Bàn đang track</b><span class="tag">3 bàn</span></div>
-          <a class="mv-watch" href="#"><span class="mv-ring tnum">9</span><span class="wb"><b>#1: Feature table</b><small>Hand #8 · Showdown</small></span><span class="wr"><span class="lead">S. Chidwick</span><span class="st tnum">2.1M</span></span></a>
-          <a class="mv-watch" href="#"><span class="mv-ring tnum">8</span><span class="wb"><b>#2: Bàn 2</b><small>Hand #12 · Flop</small></span><span class="wr"><span class="lead">J. Koon</span><span class="st tnum">1.5M</span></span></a>
-          <a class="mv-watch" href="#"><span class="mv-ring tnum">7</span><span class="wb"><b>#3: Bàn 3</b><small>Hand #9 · Preflop</small></span><span class="wr"><span class="lead">B. Kenney</span><span class="st tnum">1.2M</span></span></a>
+          <a class="mv-watch" href="#ban-m"><span class="mv-ring tnum">9</span><span class="wb"><b>#1: Feature table</b><small>Hand #8 · Showdown</small></span><span class="wr"><span class="lead">S. Chidwick</span><span class="st tnum">2.1M</span></span></a>
+          <a class="mv-watch" href="#ban-m"><span class="mv-ring tnum">8</span><span class="wb"><b>#2: Bàn 2</b><small>Hand #12 · Flop</small></span><span class="wr"><span class="lead">J. Koon</span><span class="st tnum">1.5M</span></span></a>
+          <a class="mv-watch" href="#ban-m"><span class="mv-ring tnum">7</span><span class="wb"><b>#3: Bàn 3</b><small>Hand #9 · Preflop</small></span><span class="wr"><span class="lead">B. Kenney</span><span class="st tnum">1.2M</span></span></a>
         </div>
 
         <div class="mv-card">
@@ -1089,7 +1092,7 @@ body {
           <div class="mv-pay"><span class="no tnum">3</span><span class="ww">— sẽ xác định —</span><span class="amt"><b class="tnum">28,000,000</b></span></div>
           <div class="mv-pay"><span class="no tnum">4</span><span class="ww">— sẽ xác định —</span><span class="amt"><b class="tnum">18,000,000</b></span></div>
           <div class="mv-pay"><span class="no tnum">5</span><span class="ww">— sẽ xác định —</span><span class="amt"><b class="tnum">12,000,000</b></span></div>
-          <div class="mv-card-f"><a class="mv-btn mv-btn--outline mv-btn--full" href="#">Xem đủ 8 hạng</a></div>
+          <div class="mv-card-f"><a class="mv-btn mv-btn--outline mv-btn--full" href="#chips-m">Xem đủ 8 hạng</a></div>
         </div>
 
         <div class="mv-card">
@@ -1111,10 +1114,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng giải">
       <span class="tabs">
-        <button class="tab tab--active">Tổng quan</button>
-        <button class="tab">Bàn</button>
-        <button class="tab">Hands</button>
-        <button class="tab">Chips</button>
+        <a class="tab tab--active" href="#tour-m">Tổng quan</a>
+        <a class="tab" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
       </span>
     </nav>
 
@@ -1175,10 +1178,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng giải">
       <span class="tabs">
-        <button class="tab">Tổng quan</button>
-        <button class="tab">Bàn</button>
-        <button class="tab tab--active">Hands</button>
-        <button class="tab">Chips</button>
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab" href="#ban-m">Bàn</a>
+        <a class="tab tab--active" href="#hands-m">Hands</a>
+        <a class="tab" href="#chips-m">Chips</a>
       </span>
     </nav>
 
@@ -1227,10 +1230,10 @@ body {
 
     <nav class="m-tab" aria-label="Điều hướng giải">
       <span class="tabs">
-        <button class="tab">Tổng quan</button>
-        <button class="tab">Bàn</button>
-        <button class="tab">Hands</button>
-        <button class="tab tab--active">Chips</button>
+        <a class="tab" href="#tour-m">Tổng quan</a>
+        <a class="tab" href="#ban-m">Bàn</a>
+        <a class="tab" href="#hands-m">Hands</a>
+        <a class="tab tab--active" href="#chips-m">Chips</a>
       </span>
     </nav>
 
@@ -1277,7 +1280,7 @@ body {
 
       <div class="mv-pad">
         <div class="mv-cta">
-          <a class="mv-btn mv-btn--primary" href="#">▸ Xem Bàn 1</a>
+          <a class="mv-btn mv-btn--primary" href="#ban-m">▸ Xem Bàn 1</a>
           <a class="mv-btn mv-btn--outline" href="#tour-m">Tổng quan</a>
           <button class="mv-btn mv-btn--outline" aria-label="Copy link">↗</button>
         </div>
