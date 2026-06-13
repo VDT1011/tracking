@@ -12,9 +12,9 @@
 /* ============ STYLE RIÊNG MOCKUP ADMIN (v2 — Triton redesign) ============
    Màn quản trị event trên iPad portrait (~820px), bố cục theo Triton
    Poker Reporter Admin; màu giữ palette Quads (đen ấm + gold + beige).
-   3 tab đủ nội dung: Overview · Structure · Seating Chart — mỗi tab
-   một frame xếp dọc (mockup tĩnh, không JS). Reception / Chips /
-   Visible Section: tab disabled, làm ở giai đoạn sau.
+   5 tab có nội dung: Overview · Structure · Seating Chart · Chips ·
+   Visible Section — mỗi tab một frame xếp dọc, tab bar là link nhảy
+   frame (mockup tĩnh, không JS). Reception: BỎ (check-in quản ngoài tool).
    Khác Triton: KHÔNG có "Import from PokerLens" — bản này không sync,
    blind levels nhập tay. Demo: Quads Winter Series 2026.            */
 
@@ -381,7 +381,7 @@ html { scroll-behavior: smooth; }
 <body>
 
 <div class="mock-chrome">
-  <b>Mockup — Admin event</b><span>tablet portrait 820 · v2 Triton redesign · 5 tab (Reception sau)</span>
+  <b>Mockup — Admin event</b><span>tablet portrait 820 · v2 Triton redesign · 5 tab</span>
   <nav>
     <a href="design-system.html">◂ Design System</a>
     <a href="mockup-logger.html">Reporter</a>
@@ -412,7 +412,6 @@ html { scroll-behavior: smooth; }
     <a class="adtab adtab--active" href="#overview" aria-current="page">Overview</a>
     <a class="adtab" href="#structure">Structure</a>
     <a class="adtab" href="#seating">Seating Chart</a>
-    <button class="adtab" disabled title="Làm ở giai đoạn sau">Reception <small>· sau</small></button>
     <a class="adtab" href="#chips">Chips</a>
     <a class="adtab" href="#visible">Visible Section</a>
   </nav>
@@ -487,7 +486,6 @@ html { scroll-behavior: smooth; }
     <a class="adtab" href="#overview">Overview</a>
     <a class="adtab adtab--active" href="#structure" aria-current="page">Structure</a>
     <a class="adtab" href="#seating">Seating Chart</a>
-    <button class="adtab" disabled title="Làm ở giai đoạn sau">Reception <small>· sau</small></button>
     <a class="adtab" href="#chips">Chips</a>
     <a class="adtab" href="#visible">Visible Section</a>
   </nav>
@@ -608,7 +606,6 @@ html { scroll-behavior: smooth; }
     <a class="adtab" href="#overview">Overview</a>
     <a class="adtab" href="#structure">Structure</a>
     <a class="adtab adtab--active" href="#seating" aria-current="page">Seating Chart</a>
-    <button class="adtab" disabled title="Làm ở giai đoạn sau">Reception <small>· sau</small></button>
     <a class="adtab" href="#chips">Chips</a>
     <a class="adtab" href="#visible">Visible Section</a>
   </nav>
@@ -748,7 +745,6 @@ html { scroll-behavior: smooth; }
     <a class="adtab" href="#overview">Overview</a>
     <a class="adtab" href="#structure">Structure</a>
     <a class="adtab" href="#seating">Seating Chart</a>
-    <button class="adtab" disabled title="Làm ở giai đoạn sau">Reception <small>· sau</small></button>
     <a class="adtab adtab--active" href="#chips" aria-current="page">Chips</a>
     <a class="adtab" href="#visible">Visible Section</a>
   </nav>
@@ -829,7 +825,6 @@ html { scroll-behavior: smooth; }
     <a class="adtab" href="#overview">Overview</a>
     <a class="adtab" href="#structure">Structure</a>
     <a class="adtab" href="#seating">Seating Chart</a>
-    <button class="adtab" disabled title="Làm ở giai đoạn sau">Reception <small>· sau</small></button>
     <a class="adtab" href="#chips">Chips</a>
     <a class="adtab adtab--active" href="#visible" aria-current="page">Visible Section</a>
   </nav>
@@ -909,7 +904,7 @@ html { scroll-behavior: smooth; }
   <div class="note"><b>Không sync phần mềm ngoài</b><span>Bỏ "Import from PokerLens" — blind levels nhập tay (hoặc Clone từ event trước). Mọi số liệu field/info bấm Cập nhật mới ghi.</span></div>
   <div class="note"><b>Re-draw là hành động nguy hiểm</b><span>Outline danger — xáo toàn bộ chỗ ngồi, cần confirm 2 bước khi làm thật. Thêm bàn / sửa bàn là outline trung tính.</span></div>
   <div class="note"><b>Touch target ≥ 56px</b><span>Mọi nút bấm chính ≥ --tap-min (56px); icon phụ trong hàng (clone, xóa, sửa) 44px — vận hành trên iPad, đứng thao tác.</span></div>
-  <div class="note"><b>Chips &amp; Visible Section (chốt 13/06)</b><span>2 tab Triton không lộ nội dung (SPEC để ngỏ) — nay chủ dự án chốt: <b>Chips</b> = tổng quan chip tool tự tính + chip count round đối soát (STACK_SET); <b>Visible Section</b> = bật/tắt khối hiển thị trên trang public. Reception vẫn để giai đoạn sau.</span></div>
+  <div class="note"><b>Chips &amp; Visible Section (chốt 13/06)</b><span>2 tab Triton không lộ nội dung (SPEC để ngỏ) — nay chủ dự án chốt: <b>Chips</b> = tổng quan chip tool tự tính + chip count round đối soát (STACK_SET); <b>Visible Section</b> = bật/tắt khối hiển thị trên trang public. Reception đã bỏ (đón/check-in/buy-in quản ngoài tool).</span></div>
   <div class="note"><b>Menu tab bấm được</b><span>Tab bar giờ là link nhảy tới frame tương ứng (#overview/#structure/#seating/#chips/#visible) — mockup duyệt được như prototype. Bản React sẽ là tab-switch tại chỗ.</span></div>
 </div>
 
