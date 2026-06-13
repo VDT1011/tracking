@@ -320,6 +320,9 @@ body {
   color: var(--color-text); font-size: var(--fs-base); font-weight: var(--fw-semi);
 }
 .hbtn:disabled { opacity: 0.35; }
+/* v2.1: hand-nav dời vào giữa bàn (cạnh hand tag) khi thống nhất bottom-tab 4 mục */
+.m-handnav { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.hbtn--felt { width: 30px; height: 30px; background: var(--felt-pill); border-color: transparent; color: var(--color-beige); }
 .hno { font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; color: var(--color-beige); min-width: 28px; text-align: center; }
 .tabs { flex: 1; display: flex; justify-content: center; gap: var(--sp-1); }
 .tab {
@@ -376,15 +379,26 @@ body {
 
 /* HOME — event card + past row */
 .mv-ev { display: block; color: inherit; background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
-.mv-ev-ph { position: relative; aspect-ratio: 16/7; background: radial-gradient(120% 130% at 30% 0%, var(--felt-hi), var(--felt) 55%, var(--felt-deep)); display: flex; align-items: flex-start; padding: var(--sp-2); }
-.mv-ev-ph::after { content: "♠"; position: absolute; right: 10px; bottom: -8px; font-size: 48px; color: var(--rail-edge); opacity: .5; }
+.mv-ev-ph { position: relative; aspect-ratio: 16/7; background: radial-gradient(120% 130% at 30% 0%, var(--felt-hi), var(--felt) 55%, var(--felt-deep)); display: flex; align-items: flex-end; padding: var(--sp-2); }
+.mv-ev-ph .badge { position: relative; z-index: 2; }
+/* mini table + players thu nhỏ trong ảnh card Home (mobile) — đồng bộ desktop */
+.mv-emini { position: absolute; inset: 0; z-index: 0; }
+.mv-eoval { position: absolute; left: 7%; right: 7%; top: 8%; bottom: 26%; border-radius: var(--radius-full); background: radial-gradient(ellipse at 50% 42%, var(--felt-hi), var(--felt) 62%, var(--felt-deep) 100%); border: 4px solid var(--rail); box-shadow: 0 0 0 1px var(--rail-edge), inset 0 0 0 1px var(--rail-edge); }
+.mv-eoval::before { content: ""; position: absolute; inset: 7px; border: 1px solid var(--felt-line); border-radius: var(--radius-full); }
+.mv-eboard { position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%); display: flex; gap: 2px; z-index: 1; }
+.mv-epot { position: absolute; left: 50%; top: 58%; transform: translate(-50%, -50%); z-index: 1; background: var(--felt-pill); border-radius: var(--radius-full); padding: 1px 7px; font-size: 9px; font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mv-eseat { position: absolute; transform: translate(-50%, -50%); z-index: 1; width: 22px; height: 22px; border-radius: var(--radius-full); background: var(--color-surface-2); border: 1px solid var(--color-gold-deep); display: inline-flex; align-items: center; justify-content: center; font-size: 8px; font-weight: var(--fw-bold); color: var(--color-beige); box-shadow: var(--shadow-1); }
+.mv-eseat--empty { background: transparent; border-style: dashed; border-color: var(--seat-empty-line); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.mv-eseat--btn { border-color: var(--color-gold); color: var(--color-gold); }
+.me-1{left:50%;top:12%} .me-2{left:75%;top:20%} .me-3{left:89%;top:43%} .me-4{left:79%;top:66%} .me-5{left:61%;top:73%}
+.me-6{left:39%;top:73%} .me-7{left:21%;top:66%} .me-8{left:11%;top:43%} .me-9{left:26%;top:20%}
 .mv-ev-b { padding: var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-2); }
 .mv-ev-series { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); }
 .mv-ev-nm { font-size: var(--fs-base); font-weight: var(--fw-bold); line-height: var(--lh-snug); }
 .mv-ev-nm .tnum { color: var(--color-gold); }
 .mv-ev-meta { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-5); }
 .mv-kv { display: flex; flex-direction: column; line-height: var(--lh-snug); }
-.mv-kv .k { font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.mv-kv .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
 .mv-kv .v { font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
 .mv-ev-ft { display: flex; align-items: center; gap: var(--sp-2); padding-top: var(--sp-2); border-top: 1px solid var(--color-border); }
 .mv-ev-ft .t { font-size: var(--fs-2xs); color: var(--color-text-muted); }
@@ -394,19 +408,19 @@ body {
 .mv-past .pno { font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; flex: none; }
 .mv-past .pb { min-width: 0; flex: 1; }
 .mv-past .pb b { display: block; font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mv-past .pb small { font-size: 10px; color: var(--color-text-muted); }
+.mv-past .pb small { font-size: var(--fs-2xs); color: var(--color-text-muted); }
 .mv-past .pw { font-size: var(--fs-2xs); color: var(--color-beige); text-align: right; flex: none; }
 
 /* TOURNAMENT — hero + stats + watch/stk/pay/structure */
 .mv-hero { position: relative; height: 120px; flex: none; background: linear-gradient(180deg, rgba(10,9,8,.05), rgba(10,9,8,.85)), radial-gradient(140% 120% at 20% -10%, var(--felt-hi), var(--felt) 55%, var(--felt-deep)); display: flex; align-items: flex-end; border-bottom: 1px solid var(--color-border); }
 .mv-hero::after { content: "♠"; position: absolute; right: 12px; top: -8px; font-size: 96px; color: var(--rail-edge); opacity: .35; line-height: 1; }
 .mv-hero-in { position: relative; z-index: 1; padding: var(--sp-3); }
-.mv-hero .cr { font-size: 10px; color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); font-weight: var(--fw-semi); }
+.mv-hero .cr { font-size: var(--fs-2xs); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-caps); font-weight: var(--fw-semi); }
 .mv-hero h2 { font-size: var(--fs-xl); font-weight: var(--fw-heavy); letter-spacing: -0.01em; line-height: var(--lh-tight); margin-top: 2px; }
 .mv-hero h2 .tnum { color: var(--color-gold); }
 .mv-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--color-border); flex: none; }
 .mv-stat { background: var(--color-bg); padding: var(--sp-2) var(--sp-3); }
-.mv-stat .k { font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.mv-stat .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
 .mv-stat .v { font-size: var(--fs-md); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; }
 .mv-stat--accent .v { color: var(--color-gold); }
 .mv-watch { display: flex; align-items: center; gap: var(--sp-3); padding: 10px var(--sp-3); border-top: 1px solid var(--color-border); color: inherit; }
@@ -414,20 +428,20 @@ body {
 .mv-ring { width: 38px; height: 38px; border-radius: var(--radius-full); flex: none; background: radial-gradient(ellipse at 50% 40%, var(--felt-hi), var(--felt) 70%); border: 2px solid var(--rail); box-shadow: 0 0 0 1px var(--rail-edge); display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: var(--fw-bold); color: var(--color-beige); font-variant-numeric: tabular-nums; }
 .mv-watch .wb { min-width: 0; flex: 1; }
 .mv-watch .wb b { display: block; font-size: var(--fs-sm); font-weight: var(--fw-bold); }
-.mv-watch .wb small { font-size: 10px; color: var(--color-text-muted); }
+.mv-watch .wb small { font-size: var(--fs-2xs); color: var(--color-text-muted); }
 .mv-watch .wr { text-align: right; flex: none; }
 .mv-watch .wr .lead { font-size: var(--fs-xs); font-weight: var(--fw-semi); white-space: nowrap; }
-.mv-watch .wr .st { display: block; font-size: 10px; color: var(--color-gold); font-variant-numeric: tabular-nums; }
+.mv-watch .wr .st { display: block; font-size: var(--fs-2xs); color: var(--color-gold); font-variant-numeric: tabular-nums; }
 .mv-stk { display: grid; grid-template-columns: 22px 24px 1fr auto; gap: var(--sp-2); align-items: center; padding: 8px var(--sp-3); border-top: 1px solid var(--color-border); }
 .mv-stk:first-child { border-top: 0; }
 .mv-stk .rk { font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-text-muted); font-variant-numeric: tabular-nums; text-align: center; }
 .mv-stk.lead .rk { color: var(--color-gold); }
 .mv-stk .who { display: flex; flex-direction: column; min-width: 0; }
 .mv-stk .who .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mv-stk .who .tb { font-size: 10px; color: var(--color-text-muted); }
+.mv-stk .who .tb { font-size: var(--fs-2xs); color: var(--color-text-muted); }
 .mv-stk .val { text-align: right; }
 .mv-stk .val b { font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
-.mv-stk .val span { display: block; font-size: 10px; color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.mv-stk .val span { display: block; font-size: var(--fs-2xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
 .mv-ava { width: 24px; height: 24px; border-radius: var(--radius-full); flex: none; background: var(--color-surface-2); border: 1px solid var(--color-border-strong); display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: var(--fw-bold); color: var(--color-beige); }
 .mv-pay { display: grid; grid-template-columns: 26px 1fr auto; gap: var(--sp-2); align-items: center; padding: 7px var(--sp-3); border-top: 1px solid var(--color-border); font-variant-numeric: tabular-nums; }
 .mv-pay:first-child { border-top: 0; }
@@ -448,17 +462,17 @@ body {
 
 /* HANDS — filter chips + hand row */
 .mv-chips { display: flex; gap: var(--sp-2); padding: var(--sp-2) var(--sp-4); overflow-x: auto; flex: none; border-bottom: 1px solid var(--color-border); }
-.mv-chip { flex: none; min-height: 34px; padding: 0 var(--sp-3); display: inline-flex; align-items: center; border-radius: var(--radius-full); border: 1px solid var(--color-border-strong); background: transparent; color: var(--color-beige); font-size: var(--fs-xs); font-weight: var(--fw-semi); white-space: nowrap; }
+.mv-chip { flex: none; min-height: var(--tap-sm); padding: 0 var(--sp-3); display: inline-flex; align-items: center; border-radius: var(--radius-full); border: 1px solid var(--color-border-strong); background: transparent; color: var(--color-beige); font-size: var(--fs-xs); font-weight: var(--fw-semi); white-space: nowrap; }
 .mv-chip--on { background: var(--color-gold); border-color: transparent; color: var(--color-ink-on-gold); font-weight: var(--fw-bold); }
 .mv-hand { display: grid; grid-template-columns: 32px 1fr auto; gap: 2px var(--sp-3); align-items: center; padding: 9px var(--sp-3); border-top: 1px solid var(--color-border); color: inherit; }
 .mv-hand:first-child { border-top: 0; }
 .mv-hand .no { grid-row: span 2; align-self: center; font-size: var(--fs-base); font-weight: var(--fw-bold); color: var(--color-gold); font-variant-numeric: tabular-nums; }
 .mv-hand .top { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
 .mv-hand .top .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mv-hand .top .tb { font-size: 10px; color: var(--color-text-muted); flex: none; }
+.mv-hand .top .tb { font-size: var(--fs-2xs); color: var(--color-text-muted); flex: none; }
 .mv-hand .pot { grid-row: span 2; align-self: center; text-align: right; }
 .mv-hand .pot b { font-size: var(--fs-sm); font-weight: var(--fw-bold); font-variant-numeric: tabular-nums; }
-.mv-hand .pot span { display: block; font-size: 9px; color: var(--color-text-muted); }
+.mv-hand .pot span { display: block; font-size: var(--fs-2xs); color: var(--color-text-muted); }
 .mv-hand .bot { display: flex; align-items: center; gap: var(--sp-2); }
 .mv-hand .bot .cls { font-size: var(--fs-xs); color: var(--color-beige); }
 .mv-hand .bot .cls.nosd { color: var(--color-text-muted); font-style: italic; }
@@ -471,20 +485,20 @@ body {
 .mv-clbar i.low { background: var(--color-surface-3); }
 .mv-fld { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--color-border); }
 .mv-fldt { background: var(--color-surface-1); padding: var(--sp-3); }
-.mv-fldt .k { font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
+.mv-fldt .k { font-size: var(--fs-2xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: var(--ls-caps); }
 .mv-fldt .v { font-size: var(--fs-lg); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; }
 .mv-fin { display: grid; grid-template-columns: 30px 1fr auto; gap: var(--sp-2); align-items: center; padding: 8px var(--sp-3); border-top: 1px solid var(--color-border); }
 .mv-fin:first-child { border-top: 0; }
 .mv-fin .rk { font-size: var(--fs-xs); font-weight: var(--fw-bold); color: var(--color-gold); text-align: center; font-variant-numeric: tabular-nums; }
 .mv-fin .nm { font-size: var(--fs-sm); font-weight: var(--fw-semi); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mv-fin .nm small { display: block; font-size: 9px; color: var(--color-text-muted); font-weight: var(--fw-reg); }
+.mv-fin .nm small { display: block; font-size: var(--fs-2xs); color: var(--color-text-muted); font-weight: var(--fw-reg); }
 .mv-fin .pr { text-align: right; font-variant-numeric: tabular-nums; }
 .mv-fin .pr b { font-size: var(--fs-sm); font-weight: var(--fw-bold); }
 .mv-fin .pr .bty { display: block; font-size: 9px; color: var(--color-gold); }
 
 /* PERMALINK — hero hand + vs + cta + og note */
 .mv-perma { background: radial-gradient(120% 120% at 50% -10%, var(--felt-hi), var(--felt) 55%, var(--felt-deep)); border-bottom: 1px solid var(--color-border); padding: var(--sp-4) var(--sp-3) var(--sp-5); text-align: center; flex: none; }
-.mv-perma .hd { font-size: 10px; font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-wide); }
+.mv-perma .hd { font-size: var(--fs-2xs); font-weight: var(--fw-semi); color: var(--color-beige); text-transform: uppercase; letter-spacing: var(--ls-wide); }
 .mv-perma .pt { font-size: var(--fs-3xl); font-weight: var(--fw-heavy); font-variant-numeric: tabular-nums; letter-spacing: var(--ls-num); line-height: var(--lh-tight); margin: 4px 0; }
 .mv-perma .pt small { font-size: var(--fs-sm); color: var(--color-text-muted); font-weight: var(--fw-reg); }
 .mv-perma-bd { display: flex; gap: 4px; justify-content: center; margin: var(--sp-3) 0; }
@@ -493,7 +507,7 @@ body {
 .mv-vs-s { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; max-width: 150px; }
 .mv-vs-c { display: flex; gap: 3px; }
 .mv-vs-nm { font-size: var(--fs-xs); font-weight: var(--fw-semi); }
-.mv-vs-cl { font-size: 10px; }
+.mv-vs-cl { font-size: var(--fs-2xs); }
 .mv-vs-cl.win { color: var(--color-gold); font-weight: var(--fw-bold); }
 .mv-vs-cl.lose { color: var(--color-text-muted); }
 .mv-vs .d { align-self: center; font-size: var(--fs-sm); color: var(--color-text-muted); font-weight: var(--fw-bold); }
@@ -504,7 +518,7 @@ body {
 .mv-og-th b { font-size: 10px; font-weight: var(--fw-heavy); letter-spacing: var(--ls-wide); }
 .mv-og-th span { font-size: 8px; color: var(--color-beige); font-variant-numeric: tabular-nums; }
 .mv-og .tx b { font-size: var(--fs-xs); color: var(--color-beige); display: block; margin-bottom: 2px; }
-.mv-og .tx span { font-size: 10px; color: var(--color-text-muted); line-height: var(--lh-snug); }
+.mv-og .tx span { font-size: var(--fs-2xs); color: var(--color-text-muted); line-height: var(--lh-snug); }
 </style>
 </head>
 <body>
@@ -514,8 +528,10 @@ body {
   <nav>
     <a href="design-system.html">◂ Design System</a>
     <a href="mockup-logger.html">Reporter</a>
+    <a href="mockup-admin.html">Admin tablet</a>
     <a href="mockup-admin-desktop.html">Admin desktop</a>
-    <a href="mockup-viewer-desktop.html">Viewer desktop ▸</a>
+    <a href="mockup-viewer.html">Viewer · bàn</a>
+    <a href="mockup-viewer-desktop.html">Viewer · giải ▸</a>
   </nav>
 </div>
 
@@ -536,7 +552,7 @@ body {
       <div class="mt-felt" aria-hidden="true"></div>
 
       <div class="mt-center">
-        <span class="m-handtag">Hand #8 — Flop</span>
+        <div class="m-handnav"><button class="hbtn hbtn--felt" aria-label="Hand trước">‹</button><span class="m-handtag">Hand #8 — Flop</span><button class="hbtn hbtn--felt" disabled aria-label="Hand sau">›</button></div>
         <div class="mt-pot"><span class="lbl">Pot</span><b class="tnum">180K</b><span class="tnum">≈ 11.3 BB</span></div>
         <div class="mt-board" aria-label="Board">
           <span class="pcard" aria-label="K bích"><b>K</b><i>♠</i></span>
@@ -608,12 +624,8 @@ body {
     </div>
 
     <nav class="m-tab" aria-label="Điều hướng">
-      <span class="hnav">
-        <button class="hbtn" aria-label="Hand trước">‹</button>
-        <span class="hno tnum">#8</span>
-        <button class="hbtn" disabled aria-label="Hand sau">›</button>
-      </span>
       <span class="tabs">
+        <button class="tab">Tổng quan</button>
         <button class="tab tab--active">Bàn</button>
         <button class="tab">Hands</button>
         <button class="tab">Chips</button>
@@ -639,7 +651,7 @@ body {
       <div class="mt-felt" aria-hidden="true"></div>
 
       <div class="mt-center">
-        <span class="m-handtag">Hand #8 — Showdown</span>
+        <div class="m-handnav"><button class="hbtn hbtn--felt" aria-label="Hand trước">‹</button><span class="m-handtag">Hand #8 — Showdown</span><button class="hbtn hbtn--felt" disabled aria-label="Hand sau">›</button></div>
         <div class="mt-pot"><span class="lbl">Main Pot</span><b class="tnum">1.9M</b><span class="tnum">118.5 BB</span></div>
         <div class="mt-board" aria-label="Board">
           <span class="pcard" aria-label="K bích"><b>K</b><i>♠</i></span>
@@ -733,12 +745,8 @@ body {
     </div>
 
     <nav class="m-tab" aria-label="Điều hướng">
-      <span class="hnav">
-        <button class="hbtn" aria-label="Hand trước">‹</button>
-        <span class="hno tnum">#8</span>
-        <button class="hbtn" disabled aria-label="Hand sau">›</button>
-      </span>
       <span class="tabs">
+        <button class="tab">Tổng quan</button>
         <button class="tab tab--active">Bàn</button>
         <button class="tab">Hands</button>
         <button class="tab">Chips</button>
@@ -764,7 +772,7 @@ body {
       <div class="mt-felt" aria-hidden="true"></div>
 
       <div class="mt-center">
-        <span class="m-handtag">Hand #6 — Kết thúc</span>
+        <div class="m-handnav"><button class="hbtn hbtn--felt" aria-label="Hand trước">‹</button><span class="m-handtag">Hand #6 — Kết thúc</span><button class="hbtn hbtn--felt" aria-label="Hand sau">›</button></div>
         <div class="mt-pot"><span class="lbl">Pot</span><b class="tnum">96K</b><span class="tnum">= 6 BB</span></div>
         <div class="mt-board" aria-label="Board">
           <span class="pcard" aria-label="8 bích"><b>8</b><i>♠</i></span>
@@ -836,12 +844,8 @@ body {
     </div>
 
     <nav class="m-tab" aria-label="Điều hướng">
-      <span class="hnav">
-        <button class="hbtn" aria-label="Hand trước">‹</button>
-        <span class="hno tnum">#6</span>
-        <button class="hbtn" aria-label="Hand sau">›</button>
-      </span>
       <span class="tabs">
+        <button class="tab">Tổng quan</button>
         <button class="tab tab--active">Bàn</button>
         <button class="tab">Hands</button>
         <button class="tab">Chips</button>
@@ -937,12 +941,8 @@ body {
     </div>
 
     <nav class="m-tab" aria-label="Điều hướng">
-      <span class="hnav">
-        <button class="hbtn" aria-label="Hand trước">‹</button>
-        <span class="hno tnum">#8</span>
-        <button class="hbtn" disabled aria-label="Hand sau">›</button>
-      </span>
       <span class="tabs">
+        <button class="tab">Tổng quan</button>
         <button class="tab tab--active">Bàn</button>
         <button class="tab">Hands</button>
         <button class="tab">Chips</button>
@@ -970,7 +970,23 @@ body {
       </div>
 
       <a class="mv-ev" href="#tour-m">
-        <div class="mv-ev-ph"><span class="badge"><span class="dot"></span>Delayed 30:00</span></div>
+        <div class="mv-ev-ph">
+          <div class="mv-emini" aria-hidden="true">
+            <div class="mv-eoval"></div>
+            <span class="mv-eboard"><span class="pcard pcard--sm"><b>K</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>Q</b><i>♦</i></span><span class="pcard pcard--sm"><b>4</b><i>♣</i></span></span>
+            <span class="mv-epot tnum">Pot 180K</span>
+            <span class="mv-eseat me-1">SC</span>
+            <span class="mv-eseat me-2">PI</span>
+            <span class="mv-eseat me-3">TD</span>
+            <span class="mv-eseat me-4 mv-eseat--empty">4</span>
+            <span class="mv-eseat me-5">BK</span>
+            <span class="mv-eseat me-6">JK</span>
+            <span class="mv-eseat me-7">MB</span>
+            <span class="mv-eseat me-8">WY</span>
+            <span class="mv-eseat me-9 mv-eseat--btn">PN</span>
+          </div>
+          <span class="badge"><span class="dot"></span>Delayed 30:00</span>
+        </div>
         <div class="mv-ev-b">
           <span class="mv-ev-series">Quads Poker Championship I</span>
           <span class="mv-ev-nm">High Roller — Day 1A</span>
@@ -984,7 +1000,23 @@ body {
       </a>
 
       <a class="mv-ev" href="#tour-m">
-        <div class="mv-ev-ph"><span class="badge badge--live"><span class="dot"></span>Live</span></div>
+        <div class="mv-ev-ph">
+          <div class="mv-emini" aria-hidden="true">
+            <div class="mv-eoval"></div>
+            <span class="mv-eboard"><span class="pcard pcard--sm"><b>7</b><i>♠</i></span><span class="pcard pcard--sm pcard--red"><b>6</b><i>♦</i></span><span class="pcard pcard--sm pcard--red"><b>5</b><i>♥</i></span></span>
+            <span class="mv-epot tnum">Pot 64K</span>
+            <span class="mv-eseat me-1">LT</span>
+            <span class="mv-eseat me-2 mv-eseat--empty">2</span>
+            <span class="mv-eseat me-3">PD</span>
+            <span class="mv-eseat me-4 mv-eseat--empty">4</span>
+            <span class="mv-eseat me-5">NH</span>
+            <span class="mv-eseat me-6 mv-eseat--empty">6</span>
+            <span class="mv-eseat me-7">TK</span>
+            <span class="mv-eseat me-8">BC</span>
+            <span class="mv-eseat me-9 mv-eseat--btn">AQ</span>
+          </div>
+          <span class="badge badge--live"><span class="dot"></span>Live</span>
+        </div>
         <div class="mv-ev-b">
           <span class="mv-ev-series">Quads Weekly</span>
           <span class="mv-ev-nm">Thursday Turbo</span>
@@ -1080,6 +1112,7 @@ body {
     <nav class="m-tab" aria-label="Điều hướng giải">
       <span class="tabs">
         <button class="tab tab--active">Tổng quan</button>
+        <button class="tab">Bàn</button>
         <button class="tab">Hands</button>
         <button class="tab">Chips</button>
       </span>
@@ -1143,6 +1176,7 @@ body {
     <nav class="m-tab" aria-label="Điều hướng giải">
       <span class="tabs">
         <button class="tab">Tổng quan</button>
+        <button class="tab">Bàn</button>
         <button class="tab tab--active">Hands</button>
         <button class="tab">Chips</button>
       </span>
@@ -1194,6 +1228,7 @@ body {
     <nav class="m-tab" aria-label="Điều hướng giải">
       <span class="tabs">
         <button class="tab">Tổng quan</button>
+        <button class="tab">Bàn</button>
         <button class="tab">Hands</button>
         <button class="tab tab--active">Chips</button>
       </span>
@@ -1274,7 +1309,7 @@ body {
 
 <div class="notes">
   <div class="note"><b>Chuẩn chính 390px</b><span>Người xem chủ yếu mở link share Zalo/FB trên điện thoại. Desktop (mockup-viewer-desktop.html + mockup-viewer.html) mở rộng từ đây — không thiết kế ngược.</span></div>
-  <div class="note"><b>Đủ 5 trang giải (bổ sung 13/06)</b><span>Frame E–I: Home / · Tổng quan /t · Hands · Chips · Permalink /h — khớp desktop, mobile là nguồn đầy đủ. Bottom tab giải: Tổng quan / Hands / Chips; màn Bàn giữ tab Bàn / Hands / Chips. KHÔNG bounty (chốt 13/06).</span></div>
+  <div class="note"><b>Đủ 5 trang giải (bổ sung 13/06)</b><span>Frame E–I: Home / · Tổng quan /t · Hands · Chips · Permalink /h — khớp desktop, mobile là nguồn đầy đủ. Bottom tab thống nhất 4 mục Tổng quan / Bàn / Hands / Chips cho cả màn giải lẫn màn bàn (v2.1, 13/06); hand-nav ‹ › dời vào giữa felt cạnh hand tag để nhường chỗ tab thứ 4; event card Home thêm mini-table đồng bộ desktop. KHÔNG bounty (chốt 13/06).</span></div>
   <div class="note"><b>Bàn đồ họa dọc (chốt 11/06)</b><span>Thay lưới 3×3 cũ theo chỉ đạo chủ dự án + ảnh tham chiếu: racetrack dọc, pod ghế NEO THEO GHẾ vật lý G1–G9 quanh rail; badge SB/BB/BTN, chấm D và bet trên nỉ xoay theo button. Pot + board nằm giữa bàn.</span></div>
   <div class="note"><b>Pod ghế tối giản</b><span>Avatar ảnh người chơi nếu có (club_players.photo_url), fallback chữ cái đầu. Plate: tên + stack chips (quy đổi BB xem ở log/chips). Đang action (v2): viền success + vòng pulse — đồng bộ reporter, gold để dành winner; fold mờ 45%; bài showdown xòe trên avatar.</span></div>
   <div class="note"><b>Chuẩn đọc &amp; chạm</b><span>Touch target ≥ 44px, chữ nội dung ≥ 13px (micro-label 11px caps), số tabular-nums. Badge DELAYED/LIVE luôn ở top bar; log rút còn ~230px dưới bàn — bàn là nội dung chính.</span></div>
